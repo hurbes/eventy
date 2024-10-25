@@ -14,11 +14,12 @@ jobs:
   build:      
     name: Build & Release 
     runs-on: macos-latest 
-
+    permissions:
+      contents: write
     steps:
         #1 Checkout Repository
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
         #2 Setup Java
       - name: Set Up Java
@@ -113,4 +114,3 @@ jobs:
         with:
           artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
           tag: v${{ env.VERSION }}
-          token: ${{ secrets.TOKEN }}
