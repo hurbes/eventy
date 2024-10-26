@@ -1,28 +1,39 @@
+import 'package:dio/dio.dart';
+import 'package:eventy/app/app.locator.dart';
+import 'package:eventy/core/interfaces/i_api_service.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:eventy/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
-// @stacked-import
+import 'package:eventy/core/services/payment_service.dart';
+import 'package:eventy/core/services/api_service.dart';
 
 import 'test_helpers.mocks.dart';
+// @stacked-import
 
 @GenerateMocks([], customMocks: [
-  MockSpec<NavigationService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<RouterService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<BottomSheetService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
-  // @stacked-mock-spec
+  MockSpec<PaymentService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<Dio>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<ApiService>(onMissingStub: OnMissingStub.returnDefault),
+// @stacked-mock-spec
 ])
 void registerServices() {
   getAndRegisterNavigationService();
   getAndRegisterBottomSheetService();
   getAndRegisterDialogService();
-  // @stacked-mock-register
+  getAndRegisterPaymentService();
+  getAndRegisterPaymentService();
+  getAndRegisterDio();
+  getAndRegisterApiService();
+// @stacked-mock-register
 }
 
-MockNavigationService getAndRegisterNavigationService() {
-  _removeRegistrationIfExists<NavigationService>();
-  final service = MockNavigationService();
-  locator.registerSingleton<NavigationService>(service);
+MockRouterService getAndRegisterNavigationService() {
+  _removeRegistrationIfExists<RouterService>();
+  final service = MockRouterService();
+  locator.registerSingleton<RouterService>(service);
   return service;
 }
 
@@ -69,6 +80,26 @@ MockDialogService getAndRegisterDialogService() {
   return service;
 }
 
+MockPaymentService getAndRegisterPaymentService() {
+  _removeRegistrationIfExists<PaymentService>();
+  final service = MockPaymentService();
+  locator.registerSingleton<PaymentService>(service);
+  return service;
+}
+
+MockApiService getAndRegisterApiService() {
+  _removeRegistrationIfExists<IApiService>();
+  final service = MockApiService();
+  locator.registerSingleton<IApiService>(service);
+  return service;
+}
+
+MockDio getAndRegisterDio() {
+  _removeRegistrationIfExists<Dio>();
+  final service = MockDio();
+  locator.registerSingleton<Dio>(service);
+  return service;
+}
 // @stacked-mock-create
 
 void _removeRegistrationIfExists<T extends Object>() {
