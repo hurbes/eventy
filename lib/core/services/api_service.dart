@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:eventy/app/app.locator.dart';
-import 'package:eventy/core/exceptions/app_exceptions.dart';
+import 'package:eventy/core/exceptions/api_exceptions.dart';
 import 'package:eventy/core/exceptions/base_exception.dart';
 import 'package:eventy/core/interfaces/i_api_service.dart';
 import 'package:eventy/core/mixins/logger_mixin.dart';
@@ -23,32 +23,30 @@ class ApiService extends IApiService with AppLogger {
     int retryCount = 1,
   }) async {
     try {
-      Response<T> response;
+      Response response;
       Options options = Options(headers: headers);
-
       // Retry mechanism
       int attempt = 0;
       do {
         try {
           switch (requestType) {
             case _RequestType.get:
-              response = await dio.get<T>(endpoint,
+              response = await dio.get(endpoint,
                   queryParameters: queryParameters, options: options);
               break;
             case _RequestType.post:
-              response =
-                  await dio.post<T>(endpoint, data: data, options: options);
+              response = await dio.post(endpoint, data: data, options: options);
               break;
             case _RequestType.put:
-              response =
-                  await dio.put<T>(endpoint, data: data, options: options);
+              response = await dio.put(endpoint, data: data, options: options);
               break;
             case _RequestType.delete:
-              response = await dio.delete<T>(endpoint,
+              response = await dio.delete(endpoint,
                   queryParameters: queryParameters, options: options);
               break;
           }
           logResponse(response);
+
           return response.data!;
         } on DioException catch (e) {
           if (e.type == DioExceptionType.unknown && attempt < retryCount) {
@@ -84,7 +82,7 @@ class ApiService extends IApiService with AppLogger {
   @override
   Future<T> post<T>({
     required String endpoint,
-    required Map<String, dynamic> data,
+    Map<String, dynamic>? data,
     Map<String, dynamic>? headers,
   }) async {
     return await _makeRequest<T>(
@@ -136,7 +134,6 @@ class ApiService extends IApiService with AppLogger {
   @override
   void logGenericException(String method, String endpoint, Object error) {
     logE('''
-    Error during $method request to $endpoint:
     Error: $error
     ''');
   }
