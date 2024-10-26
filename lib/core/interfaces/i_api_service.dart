@@ -13,7 +13,7 @@ abstract class IApiService {
 
   Future<T> post<T>({
     required String endpoint,
-    required Map<String, dynamic> data,
+    Map<String, dynamic> data,
     Map<String, dynamic>? headers,
   });
 
@@ -32,5 +32,5 @@ abstract class IApiService {
   // Logging and exception handling methods
   void logResponse(Response response);
   void logGenericException(String method, String endpoint, Object error);
-  void handleException(DioError e);
+  void handleException(DioException e);
 }
