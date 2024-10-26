@@ -13,7 +13,11 @@ import 'package:stacked_services/src/navigation/router_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
 import '../core/interfaces/i_api_service.dart';
+import '../core/interfaces/i_database_service.dart';
 import '../core/services/api_service.dart';
+import '../core/services/database_service.dart';
+import '../core/services/dio_service.dart';
+import '../core/services/objectbox_service.dart';
 import '../core/services/payment_service.dart';
 import 'app.router.dart';
 
@@ -33,8 +37,13 @@ Future<void> setupLocator({
   locator.registerLazySingleton(() => DialogService());
   locator.registerLazySingleton(() => RouterService());
   locator.registerLazySingleton(() => PaymentService());
-  locator.registerLazySingleton(() => Dio());
   locator.registerLazySingleton<IApiService>(() => ApiService());
+  locator.registerLazySingleton<IDatabaseService>(() => DatabaseService());
+  final objectboxService = ObjectboxService();
+  await objectboxService.init();
+  locator.registerSingleton(objectboxService);
+
+  locator.registerLazySingleton<Dio>(() => DioService.init());
   if (stackedRouter == null) {
     throw Exception(
         'Stacked is building to use the Router (Navigator 2.0) navigation but no stackedRouter is supplied. Pass the stackedRouter to the setupLocator function in main.dart');
