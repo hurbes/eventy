@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:eventy/core/exceptions/app_exceptions.dart';
+import 'package:eventy/core/exceptions/api_exceptions.dart';
 import 'package:eventy/core/services/api_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:eventy/app/app.locator.dart';

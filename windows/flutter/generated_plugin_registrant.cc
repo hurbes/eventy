@@ -6,9 +6,9 @@
 
 #include "generated_plugin_registrant.h"
 
-#include <realm/realm_plugin.h>
+#include <objectbox_flutter_libs/objectbox_flutter_libs_plugin.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
-  RealmPluginRegisterWithRegistrar(
-      registry->GetRegistrarForPlugin("RealmPlugin"));
+  ObjectboxFlutterLibsPluginRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("ObjectboxFlutterLibsPlugin"));
 }

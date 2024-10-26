@@ -8,6 +8,8 @@ import 'package:eventy/core/services/payment_service.dart';
 import 'package:eventy/core/services/api_service.dart';
 
 import 'test_helpers.mocks.dart';
+import 'package:eventy/core/services/database_service.dart';
+import 'package:eventy/core/services/objectbox_service.dart';
 // @stacked-import
 
 @GenerateMocks([], customMocks: [
@@ -17,6 +19,8 @@ import 'test_helpers.mocks.dart';
   MockSpec<PaymentService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<Dio>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<ApiService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<DatabaseService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<ObjectboxService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -27,6 +31,8 @@ void registerServices() {
   getAndRegisterPaymentService();
   getAndRegisterDio();
   getAndRegisterApiService();
+  getAndRegisterDatabaseService();
+  getAndRegisterObjectboxService();
 // @stacked-mock-register
 }
 
@@ -98,6 +104,20 @@ MockDio getAndRegisterDio() {
   _removeRegistrationIfExists<Dio>();
   final service = MockDio();
   locator.registerSingleton<Dio>(service);
+  return service;
+}
+
+MockDatabaseService getAndRegisterDatabaseService() {
+  _removeRegistrationIfExists<DatabaseService>();
+  final service = MockDatabaseService();
+  locator.registerSingleton<DatabaseService>(service);
+  return service;
+}
+
+MockObjectboxService getAndRegisterObjectboxService() {
+  _removeRegistrationIfExists<ObjectboxService>();
+  final service = MockObjectboxService();
+  locator.registerSingleton<ObjectboxService>(service);
   return service;
 }
 // @stacked-mock-create
