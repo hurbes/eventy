@@ -15,7 +15,7 @@ class StartupView extends StackedView<StartupViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xff22141a),
       body: Center(
         child: Lottie.asset(
           'assets/animations/splash_animation.json',
