@@ -67,7 +67,7 @@ class TicketSelectionView extends StackedView<TicketSelectionViewModel> {
               ),
             ),
           ),
-          SliverFillRemaining(
+          const SliverFillRemaining(
             hasScrollBody: false,
             child: Align(
               alignment: Alignment.bottomCenter,

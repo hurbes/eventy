@@ -18,7 +18,7 @@ class TicketSelectionViewModel extends ReactiveViewModel with AppLogger {
 
   bool get hasSelectedTickets {
     return selectedTickets.isNotEmpty &&
-        selectedTickets.values.every((e) => e > 0);
+        selectedTickets.values.any((e) => e > 0);
   }
 
   int quantityForTicket(Ticket ticket) =>
