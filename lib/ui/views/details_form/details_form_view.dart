@@ -7,6 +7,7 @@ import 'package:sliver_tools/sliver_tools.dart';
 import 'package:stacked/stacked.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_octicons/flutter_octicons.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'details_form_viewmodel.dart';
 
 class DetailsFormView extends StackedView<DetailsFormViewModel> {
@@ -193,25 +194,33 @@ class YourDetails extends ViewModelWidget<DetailsFormViewModel> {
           ),
         ),
         const SizedBox(height: 24),
-        const ValidatedInputField(
+        ValidatedInputField(
           label: 'First Name',
           hint: 'First name',
           validator: validateName,
           maxLength: 50,
+          initialValue: viewModel.personalDetails.firstName,
+          onChanged: (value) =>
+              viewModel.updatePersonalDetails(firstName: value),
         ),
         const SizedBox(height: 24),
-        const ValidatedInputField(
+        ValidatedInputField(
           label: 'Last Name',
           hint: 'Last Name',
           validator: validateName,
           maxLength: 50,
+          initialValue: viewModel.personalDetails.lastName,
+          onChanged: (value) =>
+              viewModel.updatePersonalDetails(lastName: value),
         ),
         const SizedBox(height: 24),
-        const ValidatedInputField(
+        ValidatedInputField(
           label: 'Email Address',
           hint: 'Email Address',
           validator: validateEmail,
           keyboardType: TextInputType.emailAddress,
+          initialValue: viewModel.personalDetails.email,
+          onChanged: (value) => viewModel.updatePersonalDetails(email: value),
         ),
         const SizedBox(height: 24),
         const CopyDetailsCheckbox(),
@@ -323,60 +332,137 @@ class AttendeeForm extends ViewModelWidget<DetailsFormViewModel> {
   }
 }
 
-class PaymentDetails extends StatelessWidget {
+class PaymentDetails extends ViewModelWidget<DetailsFormViewModel> {
   const PaymentDetails({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, DetailsFormViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Payment Details',
-          style: GoogleFonts.inter(
-            color: Colors.white,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+        // Event Summary Card
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              // Event Image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl: viewModel.eventImage,
+                  width: 84,
+                  height: 84,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Container(
+                    color: Colors.grey[800],
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                ),
+              ),
+              const SizedBox(width: 16),
+              // Event Details
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Party with friends at night - 2022',
+                      style: GoogleFonts.inter(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(
+                          OctIcons.calendar_16,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'THU 26 May, 09:00',
+                          style: GoogleFonts.inter(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        const Icon(
+                          OctIcons.location_16,
+                          size: 16,
+                          color: Colors.grey,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          'Gandhinagar',
+                          style: GoogleFonts.inter(
+                            color: Colors.grey,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 24),
-        const ValidatedInputField(
-          label: 'Card Number',
-          hint: '1234 5678 9012 3456',
-          validator: validateCardNumber,
-          keyboardType: TextInputType.number,
-          maxLength: 16,
+        // Order Summary
+        Text(
+          'Order Summary',
+          style: GoogleFonts.inter(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        const SizedBox(height: 24),
-        Row(
-          children: const [
-            Expanded(
-              child: ValidatedInputField(
-                label: 'Expiry Date',
-                hint: 'MM/YY',
-                validator: validateExpiryDate,
-                keyboardType: TextInputType.datetime,
-                maxLength: 5,
+        const SizedBox(height: 16),
+        Container(
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              const PriceItem(
+                label: '2x Ticket price',
+                price: '\$30.00',
               ),
-            ),
-            SizedBox(width: 16),
-            Expanded(
-              child: ValidatedInputField(
-                label: 'CVV',
-                hint: '123',
-                validator: validateCVV,
-                keyboardType: TextInputType.number,
-                maxLength: 3,
+              const SizedBox(height: 8),
+              const PriceItem(
+                label: 'Subtotal',
+                price: '\$30.00',
               ),
-            ),
-          ],
-        ),
-        const SizedBox(height: 24),
-        const ValidatedInputField(
-          label: 'Name on Card',
-          hint: 'John Doe',
-          validator: validateName,
-          maxLength: 50,
+              const SizedBox(height: 8),
+              const PriceItem(
+                label: 'Fees',
+                price: '\$3.00',
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 12),
+                child: Divider(color: Colors.white24),
+              ),
+              const PriceItem(
+                label: 'Total',
+                price: '\$33.00',
+                isBold: true,
+              ),
+            ],
+          ),
         ),
       ],
     );
@@ -391,6 +477,7 @@ class ValidatedInputField extends StatefulWidget {
   final int? maxLength;
   final List<TextInputFormatter>? inputFormatters;
   final Function(String)? onChanged;
+  final String? initialValue;
 
   const ValidatedInputField({
     Key? key,
@@ -401,6 +488,7 @@ class ValidatedInputField extends StatefulWidget {
     this.maxLength,
     this.inputFormatters,
     this.onChanged,
+    this.initialValue,
   }) : super(key: key);
 
   @override
@@ -408,7 +496,7 @@ class ValidatedInputField extends StatefulWidget {
 }
 
 class _ValidatedInputFieldState extends State<ValidatedInputField> {
-  final _controller = TextEditingController();
+  late final TextEditingController _controller;
   final _focusNode = FocusNode();
   String? _errorText;
   bool _isInteracted = false;
@@ -416,6 +504,7 @@ class _ValidatedInputFieldState extends State<ValidatedInputField> {
   @override
   void initState() {
     super.initState();
+    _controller = TextEditingController(text: widget.initialValue);
     _focusNode.addListener(_onFocusChange);
     _controller.addListener(_onTextChange);
   }
@@ -433,6 +522,9 @@ class _ValidatedInputFieldState extends State<ValidatedInputField> {
       setState(() {
         _errorText = widget.validator(_controller.text);
       });
+      if (_controller.text.isNotEmpty && widget.onChanged != null) {
+        widget.onChanged!(_controller.text);
+      }
     }
   }
 
@@ -441,6 +533,9 @@ class _ValidatedInputFieldState extends State<ValidatedInputField> {
       setState(() {
         _isInteracted = true;
       });
+    }
+    if (_controller.text.isNotEmpty && widget.onChanged != null) {
+      widget.onChanged!(_controller.text);
     }
   }
 
@@ -693,7 +788,7 @@ class NavigationButtons extends ViewModelWidget<DetailsFormViewModel> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (viewModel.currentStep > 0)
+          if (viewModel.canMoveToPreviousStep())
             ElevatedButton(
               onPressed: viewModel.previousStep,
               style: ElevatedButton.styleFrom(
@@ -717,22 +812,41 @@ class NavigationButtons extends ViewModelWidget<DetailsFormViewModel> {
             const SizedBox.shrink(),
           ElevatedButton(
             onPressed: viewModel.currentStep < 2
-                ? viewModel.nextStep
-                : () {/* Submit form */},
+                ? (viewModel.canMoveToNextStep() ? viewModel.nextStep : null)
+                : (viewModel.isCurrentStepValid()
+                    ? () {
+                        viewModel.createPaymentIntent();
+                      }
+                    : null),
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFFFF4E8D),
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
+              // Add disabled state styling
+              disabledBackgroundColor: Colors.grey.withOpacity(0.3),
             ),
-            child: Text(
-              viewModel.currentStep < 2 ? 'Next' : 'Submit',
-              style: GoogleFonts.inter(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  viewModel.currentStep < 2 ? 'Next' : 'Submit',
+                  style: GoogleFonts.inter(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                if (!viewModel.canMoveToNextStep()) ...[
+                  const SizedBox(width: 8),
+                  const Icon(
+                    OctIcons.lock_16,
+                    size: 16,
+                    color: Colors.white54,
+                  ),
+                ],
+              ],
             ),
           ),
         ],
@@ -883,4 +997,15 @@ class StepTitle extends ViewModelWidget<DetailsFormViewModel> {
       ],
     );
   }
+}
+
+// Add phone validation function
+String? validatePhone(String? value) {
+  if (value == null || value.isEmpty) {
+    return 'Please enter a phone number';
+  }
+  if (!RegExp(r'^\+?[\d\s-]{10,}$').hasMatch(value)) {
+    return 'Please enter a valid phone number';
+  }
+  return null;
 }

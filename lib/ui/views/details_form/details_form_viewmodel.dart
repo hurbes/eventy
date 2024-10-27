@@ -1,11 +1,15 @@
 import 'package:eventy/app/app.locator.dart';
+import 'package:eventy/core/mixins/logger_mixin.dart';
+import 'package:eventy/core/models/data_state/data_set.dart';
 import 'package:eventy/core/models/event/event.dart';
 import 'package:eventy/core/services/order_service.dart';
+
 import 'package:stacked/stacked.dart';
 
-class DetailsFormViewModel extends ReactiveViewModel {
+class DetailsFormViewModel extends FutureViewModel<void> with AppLogger {
   final _orderService = locator<OrderService>();
 
+  Event? get event => _orderService.activeEvent;
   Map<Ticket, int> get selectedTickets => _orderService.selectedTickets;
 
   int _currentStep = 0;
@@ -14,16 +18,34 @@ class DetailsFormViewModel extends ReactiveViewModel {
   bool _copyDetails = false;
   bool get copyDetails => _copyDetails;
 
-  List<Map<String, String>> _attendeeDetails = [];
+  final PersonalDetails _personalDetails = PersonalDetails();
+  PersonalDetails get personalDetails => _personalDetails;
+
+  final List<Map<String, String>> _attendeeDetails = [];
   List<Map<String, String>> get attendeeDetails => _attendeeDetails;
 
   void setCopyDetails(bool value) {
     _copyDetails = value;
+    if (value && isPersonalDetailsValid) {
+      // Copy personal details to all attendees
+      _attendeeDetails.clear();
+      for (var i = 0; i < totalAttendees; i++) {
+        _attendeeDetails.add(_personalDetails.toMap());
+      }
+    }
     notifyListeners();
   }
 
+  bool canMoveToNextStep() {
+    return isCurrentStepValid();
+  }
+
+  bool canMoveToPreviousStep() {
+    return _currentStep > 0;
+  }
+
   void nextStep() {
-    if (_currentStep < 2) {
+    if (_currentStep < 2 && canMoveToNextStep()) {
       _currentStep++;
       notifyListeners();
     }
@@ -34,6 +56,21 @@ class DetailsFormViewModel extends ReactiveViewModel {
       _currentStep--;
       notifyListeners();
     }
+  }
+
+  void updatePersonalDetails({
+    String? firstName,
+    String? lastName,
+    String? email,
+    String? phone,
+  }) {
+    if (firstName != null) _personalDetails.firstName = firstName;
+    if (lastName != null) _personalDetails.lastName = lastName;
+    if (email != null) _personalDetails.email = email;
+
+    // Update first attendee details as well
+    updateAttendeeDetails(0, _personalDetails.toMap());
+    notifyListeners();
   }
 
   void updateAttendeeDetails(int index, Map<String, String> details) {
@@ -49,16 +86,122 @@ class DetailsFormViewModel extends ReactiveViewModel {
     return selectedTickets.values.fold(0, (sum, count) => sum + count);
   }
 
-  // Add event details
-  final String eventImageUrl = 'https://picsum.photos/seed/event/400/200';
-  final String eventName = '(NOT A) Halloween Party';
-  final String eventDate = 'FRI, 01 NOV';
-  final String eventTime = '07:30 PM - 10:00 PM';
-  final String eventVenue = 'PLAYLYS BANGKOK';
-
-  // Add price details
   double get totalPrice {
     return selectedTickets.entries
         .fold(0, (sum, entry) => sum + ((entry.key.price ?? 0) * entry.value));
   }
+
+  // Validation getters
+  bool get isPersonalDetailsValid => _personalDetails.isValid;
+
+  bool get isAttendeeDetailsValid {
+    if (_attendeeDetails.isEmpty) return false;
+
+    // If copyDetails is true, we only need to validate personal details
+    if (copyDetails) return isPersonalDetailsValid;
+
+    // Check if we have details for all attendees
+    if (_attendeeDetails.length != totalAttendees) return false;
+
+    // Validate each attendee's details
+    return _attendeeDetails.every((details) {
+      final attendee = PersonalDetails(
+        firstName: details['firstName'],
+        lastName: details['lastName'],
+        email: details['email'],
+      );
+      // Note: Phone is not required for additional attendees
+      return attendee.firstName?.isNotEmpty == true &&
+          attendee.lastName?.isNotEmpty == true &&
+          PersonalDetails.isValidEmail(attendee.email ?? '');
+    });
+  }
+
+  bool get isPaymentDetailsValid {
+    if (totalPrice <= 0) return true;
+    // return _orderService.hasValidPaymentMethod;
+    return true;
+  }
+
+  bool isCurrentStepValid() {
+    switch (_currentStep) {
+      case 0:
+        return isPersonalDetailsValid;
+      case 1:
+        return isAttendeeDetailsValid;
+      case 2:
+        return isPaymentDetailsValid;
+      default:
+        return false;
+    }
+  }
+
+  void changeStep() {
+    if (currentStep < 2 && canMoveToNextStep()) {
+      return nextStep();
+    }
+    if (isCurrentStepValid()) {
+      createPaymentIntent();
+    }
+  }
+
+  Future<void> createPaymentIntent() async {
+    try {
+      final orderData = buildOrderComplete();
+      await _orderService.completeOrder(orderData);
+    } catch (e) {
+      logE(e.toString());
+    }
+  }
+
+  Map<String, dynamic> buildOrderComplete() {
+    // Build attendees list based on selected tickets
+    final List<Map<String, dynamic>> attendeesList = [];
+
+    var attendeeIndex = 0;
+    for (final ticketEntry in selectedTickets.entries) {
+      final ticket = ticketEntry.key;
+      final quantity = ticketEntry.value;
+
+      // Create attendee entries for each ticket quantity
+      for (var i = 0; i < quantity; i++) {
+        if (attendeeIndex < _attendeeDetails.length) {
+          attendeesList.add({
+            'ticket_price_id': ticket.prices.first.id,
+            'first_name': _attendeeDetails[attendeeIndex]['firstName'],
+            'last_name': _attendeeDetails[attendeeIndex]['lastName'],
+            'email': _attendeeDetails[attendeeIndex]['email'],
+            'ticket_id': ticket.id,
+          });
+          attendeeIndex++;
+        }
+      }
+    }
+
+    // Build the complete order structure
+    return {
+      'order': {
+        'first_name': _personalDetails.firstName,
+        'last_name': _personalDetails.lastName,
+        'email': _personalDetails.email,
+      },
+      'attendees': attendeesList,
+      'address': {},
+      "questions": [],
+    };
+  }
+
+  String get eventImage {
+    if (event?.images.isEmpty == true) return '';
+    return event!.images.first.url;
+  }
+
+  @override
+  List<ListenableServiceMixin> get listenableServices => [_orderService];
+
+  @override
+  bool get enableLogs => true;
+
+  @override
+  Future<void> futureToRun() => _orderService.createOrder();
 }
