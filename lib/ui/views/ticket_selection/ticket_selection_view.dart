@@ -44,13 +44,14 @@ class TicketSelectionView extends StackedView<TicketSelectionViewModel> {
             child: Column(
               children: [
                 const TicketSelectionHeader(),
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: TopCard(
-                    event: viewModel.event!,
-                    eventImage: viewModel.eventImage,
+                if (viewModel.event != null)
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: TopCard(
+                      event: viewModel.event!,
+                      eventImage: viewModel.eventImage,
+                    ),
                   ),
-                ),
               ],
             ),
           ),

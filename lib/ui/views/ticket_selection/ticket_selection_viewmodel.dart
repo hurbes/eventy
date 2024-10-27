@@ -33,6 +33,11 @@ class TicketSelectionViewModel extends ReactiveViewModel with AppLogger {
   void removeTicket(Ticket ticket) => _orderService.removeTicket(ticket);
 
   void navigateToDetailsForm() {
+    if (!hasSelectedTickets) {
+      logI('Cannot navigate to details form, no tickets selected');
+      return;
+    }
+    logI('Navigating to details form');
     _routerService.navigateToDetailsFormView();
   }
 
