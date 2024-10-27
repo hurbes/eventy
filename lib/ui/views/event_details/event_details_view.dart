@@ -1,4 +1,7 @@
+import 'package:eventy/core/models/event/event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:stacked/stacked.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_octicons/flutter_octicons.dart';
@@ -6,7 +9,9 @@ import 'package:flutter_octicons/flutter_octicons.dart';
 import 'event_details_viewmodel.dart';
 
 class EventDetailsView extends StackedView<EventDetailsViewModel> {
-  const EventDetailsView({Key? key}) : super(key: key);
+  final Event event;
+
+  const EventDetailsView({Key? key, required this.event}) : super(key: key);
 
   @override
   Widget builder(
@@ -35,12 +40,14 @@ class EventDetailsView extends StackedView<EventDetailsViewModel> {
               clipBehavior: Clip.none,
               alignment: Alignment.bottomCenter,
               children: [
-                // Background Image
-                Image.network(
-                  'https://picsum.photos/800/400',
-                  fit: BoxFit.cover,
-                  height: MediaQuery.of(context).size.height * 0.4,
-                  width: double.infinity,
+                Hero(
+                  tag: 'event_image_${event.id}',
+                  child: Image.network(
+                    'https://picsum.photos/800/400',
+                    fit: BoxFit.cover,
+                    height: MediaQuery.of(context).size.height * 0.4,
+                    width: double.infinity,
+                  ),
                 ),
                 // Top-down black gradient
                 Positioned.fill(
@@ -173,9 +180,9 @@ class EventDetailsView extends StackedView<EventDetailsViewModel> {
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
-                    'We have a team but still missing a couple of people. Let\'s play together! We have a team but still missing a couple of people. We have a team but still missing a couple of people',
-                    style: GoogleFonts.inter(
+                  HtmlWidget(
+                    event.description,
+                    textStyle: GoogleFonts.inter(
                       color: Colors.grey[400],
                       fontSize: 16,
                     ),
@@ -335,13 +342,17 @@ class EventDetailsView extends StackedView<EventDetailsViewModel> {
             ),
           ),
         ),
-      ),
+      )
+          .animate(onPlay: (controller) => controller.repeat())
+          .shimmer(duration: 1500.ms)
+          .then(delay: 1000.ms)
+          .shake(duration: 300.ms, hz: 4),
     );
   }
 
   @override
   EventDetailsViewModel viewModelBuilder(BuildContext context) =>
-      EventDetailsViewModel();
+      EventDetailsViewModel(event: event);
 }
 
 class AvatarStack extends StatelessWidget {
