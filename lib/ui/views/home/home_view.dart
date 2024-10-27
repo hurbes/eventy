@@ -91,9 +91,10 @@ class HomeView extends StackedView<HomeViewModel> {
 
   Widget _buildRecommendationItem(HomeViewModel viewModel, int index) {
     if (index < viewModel.recommendedEvents.length) {
+      final event = viewModel.recommendedEvents[index];
       return Padding(
-        padding: const EdgeInsets.only(bottom: 12),
-        child: RecommendationCard(event: viewModel.recommendedEvents[index]),
+        padding: const EdgeInsets.only(bottom: 15),
+        child: EventCard(event: event, isUpcoming: false),
       );
     } else if (viewModel.hasMoreRecommendations) {
       return Padding(
@@ -157,7 +158,7 @@ class HeaderSection extends StatelessWidget {
             ),
           ],
         ),
-        NotificationButton(),
+        const NotificationButton(),
       ],
     );
   }
@@ -305,17 +306,12 @@ class UpcomingEventsSection extends ViewModelWidget<HomeViewModel> {
               crossAxisCount: 2,
               childAspectRatio: .3,
               crossAxisSpacing: 16,
+              mainAxisSpacing: 16,
             ),
             itemCount: viewModel.upcomingEvents.length,
             itemBuilder: (context, index) {
               final event = viewModel.upcomingEvents[index];
-              return Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: EventCard(
-                  event: event,
-                  isUpcoming: true,
-                ),
-              );
+              return EventCard(event: event, isUpcoming: true);
             },
           ),
         ),
@@ -558,7 +554,6 @@ class RecommendationCard extends ViewModelWidget<HomeViewModel> {
     return EventCard(
       event: event,
       isUpcoming: false,
-      // onTap: () => viewModel.navigateToEventDetails(event),
     );
   }
 }

@@ -4,23 +4,39 @@ import 'package:flutter_octicons/flutter_octicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:animations/animations.dart';
+import 'package:eventy/ui/views/event_details/event_details_view.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
   final bool isUpcoming;
-  final VoidCallback? onTap;
 
   const EventCard({
     Key? key,
     required this.event,
     this.isUpcoming = false,
-    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return OpenContainer(
+      transitionType: ContainerTransitionType.fadeThrough,
+      openBuilder: (context, _) => EventDetailsView(event: event),
+      closedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      closedElevation: 0,
+      closedColor: Colors.transparent,
+      openColor: Colors.white.withOpacity(0.05),
+      middleColor: Colors.transparent,
+      transitionDuration: const Duration(milliseconds: 300),
+      closedBuilder: (context, openContainer) => _buildEventCard(openContainer),
+    );
+  }
+
+  Widget _buildEventCard(VoidCallback openContainer) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: openContainer,
       child: Container(
         width: isUpcoming ? 350 : double.infinity,
         height: isUpcoming ? null : 100,
@@ -31,27 +47,30 @@ class EventCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedNetworkImage(
-                imageUrl:
-                    'https://picsum.photos/200/300', // Replace with actual image URL
-                width: isUpcoming ? 80 : 84,
-                height: isUpcoming ? 80 : 84,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: Colors.grey[800]!,
-                  highlightColor: Colors.grey[700]!,
-                  child: Container(
-                    width: 350,
-                    height: 107,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
+            Hero(
+              tag: 'event_image_${event.id}',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedNetworkImage(
+                  imageUrl:
+                      'https://picsum.photos/200/300', // Replace with actual image URL
+                  width: isUpcoming ? 80 : 84,
+                  height: isUpcoming ? 80 : 84,
+                  fit: BoxFit.cover,
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[800]!,
+                    highlightColor: Colors.grey[700]!,
+                    child: Container(
+                      width: isUpcoming ? 80 : 84,
+                      height: isUpcoming ? 80 : 84,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
                     ),
                   ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
             const SizedBox(width: 12),

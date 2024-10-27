@@ -4,10 +4,13 @@ import 'package:eventy/core/models/data_state/data_set.dart';
 import 'package:eventy/core/models/event/event.dart';
 import 'package:eventy/core/repository/app_repository.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+import 'package:eventy/app/app.router.dart';
 
 class HomeViewModel extends StreamViewModel<DataState<List<Event>>>
     with IndexTrackingStateHelper, AppLogger {
   final _eventRepository = locator<Repository<Event>>();
+  final _navigationService = locator<RouterService>();
 
   bool _hasMoreRecommendations = true;
   bool get hasMoreRecommendations => _hasMoreRecommendations;
@@ -109,4 +112,10 @@ class HomeViewModel extends StreamViewModel<DataState<List<Event>>>
 
   @override
   bool get enableLogs => true;
+
+  void navigateToEventDetails(Event event) {
+    _navigationService.navigateToEventDetailsView(
+      event: event,
+    );
+  }
 }
