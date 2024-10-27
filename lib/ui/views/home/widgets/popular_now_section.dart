@@ -1,13 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_octicons/flutter_octicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stacked/stacked.dart';
 import 'package:eventy/ui/common/app_colors.dart';
 import 'package:eventy/ui/common/ui_helpers.dart';
+import 'package:eventy/ui/common/shared/eventy_network_image.dart';
 import '../home_viewmodel.dart';
 import 'section_header.dart';
-import 'avatar_stack.dart';
+import '../../../common/shared/avatar_stack.dart';
 
 class PopularNowSection extends ViewModelWidget<HomeViewModel> {
   const PopularNowSection({Key? key}) : super(key: key);
@@ -28,18 +28,13 @@ class PopularNowSection extends ViewModelWidget<HomeViewModel> {
           ),
           child: Stack(
             children: [
-              ClipRRect(
+              EventyNetworkImage(
+                imageUrl: 'https://picsum.photos/200/300',
+                width: double.infinity,
+                height: 200,
                 borderRadius: BorderRadius.circular(16),
-                child: CachedNetworkImage(
-                  imageUrl: 'https://picsum.photos/200/300',
-                  width: double.infinity,
-                  height: 200,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Container(
-                    color: ShimmerColors.baseColor,
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
+                shimmerBaseColor: ShimmerColors.baseColor,
+                shimmerHighlightColor: ShimmerColors.highlightColor,
               ),
               Positioned.fill(
                 child: DecoratedBox(
@@ -54,7 +49,7 @@ class PopularNowSection extends ViewModelWidget<HomeViewModel> {
                   ),
                 ),
               ),
-              Positioned(
+              const Positioned(
                 top: 16,
                 left: 16,
                 child: CategoryChip(label: 'Music'),

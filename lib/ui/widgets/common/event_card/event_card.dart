@@ -1,12 +1,12 @@
 import 'package:animations/animations.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eventy/core/models/event/event.dart';
 import 'package:eventy/ui/views/event_details/event_details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_octicons/flutter_octicons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
+import 'package:eventy/ui/common/app_colors.dart';
+import 'package:eventy/ui/common/shared/eventy_network_image.dart';
 
 import 'event_card_model.dart';
 
@@ -68,34 +68,20 @@ class EventCardBody extends StackedView<EventCardModel> {
         height: viewModel.isUpcoming ? null : 100,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.05),
+          color: ComponentColors.cardBackground,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Row(
           children: [
             Hero(
               tag: 'event_image_${viewModel.event.id}',
-              child: ClipRRect(
+              child: EventyNetworkImage(
+                imageUrl: viewModel.eventImage,
+                width: viewModel.isUpcoming ? 80 : 84,
+                height: viewModel.isUpcoming ? 80 : 84,
                 borderRadius: BorderRadius.circular(12),
-                child: CachedNetworkImage(
-                  imageUrl: viewModel.eventImage,
-                  width: viewModel.isUpcoming ? 80 : 84,
-                  height: viewModel.isUpcoming ? 80 : 84,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Shimmer.fromColors(
-                    baseColor: Colors.grey[800]!,
-                    highlightColor: Colors.grey[700]!,
-                    child: Container(
-                      width: viewModel.isUpcoming ? 80 : 84,
-                      height: viewModel.isUpcoming ? 80 : 84,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                  ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                ),
+                shimmerBaseColor: ShimmerColors.baseColor,
+                shimmerHighlightColor: ShimmerColors.highlightColor,
               ),
             ),
             const SizedBox(width: 12),

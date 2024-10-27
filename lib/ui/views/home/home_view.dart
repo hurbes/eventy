@@ -28,32 +28,30 @@ class HomeView extends StackedView<HomeViewModel> {
         child: NotificationListener<ScrollNotification>(
           onNotification: (scrollInfo) =>
               _handleScrollNotification(scrollInfo, viewModel),
-          child: CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                sliver: SliverList(
-                  delegate: SliverChildListDelegate([
-                    verticalSpaceSmall,
-                    const HeaderSection(),
-                    verticalSpaceSmall,
-                    const SearchBar.SearchBar(),
-                    verticalSpaceMedium,
-                    const CategorySection(),
-                    verticalSpaceMedium,
-                    _buildUpcomingEventsSection(viewModel),
-                    verticalSpaceMedium,
-                    _buildPopularNowSection(viewModel),
-                    verticalSpaceLarge,
-                  ]),
-                ),
+          child: CustomScrollView(slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate([
+                  verticalSpaceSmall,
+                  const HeaderSection(),
+                  verticalSpaceSmall,
+                  const SearchBar.SearchBar(),
+                  verticalSpaceMedium,
+                  const CategorySection(),
+                  verticalSpaceMedium,
+                  _buildUpcomingEventsSection(viewModel),
+                  verticalSpaceMedium,
+                  _buildPopularNowSection(viewModel),
+                  verticalSpaceLarge,
+                ]),
               ),
-              SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                sliver: _buildRecommendationsSection(viewModel),
-              ),
-            ],
-          ),
+            ),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              sliver: _buildRecommendationsSection(viewModel),
+            ),
+          ]),
         ),
       ),
       bottomNavigationBar: const BottomNavBar(),
