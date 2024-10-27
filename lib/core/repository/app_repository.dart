@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:eventy/app/app.locator.dart';
 import 'package:eventy/core/exceptions/api_exceptions.dart';
 import 'package:eventy/core/interfaces/i_api_service.dart';
@@ -12,7 +14,13 @@ abstract class Repository<T> with AppLogger implements IRepository<T> {
   final databaseService = locator<IDatabaseService>();
   final LRUCache<String, PaginatedData<T>> _cache;
 
-  Repository() : _cache = LRUCache(10);
+  final _dataStreamController =
+      StreamController<DataState<List<T>>>.broadcast();
+
+  Repository() : _cache = LRUCache(40);
+
+  @override
+  Stream<DataState<List<T>>> get dataStream => _dataStreamController.stream;
 
   // Abstract methods to be implemented by specific repositories
   T parseItem(Map<String, dynamic> json);
@@ -20,25 +28,37 @@ abstract class Repository<T> with AppLogger implements IRepository<T> {
   String getItemId(T item);
 
   @override
-  Stream<DataState<List<T>>> fetchAll({
+  Future<void> fetchAll({
     PaginatedOption? paginatedOptions,
     required String endpoint,
     Map<String, dynamic>? queryParams,
     bool ignoreCache = false,
-  }) async* {
-    if (paginatedOptions?.isEnabled ?? false) {
-      yield* _fetchPaginated(
-        paginatedOptions: paginatedOptions!,
-        endpoint: endpoint,
-        queryParams: queryParams,
-        ignoreCache: ignoreCache,
-      );
-    } else {
-      yield* _fetchSimple(
-        endpoint: endpoint,
-        queryParams: queryParams,
-        ignoreCache: ignoreCache,
-      );
+  }) async {
+    logI('Fetching all data from $endpoint');
+    try {
+      if (paginatedOptions?.isEnabled ?? false) {
+        await for (var state in _fetchPaginated(
+          paginatedOptions: paginatedOptions!,
+          endpoint: endpoint,
+          queryParams: queryParams,
+          ignoreCache: ignoreCache,
+        )) {
+          logI('Emitting state: $state');
+          _dataStreamController.add(state);
+        }
+      } else {
+        await for (var state in _fetchSimple(
+          endpoint: endpoint,
+          queryParams: queryParams,
+          ignoreCache: ignoreCache,
+        )) {
+          logI('Emitting state: $state');
+          _dataStreamController.add(state);
+        }
+      }
+    } catch (e) {
+      logE('Error in fetchAll: $e');
+      _dataStreamController.addError(e);
     }
   }
 
@@ -48,12 +68,15 @@ abstract class Repository<T> with AppLogger implements IRepository<T> {
     Map<String, dynamic>? queryParams,
     bool ignoreCache = false,
   }) async* {
+    logI('Fetching paginated data from $endpoint');
     final cacheKey = _buildCacheKey(endpoint, paginatedOptions.page);
 
     if (!ignoreCache) {
+      logI('Fetching local data from $cacheKey');
       yield* _handleLocalData(cacheKey, paginatedOptions);
     }
 
+    logI('Fetching API data from $endpoint');
     yield* _handleApiData(
       cacheKey: cacheKey,
       endpoint: endpoint,
@@ -73,6 +96,7 @@ abstract class Repository<T> with AppLogger implements IRepository<T> {
   }) async* {
     final cacheKey = endpoint;
 
+    logI('Fetching local data from $cacheKey');
     if (!ignoreCache) {
       yield* _handleLocalData(cacheKey);
     }
@@ -111,23 +135,30 @@ abstract class Repository<T> with AppLogger implements IRepository<T> {
     Map<String, dynamic>? queryParams,
     PaginatedOption? paginatedOptions,
   }) async* {
-    yield DataState.apiLoading(data: _getCachedData(cacheKey)?.items);
+    logI('Fetching API data from $endpoint');
+    final currentData = _getCachedData(cacheKey)?.items ?? [];
+    yield DataState.apiLoading(data: currentData);
 
     try {
+      logI('Fetching API data from $endpoint');
+
       final apiResponse = await fetchApiData(
         endpoint: endpoint,
         queryParams: queryParams,
       );
 
-      final items = _parseApiResponse(apiResponse);
+      final newItems = _parseApiResponse(apiResponse);
+      final updatedItems = _appendNewItems(currentData, newItems);
       final updatedPagination = paginatedOptions != null
           ? _extractPaginationFromResponse(apiResponse, paginatedOptions)
           : null;
 
-      await _updateLocalStorage(cacheKey, items, updatedPagination);
+      logI('Updating local storage with $cacheKey');
+
+      await _updateLocalStorage(cacheKey, updatedItems, updatedPagination);
 
       yield DataState.success(
-        items,
+        updatedItems,
         DataSource.api,
         pagination: updatedPagination,
       );
@@ -136,9 +167,19 @@ abstract class Repository<T> with AppLogger implements IRepository<T> {
       yield DataState.error(
         'Failed to fetch data',
         DataSource.api,
-        _getCachedData(cacheKey)?.items,
+        currentData,
       );
     }
+  }
+
+  // New helper method to append new items to the current data
+  List<T> _appendNewItems(List<T> currentItems, List<T> newItems) {
+    final Set<String> currentIds =
+        currentItems.map((item) => getItemId(item)).toSet();
+    final List<T> uniqueNewItems = newItems
+        .where((item) => !currentIds.contains(getItemId(item)))
+        .toList();
+    return [...currentItems, ...uniqueNewItems];
   }
 
   @override

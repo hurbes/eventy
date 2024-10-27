@@ -3,6 +3,8 @@ import 'package:eventy/core/models/event/event.dart';
 import 'app_repository.dart';
 
 class EventRepository extends Repository<Event> {
+  EventRepository() : super();
+
   @override
   Event parseItem(Map<String, dynamic> json) => Event.fromJson(json);
 
