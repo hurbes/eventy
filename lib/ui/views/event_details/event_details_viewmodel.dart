@@ -23,6 +23,10 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
 
   Event get event => data?.data ?? _event;
 
+  bool get isArchived {
+    return event.status == 'ARCHIVED';
+  }
+
   bool get isUpcoming {
     return event.startDate.isAfter(DateTime.now());
   }
@@ -65,7 +69,7 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
 
   @override
   Future<void> initialise() async {
-    super.initialise();
+    if (isArchived) return;
     logI('Initialising EventDetailsViewModel ${event.id}');
     try {
       await _eventRepository.fetchById(
@@ -75,6 +79,14 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
     } catch (e) {
       logE('Error fetching event details: $e');
     }
+  }
+
+  @override
+  // ignore: must_call_super
+  void dispose() {
+    logI('Disposing EventDetailsViewModel ${event.id}');
+    if (isArchived) return;
+    streamSubscription?.cancel();
   }
 
   @override

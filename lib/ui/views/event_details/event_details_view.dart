@@ -47,7 +47,9 @@ class EventDetailsView extends StackedView<EventDetailsViewModel> {
           ],
         ),
       ),
-      bottomNavigationBar: const BuyTicketButton(),
+      bottomNavigationBar: viewModel.isArchived
+          ? const SizedBox.shrink()
+          : const BuyTicketButton(),
     );
   }
 
