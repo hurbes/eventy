@@ -17,10 +17,17 @@ abstract class Repository<T> with AppLogger implements IRepository<T> {
   final _dataStreamController =
       StreamController<DataState<List<T>>>.broadcast();
 
+  final _singleItemStreamController =
+      StreamController<DataState<T>>.broadcast();
+
   Repository() : _cache = LRUCache(40);
 
   @override
   Stream<DataState<List<T>>> get dataStream => _dataStreamController.stream;
+
+  @override
+  Stream<DataState<T>> get singleItemStream =>
+      _singleItemStreamController.stream;
 
   // Abstract methods to be implemented by specific repositories
   T parseItem(Map<String, dynamic> json);
@@ -183,30 +190,44 @@ abstract class Repository<T> with AppLogger implements IRepository<T> {
   }
 
   @override
-  Stream<DataState<T>> fetchById({
+  Future<void> fetchById({
     required String id,
     required String endpoint,
-  }) async* {
-    yield DataState.localLoading();
+  }) async {
+    logI('Fetching by ID $id from $endpoint');
+    _singleItemStreamController.add(DataState.localLoading());
 
+    T? data;
     // Try cache/database
+    logI('Fetching from database');
     final dbData = await databaseService.fetchById<T>(int.parse(id));
     if (dbData != null) {
-      yield DataState.success(dbData, DataSource.local);
+      data = dbData;
+      logI('Found in database');
+      _singleItemStreamController
+          .add(DataState.success(dbData, DataSource.local));
     }
 
-    yield DataState.apiLoading();
+    logI('Fetching from API');
+    _singleItemStreamController.add(DataState.apiLoading());
     try {
-      final response = await apiService.get<Map<String, dynamic>>(
-        endpoint: '$endpoint/$id',
-      );
+      final response = await fetchApiData(endpoint: '$endpoint/$id');
+
+      logI('Found in API ${response['data']}');
 
       final T item = parseItem(response);
       await _updateSingleItem(item);
-      yield DataState.success(item, DataSource.api);
+      data = item;
+      logI('Emitting success $data');
+      _singleItemStreamController.add(DataState.success(item, DataSource.api));
+      return;
     } catch (e) {
       logE('API fetch by ID failed: $e');
-      yield DataState.error(e.toString(), DataSource.api);
+      _singleItemStreamController.add(DataState.error(
+        'API fetch by ID failed: $e',
+        DataSource.api,
+        data,
+      ));
     }
   }
 

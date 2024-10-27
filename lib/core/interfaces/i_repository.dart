@@ -6,6 +6,7 @@ abstract class IRepository<T> {
   // Core functions for repository
 
   Stream<DataState<List<T>>> get dataStream;
+  Stream<DataState<T>> get singleItemStream;
 
   Future<void> fetchAll({
     PaginatedOption? paginatedOptions,
@@ -14,7 +15,7 @@ abstract class IRepository<T> {
     bool ignoreCache = false,
   });
 
-  Stream<DataState<T>> fetchById({
+  Future<void> fetchById({
     required String id,
     required String endpoint,
   });
