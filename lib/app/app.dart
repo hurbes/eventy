@@ -41,8 +41,8 @@ import 'package:eventy/ui/views/search_view/search_view_view.dart';
       transitionsBuilder: TransitionsBuilders.slideBottom,
     ),
     MaterialRoute(page: DetailsFormView),
-    MaterialRoute(page: MapNavigationView),
-    MaterialRoute(page: SearchView),
+    MaterialRoute(page: MapNavigationView, fullscreenDialog: true),
+    MaterialRoute(page: SearchView, fullscreenDialog: true),
 // @stacked-route
   ],
   dependencies: [

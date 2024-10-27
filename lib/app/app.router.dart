@@ -75,12 +75,14 @@ class StackedRouterWeb extends _i9.RootStackRouter {
       return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i6.MapNavigationView(),
+        fullscreenDialog: true,
       );
     },
     SearchViewRoute.name: (routeData) {
       return _i9.MaterialPageX<dynamic>(
         routeData: routeData,
         child: const _i7.SearchView(),
+        fullscreenDialog: true,
       );
     },
   };
