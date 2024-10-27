@@ -16,6 +16,7 @@ import 'package:eventy/core/services/api_service.dart';
 import 'package:eventy/core/services/database_service.dart';
 import 'package:eventy/core/services/objectbox_service.dart';
 import 'package:eventy/core/services/dio_service.dart';
+import 'package:eventy/ui/views/event_details/event_details_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -29,7 +30,8 @@ import 'package:eventy/core/services/dio_service.dart';
       initial: true,
       transitionsBuilder: TransitionsBuilders.fadeIn,
     ),
-    // @stacked-route
+    MaterialRoute(page: EventDetailsView),
+// @stacked-route
   ],
   dependencies: [
     LazySingleton(classType: BottomSheetService),

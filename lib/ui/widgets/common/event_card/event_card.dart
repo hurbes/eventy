@@ -1,11 +1,14 @@
+import 'package:animations/animations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eventy/core/models/event/event.dart';
+import 'package:eventy/ui/views/event_details/event_details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_octicons/flutter_octicons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:animations/animations.dart';
-import 'package:eventy/ui/views/event_details/event_details_view.dart';
+import 'package:stacked/stacked.dart';
+
+import 'event_card_model.dart';
 
 class EventCard extends StatelessWidget {
   final Event event;
@@ -30,16 +33,39 @@ class EventCard extends StatelessWidget {
       openColor: Colors.white.withOpacity(0.05),
       middleColor: Colors.transparent,
       transitionDuration: const Duration(milliseconds: 300),
-      closedBuilder: (context, openContainer) => _buildEventCard(openContainer),
+      closedBuilder: (context, openContainer) => EventCardBody(
+        openContainer: openContainer,
+        event: event,
+      ),
     );
   }
+}
 
-  Widget _buildEventCard(VoidCallback openContainer) {
+class EventCardBody extends StackedView<EventCardModel> {
+  const EventCardBody({
+    super.key,
+    required this.openContainer,
+    required this.event,
+  });
+
+  final VoidCallback openContainer;
+  final Event event;
+
+  @override
+  EventCardModel viewModelBuilder(BuildContext context) =>
+      EventCardModel(event: event);
+
+  @override
+  Widget builder(
+    BuildContext context,
+    EventCardModel viewModel,
+    Widget? child,
+  ) {
     return GestureDetector(
       onTap: openContainer,
       child: Container(
-        width: isUpcoming ? 350 : double.infinity,
-        height: isUpcoming ? null : 100,
+        width: viewModel.isUpcoming ? 350 : double.infinity,
+        height: viewModel.isUpcoming ? null : 100,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.05),
@@ -48,21 +74,20 @@ class EventCard extends StatelessWidget {
         child: Row(
           children: [
             Hero(
-              tag: 'event_image_${event.id}',
+              tag: 'event_image_${viewModel.event.id}',
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: CachedNetworkImage(
-                  imageUrl:
-                      'https://picsum.photos/200/300', // Replace with actual image URL
-                  width: isUpcoming ? 80 : 84,
-                  height: isUpcoming ? 80 : 84,
+                  imageUrl: viewModel.eventImage,
+                  width: viewModel.isUpcoming ? 80 : 84,
+                  height: viewModel.isUpcoming ? 80 : 84,
                   fit: BoxFit.cover,
                   placeholder: (context, url) => Shimmer.fromColors(
                     baseColor: Colors.grey[800]!,
                     highlightColor: Colors.grey[700]!,
                     child: Container(
-                      width: isUpcoming ? 80 : 84,
-                      height: isUpcoming ? 80 : 84,
+                      width: viewModel.isUpcoming ? 80 : 84,
+                      height: viewModel.isUpcoming ? 80 : 84,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
@@ -80,7 +105,7 @@ class EventCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    event.title,
+                    viewModel.eventTitle,
                     style: GoogleFonts.inter(
                       color: Colors.white,
                       fontSize: 16,
@@ -102,9 +127,7 @@ class EventCard extends StatelessWidget {
                             const SizedBox(width: 4),
                             Flexible(
                               child: Text(
-                                event.settings.target?.locationDetails.target
-                                        ?.venueName ??
-                                    '',
+                                viewModel.eventLocation,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: GoogleFonts.inter(
@@ -114,7 +137,7 @@ class EventCard extends StatelessWidget {
                           ],
                         ),
                       ),
-                      if (isUpcoming) ...[
+                      if (viewModel.isUpcoming) ...[
                         const SizedBox(width: 8),
                         _buildJoinButton(),
                       ] else
@@ -156,7 +179,7 @@ class EventCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: Text(
-        '\$${event.currency}',
+        '100',
         style: GoogleFonts.inter(
           color: const Color(0xFFFF4E8D),
           fontWeight: FontWeight.bold,

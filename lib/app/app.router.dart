@@ -5,10 +5,12 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
+import 'package:flutter/foundation.dart' as _i7;
 import 'package:flutter/material.dart' as _i6;
 import 'package:stacked/stacked.dart' as _i5;
 import 'package:stacked_services/stacked_services.dart' as _i4;
 
+import '../core/models/event/event.dart' as _i8;
 import '../ui/views/event_details/event_details_view.dart' as _i3;
 import '../ui/views/home/home_view.dart' as _i1;
 import '../ui/views/startup/startup_view.dart' as _i2;
@@ -41,9 +43,13 @@ class StackedRouterWeb extends _i5.RootStackRouter {
       );
     },
     EventDetailsViewRoute.name: (routeData) {
+      final args = routeData.argsAs<EventDetailsViewArgs>();
       return _i5.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i3.EventDetailsView(),
+        child: _i3.EventDetailsView(
+          key: args.key,
+          event: args.event,
+        ),
       );
     },
   };
@@ -91,14 +97,36 @@ class StartupViewRoute extends _i5.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.EventDetailsView]
-class EventDetailsViewRoute extends _i5.PageRouteInfo<void> {
-  const EventDetailsViewRoute()
-      : super(
+class EventDetailsViewRoute extends _i5.PageRouteInfo<EventDetailsViewArgs> {
+  EventDetailsViewRoute({
+    _i7.Key? key,
+    required _i8.Event event,
+  }) : super(
           EventDetailsViewRoute.name,
           path: '/event-details-view',
+          args: EventDetailsViewArgs(
+            key: key,
+            event: event,
+          ),
         );
 
   static const String name = 'EventDetailsView';
+}
+
+class EventDetailsViewArgs {
+  const EventDetailsViewArgs({
+    this.key,
+    required this.event,
+  });
+
+  final _i7.Key? key;
+
+  final _i8.Event event;
+
+  @override
+  String toString() {
+    return 'EventDetailsViewArgs{key: $key, event: $event}';
+  }
 }
 
 extension RouterStateExtension on _i4.RouterService {
@@ -118,10 +146,16 @@ extension RouterStateExtension on _i4.RouterService {
     );
   }
 
-  Future<dynamic> navigateToEventDetailsView(
-      {void Function(_i5.NavigationFailure)? onFailure}) async {
+  Future<dynamic> navigateToEventDetailsView({
+    _i7.Key? key,
+    required _i8.Event event,
+    void Function(_i5.NavigationFailure)? onFailure,
+  }) async {
     return navigateTo(
-      const EventDetailsViewRoute(),
+      EventDetailsViewRoute(
+        key: key,
+        event: event,
+      ),
       onFailure: onFailure,
     );
   }
@@ -142,10 +176,16 @@ extension RouterStateExtension on _i4.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithEventDetailsView(
-      {void Function(_i5.NavigationFailure)? onFailure}) async {
+  Future<dynamic> replaceWithEventDetailsView({
+    _i7.Key? key,
+    required _i8.Event event,
+    void Function(_i5.NavigationFailure)? onFailure,
+  }) async {
     return replaceWith(
-      const EventDetailsViewRoute(),
+      EventDetailsViewRoute(
+        key: key,
+        event: event,
+      ),
       onFailure: onFailure,
     );
   }
