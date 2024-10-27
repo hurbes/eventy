@@ -69,7 +69,7 @@ class ShimmerPopularNowSection extends StatelessWidget {
           baseColor: Colors.grey[800]!,
           highlightColor: Colors.grey[700]!,
           child: Container(
-            height: 200,
+            height: 100,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
