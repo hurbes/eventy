@@ -1,11 +1,11 @@
 import 'package:eventy/core/models/event/event.dart';
+import 'package:eventy/ui/widgets/common/event_card/event_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_octicons/flutter_octicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eventy/ui/common/widgets/event_card.dart';
 
 import 'home_viewmodel.dart';
 import 'home_view_shimmer.dart';

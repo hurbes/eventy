@@ -87,23 +87,6 @@ class HomeViewModel extends StreamViewModel<DataState<List<Event>>>
     super.onData(data);
   }
 
-  String getEventLocation(Event event) {
-    return event.settings.target?.locationDetails.target?.venueName ?? '';
-  }
-
-  String getEventImage(Event event) {
-    if (event.images.isEmpty) return '';
-    return event.images.first.url;
-  }
-
-  String getEventDescription(Event event) {
-    return event.description;
-  }
-
-  String getEventDate(Event event) {
-    return event.startDate.toIso8601String();
-  }
-
   @override
   void onError(error) {
     logE('Error in HomeViewModel: $error');
