@@ -101,3 +101,34 @@ class PaginatedData<T> {
     );
   }
 }
+
+class PersonalDetails {
+  String? firstName;
+  String? lastName;
+  String? email;
+
+  PersonalDetails({
+    this.firstName,
+    this.lastName,
+    this.email,
+  });
+
+  bool get isValid {
+    return firstName?.isNotEmpty == true &&
+        lastName?.isNotEmpty == true &&
+        isValidEmail(email ?? '');
+  }
+
+  Map<String, String> toMap() {
+    return {
+      'firstName': firstName ?? '',
+      'lastName': lastName ?? '',
+      'email': email ?? '',
+    };
+  }
+
+  static bool isValidEmail(String email) {
+    final emailRegExp = RegExp(r'^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+');
+    return emailRegExp.hasMatch(email);
+  }
+}
