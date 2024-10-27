@@ -20,6 +20,8 @@ import 'package:eventy/ui/views/event_details/event_details_view.dart';
 import 'package:eventy/ui/views/ticket_selection/ticket_selection_view.dart';
 import 'package:eventy/core/services/order_service.dart';
 import 'package:eventy/ui/views/details_form/details_form_view.dart';
+import 'package:eventy/ui/views/map_navigation/map_navigation_view.dart';
+import 'package:eventy/ui/views/search_view/search_view_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -39,6 +41,8 @@ import 'package:eventy/ui/views/details_form/details_form_view.dart';
       transitionsBuilder: TransitionsBuilders.slideBottom,
     ),
     MaterialRoute(page: DetailsFormView),
+    MaterialRoute(page: MapNavigationView),
+    MaterialRoute(page: SearchView),
 // @stacked-route
   ],
   dependencies: [
