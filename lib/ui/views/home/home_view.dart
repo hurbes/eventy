@@ -2,6 +2,7 @@ import 'package:eventy/core/models/event/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_octicons/flutter_octicons.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 import 'package:stacked/stacked.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -12,24 +13,13 @@ class HomeView extends StackedView<HomeViewModel> {
   const HomeView({Key? key}) : super(key: key);
 
   @override
-  Widget builder(
-    BuildContext context,
-    HomeViewModel viewModel,
-    Widget? child,
-  ) {
+  Widget builder(BuildContext context, HomeViewModel viewModel, Widget? child) {
     return Scaffold(
       backgroundColor: const Color(0xff22141a),
       body: SafeArea(
         child: NotificationListener<ScrollNotification>(
-          onNotification: (ScrollNotification scrollInfo) {
-            if (scrollInfo.metrics.pixels ==
-                scrollInfo.metrics.maxScrollExtent) {
-              if (!viewModel.isBusy && viewModel.hasMoreRecommendations) {
-                viewModel.loadMoreRecommendations();
-              }
-            }
-            return true;
-          },
+          onNotification: (scrollInfo) =>
+              _handleScrollNotification(scrollInfo, viewModel),
           child: CustomScrollView(
             slivers: [
               SliverPadding(
@@ -43,13 +33,9 @@ class HomeView extends StackedView<HomeViewModel> {
                     const SizedBox(height: 20),
                     const CategorySection(),
                     const SizedBox(height: 24),
-                    viewModel.isBusy
-                        ? const ShimmerUpcomingEventsSection()
-                        : const UpcomingEventsSection(),
+                    _buildUpcomingEventsSection(viewModel),
                     const SizedBox(height: 24),
-                    viewModel.isBusy
-                        ? const ShimmerPopularNowSection()
-                        : const PopularNowSection(),
+                    _buildPopularNowSection(viewModel),
                     const SizedBox(height: 24),
                     const SectionHeader(title: 'Recommendations for you'),
                     const SizedBox(height: 16),
@@ -58,36 +44,7 @@ class HomeView extends StackedView<HomeViewModel> {
               ),
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                sliver: viewModel.isBusy
-                    ? const SliverToBoxAdapter(
-                        child: ShimmerRecommendationsSection())
-                    : SliverList(
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                            if (index < viewModel.recommendedEvents.length) {
-                              final event = viewModel.recommendedEvents[index];
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 12),
-                                child: RecommendationCard(event: event),
-                              );
-                            } else if (viewModel.hasMoreRecommendations) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 16),
-                                child: Center(
-                                  child: viewModel.isBusy
-                                      ? const CircularProgressIndicator()
-                                      : const SizedBox.shrink(),
-                                ),
-                              );
-                            } else {
-                              return const SizedBox.shrink();
-                            }
-                          },
-                          childCount: viewModel.recommendedEvents.length +
-                              (viewModel.hasMoreRecommendations ? 1 : 0),
-                        ),
-                      ),
+                sliver: _buildRecommendationsSection(viewModel),
               ),
             ],
           ),
@@ -95,6 +52,61 @@ class HomeView extends StackedView<HomeViewModel> {
       ),
       bottomNavigationBar: const BottomNavBar(),
     );
+  }
+
+  bool _handleScrollNotification(
+      ScrollNotification scrollInfo, HomeViewModel viewModel) {
+    if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
+      if (!viewModel.isBusy && viewModel.hasMoreRecommendations) {
+        viewModel.loadMoreRecommendations();
+      }
+    }
+    return true;
+  }
+
+  Widget _buildUpcomingEventsSection(HomeViewModel viewModel) {
+    return viewModel.isBusy
+        ? const ShimmerUpcomingEventsSection()
+        : const UpcomingEventsSection();
+  }
+
+  Widget _buildPopularNowSection(HomeViewModel viewModel) {
+    return viewModel.isBusy
+        ? const ShimmerPopularNowSection()
+        : const PopularNowSection();
+  }
+
+  Widget _buildRecommendationsSection(HomeViewModel viewModel) {
+    return viewModel.isBusy
+        ? const SliverToBoxAdapter(child: ShimmerRecommendationsSection())
+        : SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => _buildRecommendationItem(viewModel, index),
+              childCount: viewModel.recommendedEvents.length +
+                  (viewModel.hasMoreRecommendations ? 1 : 0),
+            ),
+          );
+  }
+
+  Widget _buildRecommendationItem(HomeViewModel viewModel, int index) {
+    if (index < viewModel.recommendedEvents.length) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 12),
+        child: RecommendationCard(event: viewModel.recommendedEvents[index]),
+      );
+    } else if (viewModel.hasMoreRecommendations) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
+        child: Lottie.asset(
+          'assets/animations/loader.json',
+          height: 50,
+          width: 50,
+          fit: BoxFit.contain,
+        ),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 
   @override
@@ -144,16 +156,25 @@ class HeaderSection extends StatelessWidget {
             ),
           ],
         ),
-        Container(
-          alignment: Alignment.center,
-          padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.05),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: const Icon(OctIcons.bell_16, color: Colors.white, size: 20),
-        ),
+        NotificationButton(),
       ],
+    );
+  }
+}
+
+class NotificationButton extends StatelessWidget {
+  const NotificationButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.fromLTRB(12, 8, 12, 12),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: const Icon(OctIcons.bell_16, color: Colors.white, size: 20),
     );
   }
 }
@@ -280,8 +301,8 @@ class UpcomingEventsSection extends ViewModelWidget<HomeViewModel> {
           child: GridView.builder(
             scrollDirection: Axis.horizontal,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Two items per column
-              childAspectRatio: .3, // Aspect ratio for square items
+              crossAxisCount: 2,
+              childAspectRatio: .3,
               crossAxisSpacing: 16,
             ),
             itemCount: viewModel.upcomingEvents.length,
@@ -346,49 +367,58 @@ class UpcomingEventCard extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(OctIcons.location_16,
-                            size: 16, color: Colors.grey),
-                        const SizedBox(width: 4),
-                        SizedBox(
-                          width: 150,
-                          child: Text(
-                            event.settings.target?.locationDetails.target
-                                    ?.venueName ??
-                                '',
-                            maxLines: 1,
-                            overflow: TextOverflow.visible,
-                            style: GoogleFonts.inter(
-                                color: Colors.grey, fontSize: 14),
+                    Expanded(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(OctIcons.location_16,
+                              size: 16, color: Colors.grey),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              event.settings.target?.locationDetails.target
+                                      ?.venueName ??
+                                  '',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.inter(
+                                  color: Colors.grey, fontSize: 14),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFF4E8D),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Text(
-                        'Join',
-                        style: GoogleFonts.inter(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
+                        ],
                       ),
                     ),
+                    const SizedBox(width: 8),
+                    JoinButton(),
                   ],
                 ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class JoinButton extends StatelessWidget {
+  const JoinButton({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFF4E8D),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        'Join',
+        style: GoogleFonts.inter(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 14,
+        ),
       ),
     );
   }
@@ -618,13 +648,13 @@ class SectionHeader extends StatelessWidget {
   }
 }
 
-class RecommendationCard extends StatelessWidget {
+class RecommendationCard extends ViewModelWidget<HomeViewModel> {
   final Event event;
 
   const RecommendationCard({Key? key, required this.event}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, HomeViewModel viewModel) {
     return Container(
       height: 100,
       decoration: BoxDecoration(
@@ -638,12 +668,18 @@ class RecommendationCard extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: CachedNetworkImage(
-                imageUrl: 'https://picsum.photos/200/300',
+                imageUrl: viewModel.getEventImage(event),
                 width: 84,
                 height: 84,
                 fit: BoxFit.cover,
+                errorListener: (value) {},
                 placeholder: (context, url) => ShimmerRecommendationCard(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                errorWidget: (context, url, error) => CachedNetworkImage(
+                  imageUrl: 'https://picsum.photos/200/300',
+                  width: 84,
+                  height: 84,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -670,19 +706,16 @@ class RecommendationCard extends StatelessWidget {
                       const Icon(OctIcons.location_16,
                           size: 16, color: Colors.grey),
                       const SizedBox(width: 4),
-                      SizedBox(
-                        width: 150,
+                      Expanded(
                         child: Text(
-                          event.settings.target?.locationDetails.target
-                                  ?.venueName ??
-                              '',
+                          viewModel.getEventLocation(event),
                           maxLines: 1,
-                          overflow: TextOverflow.visible,
+                          overflow: TextOverflow.ellipsis,
                           style: GoogleFonts.inter(
                               color: Colors.grey, fontSize: 14),
                         ),
                       ),
-                      const Spacer(),
+                      const SizedBox(width: 8),
                       Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 8, vertical: 4),
