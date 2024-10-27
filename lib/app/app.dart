@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:eventy/core/interfaces/i_api_service.dart';
 import 'package:eventy/core/interfaces/i_database_service.dart';
+import 'package:eventy/core/models/event/event.dart';
+import 'package:eventy/core/repository/app_repository.dart';
+import 'package:eventy/core/repository/event_repository.dart';
 import 'package:eventy/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:eventy/ui/dialogs/info_alert/info_alert_dialog.dart';
 import 'package:eventy/ui/views/home/home_view.dart';
@@ -38,6 +41,7 @@ import 'package:eventy/core/services/dio_service.dart';
     InitializableSingleton(classType: ObjectboxService),
     LazySingleton(
         classType: DioService, resolveUsing: DioService.init, asType: Dio),
+    LazySingleton(classType: EventRepository, asType: Repository<Event>),
 // @stacked-service
   ],
   bottomsheets: [

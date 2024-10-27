@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:eventy/core/models/data_state/data_set.dart';
 
 abstract class IRepository<T> {
   // Core functions for repository
-  Stream<DataState<List<T>>> fetchAll({
+
+  Stream<DataState<List<T>>> get dataStream;
+
+  Future<void> fetchAll({
     PaginatedOption? paginatedOptions,
     required String endpoint,
     Map<String, dynamic>? queryParams,
