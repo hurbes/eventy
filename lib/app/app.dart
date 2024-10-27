@@ -17,6 +17,9 @@ import 'package:eventy/core/services/database_service.dart';
 import 'package:eventy/core/services/objectbox_service.dart';
 import 'package:eventy/core/services/dio_service.dart';
 import 'package:eventy/ui/views/event_details/event_details_view.dart';
+import 'package:eventy/ui/views/ticket_selection/ticket_selection_view.dart';
+import 'package:eventy/core/services/order_service.dart';
+import 'package:eventy/ui/views/details_form/details_form_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -31,6 +34,11 @@ import 'package:eventy/ui/views/event_details/event_details_view.dart';
       transitionsBuilder: TransitionsBuilders.fadeIn,
     ),
     MaterialRoute(page: EventDetailsView),
+    CustomRoute(
+      page: TicketSelectionView,
+      transitionsBuilder: TransitionsBuilders.slideBottom,
+    ),
+    MaterialRoute(page: DetailsFormView),
 // @stacked-route
   ],
   dependencies: [
@@ -44,6 +52,7 @@ import 'package:eventy/ui/views/event_details/event_details_view.dart';
     LazySingleton(
         classType: DioService, resolveUsing: DioService.init, asType: Dio),
     LazySingleton(classType: EventRepository, asType: Repository<Event>),
+    LazySingleton(classType: OrderService),
 // @stacked-service
   ],
   bottomsheets: [
