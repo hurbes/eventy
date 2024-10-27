@@ -166,6 +166,11 @@
           "id": "1:515576437394905215",
           "name": "images",
           "targetId": "4:7562423902453322177"
+        },
+        {
+          "id": "5:2111035307468602959",
+          "name": "tickets",
+          "targetId": "12:3361063440599023220"
         }
       ]
     },
@@ -674,11 +679,195 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "12:3361063440599023220",
+      "lastPropertyId": "16:5767843473786288769",
+      "name": "Ticket",
+      "properties": [
+        {
+          "id": "1:2139809133449553096",
+          "name": "objId",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:4929718348661318091",
+          "name": "id",
+          "type": 6
+        },
+        {
+          "id": "3:5290623083594660400",
+          "name": "title",
+          "type": 9
+        },
+        {
+          "id": "4:205595219539729992",
+          "name": "type",
+          "type": 9
+        },
+        {
+          "id": "5:2351819754740568480",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "6:2861363998244511437",
+          "name": "maxPerOrder",
+          "type": 6
+        },
+        {
+          "id": "7:2461299595507731822",
+          "name": "minPerOrder",
+          "type": 6
+        },
+        {
+          "id": "8:8102328912233820949",
+          "name": "saleStartDate",
+          "type": 12
+        },
+        {
+          "id": "9:6068008266873906401",
+          "name": "saleEndDate",
+          "type": 12
+        },
+        {
+          "id": "10:5571616562138433161",
+          "name": "eventId",
+          "type": 6
+        },
+        {
+          "id": "11:3546994262305574512",
+          "name": "isBeforeSaleStartDate",
+          "type": 1
+        },
+        {
+          "id": "12:214200492901788912",
+          "name": "isAfterSaleEndDate",
+          "type": 1
+        },
+        {
+          "id": "13:1086619985057026505",
+          "name": "quantityAvailable",
+          "type": 6
+        },
+        {
+          "id": "14:5580291711497727534",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "15:3057239627746289131",
+          "name": "isAvailable",
+          "type": 1
+        },
+        {
+          "id": "16:5767843473786288769",
+          "name": "isSoldOut",
+          "type": 1
+        }
+      ],
+      "relations": [
+        {
+          "id": "4:5857954840408047277",
+          "name": "prices",
+          "targetId": "13:799067579399403885"
+        }
+      ]
+    },
+    {
+      "id": "13:799067579399403885",
+      "lastPropertyId": "16:1435773152165124100",
+      "name": "TicketPrice",
+      "properties": [
+        {
+          "id": "1:4707503047477079274",
+          "name": "objId",
+          "type": 6,
+          "flags": 129
+        },
+        {
+          "id": "2:2723124642311002689",
+          "name": "id",
+          "type": 6
+        },
+        {
+          "id": "3:4712909740479518579",
+          "name": "label",
+          "type": 9
+        },
+        {
+          "id": "4:359588582104431674",
+          "name": "price",
+          "type": 8
+        },
+        {
+          "id": "5:8256978274880165248",
+          "name": "saleStartDate",
+          "type": 12
+        },
+        {
+          "id": "6:512181437394372820",
+          "name": "saleEndDate",
+          "type": 12
+        },
+        {
+          "id": "7:6964957283742571884",
+          "name": "priceIncludingTaxesAndFees",
+          "type": 8
+        },
+        {
+          "id": "8:5789689339554339387",
+          "name": "priceBeforeDiscount",
+          "type": 8
+        },
+        {
+          "id": "9:4807942621373375517",
+          "name": "isDiscounted",
+          "type": 1
+        },
+        {
+          "id": "10:1374836246624856561",
+          "name": "taxTotal",
+          "type": 8
+        },
+        {
+          "id": "11:9012351717138883537",
+          "name": "feeTotal",
+          "type": 8
+        },
+        {
+          "id": "12:5758966580938900618",
+          "name": "isBeforeSaleStartDate",
+          "type": 1
+        },
+        {
+          "id": "13:5900005722219907436",
+          "name": "isAfterSaleEndDate",
+          "type": 1
+        },
+        {
+          "id": "14:234998090110260020",
+          "name": "isAvailable",
+          "type": 1
+        },
+        {
+          "id": "15:4336760304103119449",
+          "name": "isSoldOut",
+          "type": 1
+        },
+        {
+          "id": "16:1435773152165124100",
+          "name": "quantityRemaining",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "11:3799377972835643350",
+  "lastEntityId": "13:799067579399403885",
   "lastIndexId": "10:8443405537350574685",
-  "lastRelationId": "3:8037609308355931107",
+  "lastRelationId": "5:2111035307468602959",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

@@ -175,7 +175,11 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelRelation(
             id: const obx_int.IdUid(1, 515576437394905215),
             name: 'images',
-            targetId: const obx_int.IdUid(4, 7562423902453322177))
+            targetId: const obx_int.IdUid(4, 7562423902453322177)),
+        obx_int.ModelRelation(
+            id: const obx_int.IdUid(5, 2111035307468602959),
+            name: 'tickets',
+            targetId: const obx_int.IdUid(12, 3361063440599023220))
       ],
       backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
@@ -677,6 +681,189 @@ final _entities = <obx_int.ModelEntity>[
             flags: 129)
       ],
       relations: <obx_int.ModelRelation>[],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(12, 3361063440599023220),
+      name: 'Ticket',
+      lastPropertyId: const obx_int.IdUid(16, 5767843473786288769),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 2139809133449553096),
+            name: 'objId',
+            type: 6,
+            flags: 129),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 4929718348661318091),
+            name: 'id',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 5290623083594660400),
+            name: 'title',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 205595219539729992),
+            name: 'type',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 2351819754740568480),
+            name: 'description',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 2861363998244511437),
+            name: 'maxPerOrder',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 2461299595507731822),
+            name: 'minPerOrder',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 8102328912233820949),
+            name: 'saleStartDate',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 6068008266873906401),
+            name: 'saleEndDate',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 5571616562138433161),
+            name: 'eventId',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 3546994262305574512),
+            name: 'isBeforeSaleStartDate',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 214200492901788912),
+            name: 'isAfterSaleEndDate',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 1086619985057026505),
+            name: 'quantityAvailable',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 5580291711497727534),
+            name: 'price',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 3057239627746289131),
+            name: 'isAvailable',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 5767843473786288769),
+            name: 'isSoldOut',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[
+        obx_int.ModelRelation(
+            id: const obx_int.IdUid(4, 5857954840408047277),
+            name: 'prices',
+            targetId: const obx_int.IdUid(13, 799067579399403885))
+      ],
+      backlinks: <obx_int.ModelBacklink>[]),
+  obx_int.ModelEntity(
+      id: const obx_int.IdUid(13, 799067579399403885),
+      name: 'TicketPrice',
+      lastPropertyId: const obx_int.IdUid(16, 1435773152165124100),
+      flags: 0,
+      properties: <obx_int.ModelProperty>[
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(1, 4707503047477079274),
+            name: 'objId',
+            type: 6,
+            flags: 129),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(2, 2723124642311002689),
+            name: 'id',
+            type: 6,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(3, 4712909740479518579),
+            name: 'label',
+            type: 9,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(4, 359588582104431674),
+            name: 'price',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(5, 8256978274880165248),
+            name: 'saleStartDate',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(6, 512181437394372820),
+            name: 'saleEndDate',
+            type: 12,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(7, 6964957283742571884),
+            name: 'priceIncludingTaxesAndFees',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(8, 5789689339554339387),
+            name: 'priceBeforeDiscount',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(9, 4807942621373375517),
+            name: 'isDiscounted',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(10, 1374836246624856561),
+            name: 'taxTotal',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(11, 9012351717138883537),
+            name: 'feeTotal',
+            type: 8,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(12, 5758966580938900618),
+            name: 'isBeforeSaleStartDate',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(13, 5900005722219907436),
+            name: 'isAfterSaleEndDate',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(14, 234998090110260020),
+            name: 'isAvailable',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(15, 4336760304103119449),
+            name: 'isSoldOut',
+            type: 1,
+            flags: 0),
+        obx_int.ModelProperty(
+            id: const obx_int.IdUid(16, 1435773152165124100),
+            name: 'quantityRemaining',
+            type: 6,
+            flags: 0)
+      ],
+      relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[])
 ];
 
@@ -715,9 +902,9 @@ Future<obx.Store> openStore(
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
       entities: _entities,
-      lastEntityId: const obx_int.IdUid(11, 3799377972835643350),
+      lastEntityId: const obx_int.IdUid(13, 799067579399403885),
       lastIndexId: const obx_int.IdUid(10, 8443405537350574685),
-      lastRelationId: const obx_int.IdUid(3, 8037609308355931107),
+      lastRelationId: const obx_int.IdUid(5, 2111035307468602959),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
       retiredIndexUids: const [],
@@ -822,8 +1009,10 @@ obx_int.ModelDefinition getObjectBoxModel() {
     Event: obx_int.EntityDefinition<Event>(
         model: _entities[2],
         toOneRelations: (Event object) => [object.settings, object.organizer],
-        toManyRelations: (Event object) =>
-            {obx_int.RelInfo<Event>.toMany(1, object.objId!): object.images},
+        toManyRelations: (Event object) => {
+              obx_int.RelInfo<Event>.toMany(1, object.objId!): object.images,
+              obx_int.RelInfo<Event>.toMany(5, object.objId!): object.tickets
+            },
         getId: (Event object) => object.objId,
         setId: (Event object, int id) {
           object.objId = id;
@@ -891,6 +1080,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
           final organizerParam = obx.ToOne<Organizer>(
               targetId:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0));
+          final ticketsParam = obx.ToMany<Ticket>();
           final object = Event(
               objId: objIdParam,
               id: idParam,
@@ -905,11 +1095,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
               slug: slugParam,
               images: imagesParam,
               settings: settingsParam,
-              organizer: organizerParam);
+              organizer: organizerParam,
+              tickets: ticketsParam);
           object.settings.attach(store);
           object.organizer.attach(store);
           obx_int.InternalToManyAccess.setRelInfo<Event>(object.images, store,
               obx_int.RelInfo<Event>.toMany(1, object.objId!));
+          obx_int.InternalToManyAccess.setRelInfo<Event>(object.tickets, store,
+              obx_int.RelInfo<Event>.toMany(5, object.objId!));
           return object;
         }),
     EventImage: obx_int.EntityDefinition<EventImage>(
@@ -1537,6 +1730,220 @@ obx_int.ModelDefinition getObjectBoxModel() {
               hideGettingStartedPage: hideGettingStartedPageParam);
           object.locationDetails.attach(store);
           return object;
+        }),
+    Ticket: obx_int.EntityDefinition<Ticket>(
+        model: _entities[11],
+        toOneRelations: (Ticket object) => [],
+        toManyRelations: (Ticket object) =>
+            {obx_int.RelInfo<Ticket>.toMany(4, object.objId!): object.prices},
+        getId: (Ticket object) => object.objId,
+        setId: (Ticket object, int id) {
+          object.objId = id;
+        },
+        objectToFB: (Ticket object, fb.Builder fbb) {
+          final titleOffset =
+              object.title == null ? null : fbb.writeString(object.title!);
+          final typeOffset =
+              object.type == null ? null : fbb.writeString(object.type!);
+          final descriptionOffset = object.description == null
+              ? null
+              : fbb.writeString(object.description!);
+          fbb.startTable(17);
+          fbb.addInt64(0, object.objId ?? 0);
+          fbb.addInt64(1, object.id);
+          fbb.addOffset(2, titleOffset);
+          fbb.addOffset(3, typeOffset);
+          fbb.addOffset(4, descriptionOffset);
+          fbb.addInt64(5, object.maxPerOrder);
+          fbb.addInt64(6, object.minPerOrder);
+          fbb.addInt64(
+              7,
+              object.saleStartDate == null
+                  ? null
+                  : object.saleStartDate!.microsecondsSinceEpoch * 1000);
+          fbb.addInt64(
+              8,
+              object.saleEndDate == null
+                  ? null
+                  : object.saleEndDate!.microsecondsSinceEpoch * 1000);
+          fbb.addInt64(9, object.eventId);
+          fbb.addBool(10, object.isBeforeSaleStartDate);
+          fbb.addBool(11, object.isAfterSaleEndDate);
+          fbb.addInt64(12, object.quantityAvailable);
+          fbb.addFloat64(13, object.price);
+          fbb.addBool(14, object.isAvailable);
+          fbb.addBool(15, object.isSoldOut);
+          fbb.finish(fbb.endTable());
+          return object.objId ?? 0;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final saleStartDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 18);
+          final saleEndDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 20);
+          final objIdParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
+          final idParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6);
+          final titleParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 8);
+          final typeParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 10);
+          final descriptionParam =
+              const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 12);
+          final maxPerOrderParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+          final minPerOrderParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 16);
+          final saleStartDateParam = saleStartDateValue == null
+              ? null
+              : DateTime.fromMicrosecondsSinceEpoch(
+                  (saleStartDateValue / 1000).round());
+          final saleEndDateParam = saleEndDateValue == null
+              ? null
+              : DateTime.fromMicrosecondsSinceEpoch(
+                  (saleEndDateValue / 1000).round());
+          final eventIdParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          final isBeforeSaleStartDateParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 24);
+          final isAfterSaleEndDateParam =
+              const fb.BoolReader().vTableGetNullable(buffer, rootOffset, 26);
+          final quantityAvailableParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 28);
+          final priceParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 30);
+          final pricesParam = obx.ToMany<TicketPrice>();
+          final isAvailableParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false);
+          final isSoldOutParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 34, false);
+          final object = Ticket(
+              objId: objIdParam,
+              id: idParam,
+              title: titleParam,
+              type: typeParam,
+              description: descriptionParam,
+              maxPerOrder: maxPerOrderParam,
+              minPerOrder: minPerOrderParam,
+              saleStartDate: saleStartDateParam,
+              saleEndDate: saleEndDateParam,
+              eventId: eventIdParam,
+              isBeforeSaleStartDate: isBeforeSaleStartDateParam,
+              isAfterSaleEndDate: isAfterSaleEndDateParam,
+              quantityAvailable: quantityAvailableParam,
+              price: priceParam,
+              prices: pricesParam,
+              isAvailable: isAvailableParam,
+              isSoldOut: isSoldOutParam);
+          obx_int.InternalToManyAccess.setRelInfo<Ticket>(object.prices, store,
+              obx_int.RelInfo<Ticket>.toMany(4, object.objId!));
+          return object;
+        }),
+    TicketPrice: obx_int.EntityDefinition<TicketPrice>(
+        model: _entities[12],
+        toOneRelations: (TicketPrice object) => [],
+        toManyRelations: (TicketPrice object) => {},
+        getId: (TicketPrice object) => object.objId,
+        setId: (TicketPrice object, int id) {
+          object.objId = id;
+        },
+        objectToFB: (TicketPrice object, fb.Builder fbb) {
+          final labelOffset =
+              object.label == null ? null : fbb.writeString(object.label!);
+          fbb.startTable(17);
+          fbb.addInt64(0, object.objId ?? 0);
+          fbb.addInt64(1, object.id);
+          fbb.addOffset(2, labelOffset);
+          fbb.addFloat64(3, object.price);
+          fbb.addInt64(
+              4,
+              object.saleStartDate == null
+                  ? null
+                  : object.saleStartDate!.microsecondsSinceEpoch * 1000);
+          fbb.addInt64(
+              5,
+              object.saleEndDate == null
+                  ? null
+                  : object.saleEndDate!.microsecondsSinceEpoch * 1000);
+          fbb.addFloat64(6, object.priceIncludingTaxesAndFees);
+          fbb.addFloat64(7, object.priceBeforeDiscount);
+          fbb.addBool(8, object.isDiscounted);
+          fbb.addFloat64(9, object.taxTotal);
+          fbb.addFloat64(10, object.feeTotal);
+          fbb.addBool(11, object.isBeforeSaleStartDate);
+          fbb.addBool(12, object.isAfterSaleEndDate);
+          fbb.addBool(13, object.isAvailable);
+          fbb.addBool(14, object.isSoldOut);
+          fbb.addInt64(15, object.quantityRemaining);
+          fbb.finish(fbb.endTable());
+          return object.objId ?? 0;
+        },
+        objectFromFB: (obx.Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+          final saleStartDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 12);
+          final saleEndDateValue =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 14);
+          final objIdParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 4);
+          final idParam =
+              const fb.Int64Reader().vTableGetNullable(buffer, rootOffset, 6);
+          final labelParam = const fb.StringReader(asciiOptimization: true)
+              .vTableGetNullable(buffer, rootOffset, 8);
+          final priceParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0);
+          final saleStartDateParam = saleStartDateValue == null
+              ? null
+              : DateTime.fromMicrosecondsSinceEpoch(
+                  (saleStartDateValue / 1000).round());
+          final saleEndDateParam = saleEndDateValue == null
+              ? null
+              : DateTime.fromMicrosecondsSinceEpoch(
+                  (saleEndDateValue / 1000).round());
+          final priceIncludingTaxesAndFeesParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 16);
+          final priceBeforeDiscountParam = const fb.Float64Reader()
+              .vTableGetNullable(buffer, rootOffset, 18);
+          final isDiscountedParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 20, false);
+          final taxTotalParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 22, 0);
+          final feeTotalParam =
+              const fb.Float64Reader().vTableGet(buffer, rootOffset, 24, 0);
+          final isBeforeSaleStartDateParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 26, false);
+          final isAfterSaleEndDateParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 28, false);
+          final isAvailableParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 30, false);
+          final isSoldOutParam =
+              const fb.BoolReader().vTableGet(buffer, rootOffset, 32, false);
+          final quantityRemainingParam =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
+          final object = TicketPrice(
+              objId: objIdParam,
+              id: idParam,
+              label: labelParam,
+              price: priceParam,
+              saleStartDate: saleStartDateParam,
+              saleEndDate: saleEndDateParam,
+              priceIncludingTaxesAndFees: priceIncludingTaxesAndFeesParam,
+              priceBeforeDiscount: priceBeforeDiscountParam,
+              isDiscounted: isDiscountedParam,
+              taxTotal: taxTotalParam,
+              feeTotal: feeTotalParam,
+              isBeforeSaleStartDate: isBeforeSaleStartDateParam,
+              isAfterSaleEndDate: isAfterSaleEndDateParam,
+              isAvailable: isAvailableParam,
+              isSoldOut: isSoldOutParam,
+              quantityRemaining: quantityRemainingParam);
+
+          return object;
         })
   };
 
@@ -1645,6 +2052,10 @@ class Event_ {
   /// see [Event.images]
   static final images =
       obx.QueryRelationToMany<Event, EventImage>(_entities[2].relations[0]);
+
+  /// see [Event.tickets]
+  static final tickets =
+      obx.QueryRelationToMany<Event, Ticket>(_entities[2].relations[1]);
 }
 
 /// [EventImage] entity fields to define ObjectBox queries.
@@ -2000,4 +2411,142 @@ class Settings_ {
   /// See [Settings.objId].
   static final objId =
       obx.QueryIntegerProperty<Settings>(_entities[10].properties[28]);
+}
+
+/// [Ticket] entity fields to define ObjectBox queries.
+class Ticket_ {
+  /// See [Ticket.objId].
+  static final objId =
+      obx.QueryIntegerProperty<Ticket>(_entities[11].properties[0]);
+
+  /// See [Ticket.id].
+  static final id =
+      obx.QueryIntegerProperty<Ticket>(_entities[11].properties[1]);
+
+  /// See [Ticket.title].
+  static final title =
+      obx.QueryStringProperty<Ticket>(_entities[11].properties[2]);
+
+  /// See [Ticket.type].
+  static final type =
+      obx.QueryStringProperty<Ticket>(_entities[11].properties[3]);
+
+  /// See [Ticket.description].
+  static final description =
+      obx.QueryStringProperty<Ticket>(_entities[11].properties[4]);
+
+  /// See [Ticket.maxPerOrder].
+  static final maxPerOrder =
+      obx.QueryIntegerProperty<Ticket>(_entities[11].properties[5]);
+
+  /// See [Ticket.minPerOrder].
+  static final minPerOrder =
+      obx.QueryIntegerProperty<Ticket>(_entities[11].properties[6]);
+
+  /// See [Ticket.saleStartDate].
+  static final saleStartDate =
+      obx.QueryDateNanoProperty<Ticket>(_entities[11].properties[7]);
+
+  /// See [Ticket.saleEndDate].
+  static final saleEndDate =
+      obx.QueryDateNanoProperty<Ticket>(_entities[11].properties[8]);
+
+  /// See [Ticket.eventId].
+  static final eventId =
+      obx.QueryIntegerProperty<Ticket>(_entities[11].properties[9]);
+
+  /// See [Ticket.isBeforeSaleStartDate].
+  static final isBeforeSaleStartDate =
+      obx.QueryBooleanProperty<Ticket>(_entities[11].properties[10]);
+
+  /// See [Ticket.isAfterSaleEndDate].
+  static final isAfterSaleEndDate =
+      obx.QueryBooleanProperty<Ticket>(_entities[11].properties[11]);
+
+  /// See [Ticket.quantityAvailable].
+  static final quantityAvailable =
+      obx.QueryIntegerProperty<Ticket>(_entities[11].properties[12]);
+
+  /// See [Ticket.price].
+  static final price =
+      obx.QueryDoubleProperty<Ticket>(_entities[11].properties[13]);
+
+  /// See [Ticket.isAvailable].
+  static final isAvailable =
+      obx.QueryBooleanProperty<Ticket>(_entities[11].properties[14]);
+
+  /// See [Ticket.isSoldOut].
+  static final isSoldOut =
+      obx.QueryBooleanProperty<Ticket>(_entities[11].properties[15]);
+
+  /// see [Ticket.prices]
+  static final prices =
+      obx.QueryRelationToMany<Ticket, TicketPrice>(_entities[11].relations[0]);
+}
+
+/// [TicketPrice] entity fields to define ObjectBox queries.
+class TicketPrice_ {
+  /// See [TicketPrice.objId].
+  static final objId =
+      obx.QueryIntegerProperty<TicketPrice>(_entities[12].properties[0]);
+
+  /// See [TicketPrice.id].
+  static final id =
+      obx.QueryIntegerProperty<TicketPrice>(_entities[12].properties[1]);
+
+  /// See [TicketPrice.label].
+  static final label =
+      obx.QueryStringProperty<TicketPrice>(_entities[12].properties[2]);
+
+  /// See [TicketPrice.price].
+  static final price =
+      obx.QueryDoubleProperty<TicketPrice>(_entities[12].properties[3]);
+
+  /// See [TicketPrice.saleStartDate].
+  static final saleStartDate =
+      obx.QueryDateNanoProperty<TicketPrice>(_entities[12].properties[4]);
+
+  /// See [TicketPrice.saleEndDate].
+  static final saleEndDate =
+      obx.QueryDateNanoProperty<TicketPrice>(_entities[12].properties[5]);
+
+  /// See [TicketPrice.priceIncludingTaxesAndFees].
+  static final priceIncludingTaxesAndFees =
+      obx.QueryDoubleProperty<TicketPrice>(_entities[12].properties[6]);
+
+  /// See [TicketPrice.priceBeforeDiscount].
+  static final priceBeforeDiscount =
+      obx.QueryDoubleProperty<TicketPrice>(_entities[12].properties[7]);
+
+  /// See [TicketPrice.isDiscounted].
+  static final isDiscounted =
+      obx.QueryBooleanProperty<TicketPrice>(_entities[12].properties[8]);
+
+  /// See [TicketPrice.taxTotal].
+  static final taxTotal =
+      obx.QueryDoubleProperty<TicketPrice>(_entities[12].properties[9]);
+
+  /// See [TicketPrice.feeTotal].
+  static final feeTotal =
+      obx.QueryDoubleProperty<TicketPrice>(_entities[12].properties[10]);
+
+  /// See [TicketPrice.isBeforeSaleStartDate].
+  static final isBeforeSaleStartDate =
+      obx.QueryBooleanProperty<TicketPrice>(_entities[12].properties[11]);
+
+  /// See [TicketPrice.isAfterSaleEndDate].
+  static final isAfterSaleEndDate =
+      obx.QueryBooleanProperty<TicketPrice>(_entities[12].properties[12]);
+
+  /// See [TicketPrice.isAvailable].
+  static final isAvailable =
+      obx.QueryBooleanProperty<TicketPrice>(_entities[12].properties[13]);
+
+  /// See [TicketPrice.isSoldOut].
+  static final isSoldOut =
+      obx.QueryBooleanProperty<TicketPrice>(_entities[12].properties[14]);
+
+  /// See [TicketPrice.quantityRemaining].
+  static final quantityRemaining =
+      obx.QueryIntegerProperty<TicketPrice>(_entities[12].properties[15]);
 }

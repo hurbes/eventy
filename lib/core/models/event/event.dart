@@ -9,21 +9,22 @@ part 'event.g.dart';
 @Entity()
 @JsonSerializable()
 class EventResponse extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "data")
+  @JsonKey(name: "data", includeIfNull: false)
   @_EventRelToManyConverter()
   ToMany<Event> data;
 
-  @JsonKey(name: "links")
+  @JsonKey(name: "links", includeIfNull: false)
   @_LinksRelToOneConverter()
   ToOne<Links> links;
 
-  @JsonKey(name: "meta")
+  @JsonKey(name: "meta", includeIfNull: false)
   @_MetaRelToOneConverter()
   ToOne<Meta> meta;
 
@@ -47,50 +48,55 @@ class EventResponse extends Equatable {
 @Entity()
 @JsonSerializable()
 class Event extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "title")
+  @JsonKey(name: "title", defaultValue: "", includeIfNull: false)
   String title;
 
-  @JsonKey(name: "description")
+  @JsonKey(name: "description", defaultValue: "", includeIfNull: false)
   String description;
 
-  @JsonKey(name: "start_date")
+  @JsonKey(name: "start_date", includeIfNull: false)
   @Property(type: PropertyType.dateNano)
   DateTime startDate;
 
-  @JsonKey(name: "end_date")
+  @JsonKey(name: "end_date", includeIfNull: false)
   @Property(type: PropertyType.dateNano)
   DateTime endDate;
 
-  @JsonKey(name: "status")
+  @JsonKey(name: "status", defaultValue: "", includeIfNull: false)
   String status;
 
-  @JsonKey(name: "lifecycle_status")
+  @JsonKey(name: "lifecycle_status", defaultValue: "", includeIfNull: false)
   String lifecycleStatus;
 
-  @JsonKey(name: "currency")
+  @JsonKey(name: "currency", defaultValue: "", includeIfNull: false)
   String currency;
 
-  @JsonKey(name: "timezone")
+  @JsonKey(name: "timezone", defaultValue: "", includeIfNull: false)
   String timezone;
 
-  @JsonKey(name: "slug")
+  @JsonKey(name: "slug", defaultValue: "", includeIfNull: false)
   String slug;
 
-  @JsonKey(name: "images")
+  @JsonKey(name: "images", includeIfNull: false)
   @_ImageRelToManyConverter()
   ToMany<EventImage> images;
 
-  @JsonKey(name: "settings")
+  @JsonKey(name: "tickets", includeIfNull: false)
+  @_TicketRelToManyConverter()
+  ToMany<Ticket> tickets;
+
+  @JsonKey(name: "settings", includeIfNull: false)
   @_SettingsRelToOneConverter()
   ToOne<Settings> settings;
 
-  @JsonKey(name: "organizer")
+  @JsonKey(name: "organizer", includeIfNull: false)
   @_OrganizerRelToOneConverter()
   ToOne<Organizer> organizer;
 
@@ -109,6 +115,7 @@ class Event extends Equatable {
     required this.images,
     required this.settings,
     required this.organizer,
+    required this.tickets,
   });
 
   factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
@@ -137,25 +144,26 @@ class Event extends Equatable {
 @Entity()
 @JsonSerializable()
 class EventImage extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "url")
+  @JsonKey(name: "url", defaultValue: "", includeIfNull: false)
   String url;
 
-  @JsonKey(name: "size")
+  @JsonKey(name: "size", defaultValue: 0, includeIfNull: false)
   int size;
 
-  @JsonKey(name: "file_name")
+  @JsonKey(name: "file_name", defaultValue: "", includeIfNull: false)
   String fileName;
 
-  @JsonKey(name: "mime_type")
+  @JsonKey(name: "mime_type", defaultValue: "", includeIfNull: false)
   String mimeType;
 
-  @JsonKey(name: "type")
+  @JsonKey(name: "type", defaultValue: "", includeIfNull: false)
   String type;
 
   EventImage({
@@ -180,31 +188,32 @@ class EventImage extends Equatable {
 @Entity()
 @JsonSerializable()
 class Organizer extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "name")
+  @JsonKey(name: "name", defaultValue: "", includeIfNull: false)
   String name;
 
-  @JsonKey(name: "email")
+  @JsonKey(name: "email", defaultValue: "", includeIfNull: false)
   String email;
 
-  @JsonKey(name: "phone")
+  @JsonKey(name: "phone", defaultValue: "", includeIfNull: false)
   String? phone;
 
-  @JsonKey(name: "website")
+  @JsonKey(name: "website", defaultValue: "", includeIfNull: false)
   String? website;
 
-  @JsonKey(name: "description")
+  @JsonKey(name: "description", defaultValue: "", includeIfNull: false)
   String? description;
 
-  @JsonKey(name: "timezone")
+  @JsonKey(name: "timezone", defaultValue: "", includeIfNull: false)
   String timezone;
 
-  @JsonKey(name: "currency")
+  @JsonKey(name: "currency", defaultValue: "", includeIfNull: false)
   String currency;
 
   Organizer({
@@ -241,92 +250,132 @@ class Organizer extends Equatable {
 @Entity()
 @JsonSerializable()
 class Settings extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "pre_checkout_message")
+  @JsonKey(name: "pre_checkout_message", defaultValue: "", includeIfNull: false)
   String? preCheckoutMessage;
 
-  @JsonKey(name: "post_checkout_message")
+  @JsonKey(
+      name: "post_checkout_message", defaultValue: "", includeIfNull: false)
   String? postCheckoutMessage;
 
-  @JsonKey(name: "ticket_page_message")
+  @JsonKey(name: "ticket_page_message", defaultValue: "", includeIfNull: false)
   String? ticketPageMessage;
 
-  @JsonKey(name: "continue_button_text")
+  @JsonKey(name: "continue_button_text", defaultValue: "", includeIfNull: false)
   String? continueButtonText;
 
-  @JsonKey(name: "required_attendee_details")
+  @JsonKey(
+      name: "required_attendee_details",
+      defaultValue: false,
+      includeIfNull: false)
   bool requiredAttendeeDetails;
 
-  @JsonKey(name: "email_footer_message")
+  @JsonKey(name: "email_footer_message", defaultValue: "", includeIfNull: false)
   String? emailFooterMessage;
 
-  @JsonKey(name: "support_email")
+  @JsonKey(name: "support_email", defaultValue: "", includeIfNull: false)
   String? supportEmail;
 
-  @JsonKey(name: "order_timeout_in_minutes")
+  @JsonKey(
+      name: "order_timeout_in_minutes", defaultValue: 30, includeIfNull: false)
   int orderTimeoutInMinutes;
 
-  @JsonKey(name: "homepage_body_background_color")
+  @JsonKey(
+      name: "homepage_body_background_color",
+      defaultValue: "#FFFFFF",
+      includeIfNull: false)
   String homepageBodyBackgroundColor;
 
-  @JsonKey(name: "homepage_background_color")
+  @JsonKey(
+      name: "homepage_background_color",
+      defaultValue: "#FFFFFF",
+      includeIfNull: false)
   String homepageBackgroundColor;
 
-  @JsonKey(name: "homepage_primary_color")
+  @JsonKey(
+      name: "homepage_primary_color",
+      defaultValue: "#000000",
+      includeIfNull: false)
   String homepagePrimaryColor;
 
-  @JsonKey(name: "homepage_primary_text_color")
+  @JsonKey(
+      name: "homepage_primary_text_color",
+      defaultValue: "#FFFFFF",
+      includeIfNull: false)
   String homepagePrimaryTextColor;
 
-  @JsonKey(name: "homepage_secondary_color")
+  @JsonKey(
+      name: "homepage_secondary_color",
+      defaultValue: "#FFFFFF",
+      includeIfNull: false)
   String homepageSecondaryColor;
 
-  @JsonKey(name: "homepage_secondary_text_color")
+  @JsonKey(
+      name: "homepage_secondary_text_color",
+      defaultValue: "#000000",
+      includeIfNull: false)
   String homepageSecondaryTextColor;
 
-  @JsonKey(name: "homepage_background_type")
+  @JsonKey(
+      name: "homepage_background_type",
+      defaultValue: "color",
+      includeIfNull: false)
   String homepageBackgroundType;
 
-  @JsonKey(name: "website_url")
+  @JsonKey(name: "website_url", defaultValue: "", includeIfNull: false)
   String? websiteUrl;
 
-  @JsonKey(name: "maps_url")
+  @JsonKey(name: "maps_url", defaultValue: "", includeIfNull: false)
   String? mapsUrl;
 
-  @JsonKey(name: "location_details")
+  @JsonKey(name: "location_details", includeIfNull: false)
   @_LocationDetailsRelToOneConverter()
   ToOne<LocationDetails> locationDetails;
 
-  @JsonKey(name: "is_online_event")
+  @JsonKey(name: "is_online_event", defaultValue: false, includeIfNull: false)
   bool isOnlineEvent;
 
-  @JsonKey(name: "online_event_connection_details")
+  @JsonKey(
+      name: "online_event_connection_details",
+      defaultValue: "",
+      includeIfNull: false)
   String? onlineEventConnectionDetails;
 
-  @JsonKey(name: "seo_title")
+  @JsonKey(name: "seo_title", defaultValue: "", includeIfNull: false)
   String? seoTitle;
 
-  @JsonKey(name: "seo_description")
+  @JsonKey(name: "seo_description", defaultValue: "", includeIfNull: false)
   String? seoDescription;
 
-  @JsonKey(name: "seo_keywords")
+  @JsonKey(name: "seo_keywords", defaultValue: "", includeIfNull: false)
   String? seoKeywords;
 
-  @JsonKey(name: "allow_search_engine_indexing")
+  @JsonKey(
+      name: "allow_search_engine_indexing",
+      defaultValue: true,
+      includeIfNull: false)
   bool allowSearchEngineIndexing;
 
-  @JsonKey(name: "notify_organizer_of_new_orders")
+  @JsonKey(
+      name: "notify_organizer_of_new_orders",
+      defaultValue: false,
+      includeIfNull: false)
   bool notifyOrganizerOfNewOrders;
 
-  @JsonKey(name: "price_display_mode")
+  @JsonKey(
+      name: "price_display_mode", defaultValue: "default", includeIfNull: false)
   String? priceDisplayMode;
 
-  @JsonKey(name: "hide_getting_started_page")
+  @JsonKey(
+      name: "hide_getting_started_page",
+      defaultValue: false,
+      includeIfNull: false)
   bool hideGettingStartedPage;
 
   Settings({
@@ -403,31 +452,32 @@ class Settings extends Equatable {
 @Entity()
 @JsonSerializable()
 class LocationDetails extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "city")
+  @JsonKey(name: "city", defaultValue: "", includeIfNull: false)
   String city;
 
-  @JsonKey(name: "country")
+  @JsonKey(name: "country", defaultValue: "", includeIfNull: false)
   String country;
 
-  @JsonKey(name: "venue_name")
+  @JsonKey(name: "venue_name", defaultValue: "", includeIfNull: false)
   String venueName;
 
-  @JsonKey(name: "address_line_1")
+  @JsonKey(name: "address_line_1", defaultValue: "", includeIfNull: false)
   String addressLine1;
 
-  @JsonKey(name: "address_line_2")
+  @JsonKey(name: "address_line_2", defaultValue: "", includeIfNull: false)
   String? addressLine2;
 
-  @JsonKey(name: "state_or_region")
+  @JsonKey(name: "state_or_region", defaultValue: "", includeIfNull: false)
   String? stateOrRegion;
 
-  @JsonKey(name: "zip_or_postal_code")
+  @JsonKey(name: "zip_or_postal_code", defaultValue: "", includeIfNull: false)
   String zipOrPostalCode;
 
   LocationDetails({
@@ -464,22 +514,23 @@ class LocationDetails extends Equatable {
 @Entity()
 @JsonSerializable()
 class Links extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "first")
+  @JsonKey(name: "first", defaultValue: "", includeIfNull: false)
   String first;
 
-  @JsonKey(name: "last")
+  @JsonKey(name: "last", defaultValue: "", includeIfNull: false)
   String last;
 
-  @JsonKey(name: "prev")
+  @JsonKey(name: "prev", defaultValue: "", includeIfNull: false)
   String? prev;
 
-  @JsonKey(name: "next")
+  @JsonKey(name: "next", defaultValue: "", includeIfNull: false)
   String next;
 
   Links({
@@ -502,48 +553,56 @@ class Links extends Equatable {
 @Entity()
 @JsonSerializable()
 class Meta extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "current_page")
+  @JsonKey(name: "current_page", defaultValue: 1, includeIfNull: false)
   int currentPage;
 
-  @JsonKey(name: "from")
+  @JsonKey(name: "from", defaultValue: 0, includeIfNull: false)
   int from;
 
-  @JsonKey(name: "last_page")
+  @JsonKey(name: "last_page", defaultValue: 1, includeIfNull: false)
   int lastPage;
 
-  @JsonKey(name: "links")
+  @JsonKey(name: "links", includeIfNull: false)
   @_LinkRelToManyConverter()
   ToMany<Link> links;
 
-  @JsonKey(name: "path")
+  @JsonKey(name: "path", defaultValue: "", includeIfNull: false)
   String path;
 
-  @JsonKey(name: "per_page")
+  @JsonKey(name: "per_page", defaultValue: 10, includeIfNull: false)
   int perPage;
 
-  @JsonKey(name: "to")
+  @JsonKey(name: "to", defaultValue: 0, includeIfNull: false)
   int to;
 
-  @JsonKey(name: "total")
+  @JsonKey(name: "total", defaultValue: 0, includeIfNull: false)
   int total;
 
-  @JsonKey(name: "allowed_filter_fields")
+  @JsonKey(
+      name: "allowed_filter_fields",
+      defaultValue: <String>[],
+      includeIfNull: false)
   List<String> allowedFilterFields;
 
-  @JsonKey(name: "allowed_sorts")
+  @JsonKey(name: "allowed_sorts", includeIfNull: false)
   @_AllowedSortsRelToOneConverter()
   ToOne<AllowedSorts> allowedSorts;
 
-  @JsonKey(name: "default_sort")
+  @JsonKey(
+      name: "default_sort", defaultValue: "created_at", includeIfNull: false)
   String defaultSort;
 
-  @JsonKey(name: "default_sort_direction")
+  @JsonKey(
+      name: "default_sort_direction",
+      defaultValue: "desc",
+      includeIfNull: false)
   String defaultSortDirection;
 
   Meta({
@@ -589,25 +648,26 @@ class Meta extends Equatable {
 @Entity()
 @JsonSerializable()
 class AllowedSorts extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "start_date")
+  @JsonKey(name: "start_date", includeIfNull: false)
   @_CreatedAtRelToOneConverter()
   ToOne<CreatedAt> startDate;
 
-  @JsonKey(name: "end_date")
+  @JsonKey(name: "end_date", includeIfNull: false)
   @_CreatedAtRelToOneConverter()
   ToOne<CreatedAt> endDate;
 
-  @JsonKey(name: "created_at")
+  @JsonKey(name: "created_at", includeIfNull: false)
   @_CreatedAtRelToOneConverter()
   ToOne<CreatedAt> createdAt;
 
-  @JsonKey(name: "updated_at")
+  @JsonKey(name: "updated_at", includeIfNull: false)
   @_CreatedAtRelToOneConverter()
   ToOne<CreatedAt> updatedAt;
 
@@ -639,16 +699,17 @@ class AllowedSorts extends Equatable {
 @Entity()
 @JsonSerializable()
 class CreatedAt extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "asc")
+  @JsonKey(name: "asc", defaultValue: "asc", includeIfNull: false)
   String asc;
 
-  @JsonKey(name: "desc")
+  @JsonKey(name: "desc", defaultValue: "desc", includeIfNull: false)
   String desc;
 
   CreatedAt({
@@ -675,19 +736,20 @@ class CreatedAt extends Equatable {
 @Entity()
 @JsonSerializable()
 class Link extends Equatable {
+  @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
   @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
   int? objId;
 
-  @JsonKey(name: "url")
+  @JsonKey(name: "url", defaultValue: "", includeIfNull: false)
   String? url;
 
-  @JsonKey(name: "label")
+  @JsonKey(name: "label", defaultValue: "", includeIfNull: false)
   String label;
 
-  @JsonKey(name: "active")
+  @JsonKey(name: "active", defaultValue: false, includeIfNull: false)
   bool active;
 
   Link({
@@ -709,6 +771,217 @@ class Link extends Equatable {
         url,
         label,
         active,
+      ];
+}
+
+@Entity()
+@JsonSerializable()
+class Ticket extends Equatable {
+  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
+  @Id(assignable: true)
+  int? objId;
+
+  @JsonKey(name: "id", defaultValue: 0, includeIfNull: false)
+  int? id;
+
+  @JsonKey(name: "title", defaultValue: "", includeIfNull: false)
+  String? title;
+
+  @JsonKey(name: "type", defaultValue: "", includeIfNull: false)
+  String? type;
+
+  @JsonKey(name: "description", defaultValue: "", includeIfNull: false)
+  String? description;
+
+  @JsonKey(name: "max_per_order", defaultValue: 10, includeIfNull: false)
+  int? maxPerOrder;
+
+  @JsonKey(name: "min_per_order", defaultValue: 1, includeIfNull: false)
+  int? minPerOrder;
+
+  @JsonKey(name: "sale_start_date", includeIfNull: false)
+  @Property(type: PropertyType.dateNano)
+  DateTime? saleStartDate;
+
+  @JsonKey(name: "sale_end_date", includeIfNull: false)
+  @Property(type: PropertyType.dateNano)
+  DateTime? saleEndDate;
+
+  @JsonKey(name: "event_id", defaultValue: 0, includeIfNull: false)
+  int eventId;
+
+  @JsonKey(
+      name: "is_before_sale_start_date",
+      defaultValue: false,
+      includeIfNull: false)
+  bool? isBeforeSaleStartDate;
+
+  @JsonKey(
+      name: "is_after_sale_end_date", defaultValue: false, includeIfNull: false)
+  bool? isAfterSaleEndDate;
+
+  @JsonKey(name: "quantity_available", defaultValue: 0, includeIfNull: false)
+  int? quantityAvailable;
+
+  @JsonKey(name: "price", defaultValue: 0.0, includeIfNull: false)
+  double? price;
+
+  @JsonKey(name: "prices", includeIfNull: false)
+  @_TicketPriceRelToManyConverter()
+  ToMany<TicketPrice> prices;
+
+  @JsonKey(name: "is_available", defaultValue: false, includeIfNull: false)
+  bool isAvailable;
+
+  @JsonKey(name: "is_sold_out", defaultValue: false, includeIfNull: false)
+  bool isSoldOut;
+
+  Ticket({
+    this.objId = 0,
+    required this.id,
+    required this.title,
+    required this.type,
+    required this.description,
+    required this.maxPerOrder,
+    required this.minPerOrder,
+    required this.saleStartDate,
+    required this.saleEndDate,
+    required this.eventId,
+    required this.isBeforeSaleStartDate,
+    required this.isAfterSaleEndDate,
+    required this.quantityAvailable,
+    required this.price,
+    required this.prices,
+    required this.isAvailable,
+    required this.isSoldOut,
+  });
+
+  factory Ticket.fromJson(Map<String, dynamic> json) => _$TicketFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TicketToJson(this);
+
+  @override
+  List<Object?> get props => [
+        objId,
+        id,
+        title,
+        type,
+        description,
+        maxPerOrder,
+        minPerOrder,
+        saleStartDate,
+        saleEndDate,
+        eventId,
+        isBeforeSaleStartDate,
+        isAfterSaleEndDate,
+        quantityAvailable,
+        price,
+        prices,
+        isAvailable,
+        isSoldOut,
+      ];
+}
+
+@Entity()
+@JsonSerializable()
+class TicketPrice extends Equatable {
+  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
+  @Id(assignable: true)
+  int? objId;
+
+  @JsonKey(name: "id", includeIfNull: false, defaultValue: 0)
+  int? id;
+
+  @JsonKey(name: "label", includeIfNull: false, defaultValue: "")
+  String? label;
+
+  @JsonKey(name: "price", defaultValue: 0.0)
+  double price;
+
+  @JsonKey(name: "sale_start_date", includeIfNull: false)
+  @Property(type: PropertyType.dateNano)
+  DateTime? saleStartDate;
+
+  @JsonKey(name: "sale_end_date", includeIfNull: false)
+  @Property(type: PropertyType.dateNano)
+  DateTime? saleEndDate;
+
+  @JsonKey(
+      name: "price_including_taxes_and_fees",
+      includeIfNull: false,
+      defaultValue: 0.0)
+  double? priceIncludingTaxesAndFees;
+
+  @JsonKey(
+      name: "price_before_discount", includeIfNull: false, defaultValue: 0.0)
+  double? priceBeforeDiscount;
+
+  @JsonKey(name: "is_discounted", defaultValue: false)
+  bool isDiscounted;
+
+  @JsonKey(name: "tax_total", defaultValue: 0.0)
+  double taxTotal;
+
+  @JsonKey(name: "fee_total", defaultValue: 0.0)
+  double feeTotal;
+
+  @JsonKey(name: "is_before_sale_start_date", defaultValue: false)
+  bool isBeforeSaleStartDate;
+
+  @JsonKey(name: "is_after_sale_end_date", defaultValue: false)
+  bool isAfterSaleEndDate;
+
+  @JsonKey(name: "is_available", defaultValue: true)
+  bool isAvailable;
+
+  @JsonKey(name: "is_sold_out", defaultValue: false)
+  bool isSoldOut;
+
+  @JsonKey(name: "quantity_remaining", defaultValue: 0)
+  int quantityRemaining;
+
+  TicketPrice({
+    this.objId = 0,
+    required this.id,
+    this.label,
+    required this.price,
+    this.saleStartDate,
+    this.saleEndDate,
+    required this.priceIncludingTaxesAndFees,
+    this.priceBeforeDiscount,
+    required this.isDiscounted,
+    required this.taxTotal,
+    required this.feeTotal,
+    required this.isBeforeSaleStartDate,
+    required this.isAfterSaleEndDate,
+    required this.isAvailable,
+    required this.isSoldOut,
+    required this.quantityRemaining,
+  });
+
+  factory TicketPrice.fromJson(Map<String, dynamic> json) =>
+      _$TicketPriceFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TicketPriceToJson(this);
+
+  @override
+  List<Object?> get props => [
+        objId,
+        id,
+        label,
+        price,
+        saleStartDate,
+        saleEndDate,
+        priceIncludingTaxesAndFees,
+        priceBeforeDiscount,
+        isDiscounted,
+        taxTotal,
+        feeTotal,
+        isBeforeSaleStartDate,
+        isAfterSaleEndDate,
+        isAvailable,
+        isSoldOut,
+        quantityRemaining,
       ];
 }
 
@@ -838,4 +1111,32 @@ class _CreatedAtRelToOneConverter
 
   @override
   Map<String, dynamic>? toJson(ToOne<CreatedAt> rel) => rel.target?.toJson();
+}
+
+class _TicketPriceRelToManyConverter
+    implements JsonConverter<ToMany<TicketPrice>, List<dynamic>?> {
+  const _TicketPriceRelToManyConverter();
+
+  @override
+  ToMany<TicketPrice> fromJson(List<dynamic>? json) => ToMany<TicketPrice>(
+      items: json == null
+          ? []
+          : json.map((e) => TicketPrice.fromJson(e)).toList());
+
+  @override
+  List<Map<String, dynamic>>? toJson(ToMany<TicketPrice> rel) =>
+      rel.map((TicketPrice obj) => obj.toJson()).toList();
+}
+
+class _TicketRelToManyConverter
+    implements JsonConverter<ToMany<Ticket>, List<dynamic>?> {
+  const _TicketRelToManyConverter();
+
+  @override
+  ToMany<Ticket> fromJson(List<dynamic>? json) => ToMany<Ticket>(
+      items: json == null ? [] : json.map((e) => Ticket.fromJson(e)).toList());
+
+  @override
+  List<Map<String, dynamic>>? toJson(ToMany<Ticket> rel) =>
+      rel.map((Ticket obj) => obj.toJson()).toList();
 }
