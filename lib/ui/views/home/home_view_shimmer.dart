@@ -18,7 +18,7 @@ class ShimmerUpcomingEventsSection extends StatelessWidget {
             itemCount: 2,
             itemBuilder: (context, index) {
               return const Padding(
-                padding: const EdgeInsets.only(right: 16),
+                padding: EdgeInsets.only(right: 16),
                 child: Column(
                   children: [
                     ShimmerUpcomingEventCard(),
@@ -96,8 +96,8 @@ class ShimmerRecommendationsSection extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           itemCount: 4,
           itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 12),
+            return const Padding(
+              padding: EdgeInsets.only(bottom: 12),
               child: ShimmerRecommendationCard(),
             );
           },
@@ -108,6 +108,8 @@ class ShimmerRecommendationsSection extends StatelessWidget {
 }
 
 class ShimmerRecommendationCard extends StatelessWidget {
+  const ShimmerRecommendationCard({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
