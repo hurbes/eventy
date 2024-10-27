@@ -3,9 +3,11 @@ import 'package:eventy/app/app.bottomsheets.dart';
 import 'package:eventy/app/app.dialogs.dart';
 import 'package:eventy/app/app.locator.dart';
 import 'package:eventy/app/app.router.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await setupLocator(stackedRouter: stackedRouter);
   setupDialogUi();
   setupBottomSheetUi();

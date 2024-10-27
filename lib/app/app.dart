@@ -22,6 +22,8 @@ import 'package:eventy/core/services/order_service.dart';
 import 'package:eventy/ui/views/details_form/details_form_view.dart';
 import 'package:eventy/ui/views/map_navigation/map_navigation_view.dart';
 import 'package:eventy/ui/views/search_view/search_view_view.dart';
+import 'package:eventy/ui/bottom_sheets/payment/payment_sheet.dart';
+import 'package:eventy/core/services/stripe_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -57,11 +59,13 @@ import 'package:eventy/ui/views/search_view/search_view_view.dart';
         classType: DioService, resolveUsing: DioService.init, asType: Dio),
     LazySingleton(classType: EventRepository, asType: Repository<Event>),
     LazySingleton(classType: OrderService),
+    LazySingleton(classType: StripeService),
 // @stacked-service
   ],
   bottomsheets: [
     StackedBottomsheet(classType: NoticeSheet),
-    // @stacked-bottom-sheet
+    StackedBottomsheet(classType: PaymentSheet),
+// @stacked-bottom-sheet
   ],
   dialogs: [
     StackedDialog(classType: InfoAlertDialog),
