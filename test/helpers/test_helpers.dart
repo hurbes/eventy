@@ -10,6 +10,8 @@ import 'package:eventy/core/services/api_service.dart';
 import 'test_helpers.mocks.dart';
 import 'package:eventy/core/services/database_service.dart';
 import 'package:eventy/core/services/objectbox_service.dart';
+import 'package:eventy/core/services/dio_service.dart';
+import 'package:eventy/core/services/order_service.dart';
 // @stacked-import
 
 @GenerateMocks([], customMocks: [
@@ -21,6 +23,8 @@ import 'package:eventy/core/services/objectbox_service.dart';
   MockSpec<ApiService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DatabaseService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<ObjectboxService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<DioService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<OrderService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -33,6 +37,8 @@ void registerServices() {
   getAndRegisterApiService();
   getAndRegisterDatabaseService();
   getAndRegisterObjectboxService();
+  getAndRegisterDioService();
+  getAndRegisterOrderService();
 // @stacked-mock-register
 }
 
@@ -118,6 +124,20 @@ MockObjectboxService getAndRegisterObjectboxService() {
   _removeRegistrationIfExists<ObjectboxService>();
   final service = MockObjectboxService();
   locator.registerSingleton<ObjectboxService>(service);
+  return service;
+}
+
+MockDioService getAndRegisterDioService() {
+  _removeRegistrationIfExists<DioService>();
+  final service = MockDioService();
+  locator.registerSingleton<DioService>(service);
+  return service;
+}
+
+MockOrderService getAndRegisterOrderService() {
+  _removeRegistrationIfExists<OrderService>();
+  final service = MockOrderService();
+  locator.registerSingleton<OrderService>(service);
   return service;
 }
 // @stacked-mock-create

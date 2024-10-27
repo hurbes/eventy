@@ -13,9 +13,12 @@ import 'package:dio/src/dio_mixin.dart' as _i6;
 import 'package:dio/src/options.dart' as _i3;
 import 'package:dio/src/response.dart' as _i7;
 import 'package:dio/src/transformer.dart' as _i5;
+import 'package:eventy/core/models/event/event.dart' as _i26;
 import 'package:eventy/core/services/api_service.dart' as _i20;
 import 'package:eventy/core/services/database_service.dart' as _i22;
+import 'package:eventy/core/services/dio_service.dart' as _i24;
 import 'package:eventy/core/services/objectbox_service.dart' as _i23;
+import 'package:eventy/core/services/order_service.dart' as _i25;
 import 'package:eventy/core/services/payment_service.dart' as _i18;
 import 'package:flutter/material.dart' as _i12;
 import 'package:mockito/mockito.dart' as _i1;
@@ -2124,6 +2127,16 @@ class MockDatabaseService extends _i1.Mock implements _i22.DatabaseService {
       ) as _i9.Stream<List<T>>);
 
   @override
+  _i9.Future<void> clearAll<T>() => (super.noSuchMethod(
+        Invocation.method(
+          #clearAll,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
   void dispose() => super.noSuchMethod(
         Invocation.method(
           #dispose,
@@ -2213,4 +2226,174 @@ class MockObjectboxService extends _i1.Mock implements _i23.ObjectboxService {
         returnValue: _i9.Future<void>.value(),
         returnValueForMissingStub: _i9.Future<void>.value(),
       ) as _i9.Future<void>);
+}
+
+/// A class which mocks [DioService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDioService extends _i1.Mock implements _i24.DioService {}
+
+/// A class which mocks [OrderService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockOrderService extends _i1.Mock implements _i25.OrderService {
+  @override
+  Map<_i26.Ticket, int> get selectedTickets => (super.noSuchMethod(
+        Invocation.getter(#selectedTickets),
+        returnValue: <_i26.Ticket, int>{},
+        returnValueForMissingStub: <_i26.Ticket, int>{},
+      ) as Map<_i26.Ticket, int>);
+
+  @override
+  bool get enableLogs => (super.noSuchMethod(
+        Invocation.getter(#enableLogs),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  void setActiveEvent(_i26.Event? event) => super.noSuchMethod(
+        Invocation.method(
+          #setActiveEvent,
+          [event],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  int quantityForTicket(_i26.Ticket? ticket) => (super.noSuchMethod(
+        Invocation.method(
+          #quantityForTicket,
+          [ticket],
+        ),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  void addTicket(_i26.Ticket? ticket) => super.noSuchMethod(
+        Invocation.method(
+          #addTicket,
+          [ticket],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeTicket(_i26.Ticket? ticket) => super.noSuchMethod(
+        Invocation.method(
+          #removeTicket,
+          [ticket],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool canAddMoreTickets(_i26.Ticket? ticket) => (super.noSuchMethod(
+        Invocation.method(
+          #canAddMoreTickets,
+          [ticket],
+        ),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  bool canRemoveTickets(_i26.Ticket? ticket) => (super.noSuchMethod(
+        Invocation.method(
+          #canRemoveTickets,
+          [ticket],
+        ),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logEntryCheck() => super.noSuchMethod(
+        Invocation.method(
+          #logEntryCheck,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logD(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logD,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logI(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logI,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logW(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logW,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logE(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logE,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
