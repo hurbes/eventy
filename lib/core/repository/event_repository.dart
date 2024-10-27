@@ -6,7 +6,7 @@ class EventRepository extends Repository<Event> {
   EventRepository() : super();
 
   @override
-  Event parseItem(Map<String, dynamic> json) => Event.fromJson(json);
+  Event parseItem(Map<String, dynamic> json) => Event.fromJson(json['data']);
 
   @override
   List<Event> parseList(List<Map<String, dynamic>> jsonList) {
