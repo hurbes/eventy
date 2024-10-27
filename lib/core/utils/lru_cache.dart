@@ -14,9 +14,29 @@ class LRUCache<K, V> {
   }
 
   void put(K key, V value) {
-    if (_cache.containsKey(key)) _cache.remove(key);
+    // First remove any existing entry with the same key
+    if (_cache.containsKey(key)) {
+      _cache.remove(key);
+    } else {
+      // If the value already exists somewhere else, remove that entry
+      K? keyToRemove;
+      _cache.forEach((k, v) {
+        if (v == value) {
+          keyToRemove = k;
+        }
+      });
+      if (keyToRemove != null) {
+        _cache.remove(keyToRemove);
+      }
+    }
+
+    // Add the new key-value pair
     _cache[key] = value;
-    if (_cache.length > maxSize) _cache.remove(_cache.keys.first);
+
+    // Remove oldest entry if cache exceeds maxSize
+    if (_cache.length > maxSize) {
+      _cache.remove(_cache.keys.first);
+    }
   }
 
   void clear() => _cache.clear();
