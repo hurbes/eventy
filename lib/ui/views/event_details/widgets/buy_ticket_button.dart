@@ -16,10 +16,14 @@ class BuyTicketButton extends ViewModelWidget<EventDetailsViewModel> {
           text: 'Buy Ticket',
           width: double.infinity,
           onTap: viewModel.navigateToTicketSelection,
+          isEnabled: viewModel.isBookable,
         ),
       ),
     )
-        .animate(onPlay: (controller) => controller.repeat())
+        .animate(
+          onPlay: (controller) => controller.repeat(),
+          target: viewModel.isBookable ? 1 : 0,
+        )
         .shimmer(duration: 1500.ms)
         .then(delay: 1000.ms)
         .shake(duration: 300.ms, hz: 4);

@@ -27,6 +27,10 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
     return event.status == 'ARCHIVED';
   }
 
+  bool get isBookable {
+    return !isArchived && event.tickets.isNotEmpty;
+  }
+
   bool get isUpcoming {
     return event.startDate.isAfter(DateTime.now());
   }
@@ -69,8 +73,11 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
 
   @override
   Future<void> initialise() async {
+    logI('Initialising EventDetailsViewModel ${event.id} $isArchived');
     if (isArchived) return;
-    logI('Initialising EventDetailsViewModel ${event.id}');
+
+    super.initialise();
+    logI('Fetching event details ${event.id}');
     try {
       await _eventRepository.fetchById(
         id: event.id.toString(),
