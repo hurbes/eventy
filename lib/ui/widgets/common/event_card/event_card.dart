@@ -64,7 +64,7 @@ class EventCardBody extends StackedView<EventCardModel> {
     return GestureDetector(
       onTap: openContainer,
       child: Container(
-        width: viewModel.isUpcoming ? 350 : double.infinity,
+        width: double.infinity,
         height: viewModel.isUpcoming ? null : 100,
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
