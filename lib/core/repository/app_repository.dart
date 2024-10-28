@@ -209,7 +209,7 @@ abstract class Repository<T> with AppLogger implements IRepository<T> {
     }
 
     logI('Fetching from API');
-    _singleItemStreamController.add(DataState.apiLoading());
+    _singleItemStreamController.add(DataState.apiLoading(data: data));
     try {
       final response = await fetchApiData(endpoint: '$endpoint/$id');
 
