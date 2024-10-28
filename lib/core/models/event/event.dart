@@ -12,9 +12,8 @@ class EventResponse extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "data", includeIfNull: false)
   @_EventRelToManyConverter()
@@ -51,9 +50,8 @@ class Event extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "title", defaultValue: "", includeIfNull: false)
   String title;
@@ -147,9 +145,8 @@ class EventImage extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "url", defaultValue: "", includeIfNull: false)
   String url;
@@ -191,9 +188,8 @@ class Organizer extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "name", defaultValue: "", includeIfNull: false)
   String name;
@@ -253,9 +249,8 @@ class Settings extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "pre_checkout_message", defaultValue: "", includeIfNull: false)
   String? preCheckoutMessage;
@@ -455,9 +450,8 @@ class LocationDetails extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "city", defaultValue: "", includeIfNull: false)
   String city;
@@ -517,9 +511,8 @@ class Links extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "first", defaultValue: "", includeIfNull: false)
   String first;
@@ -556,9 +549,8 @@ class Meta extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "current_page", defaultValue: 1, includeIfNull: false)
   int currentPage;
@@ -651,9 +643,8 @@ class AllowedSorts extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "start_date", includeIfNull: false)
   @_CreatedAtRelToOneConverter()
@@ -702,9 +693,8 @@ class CreatedAt extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "asc", defaultValue: "asc", includeIfNull: false)
   String asc;
@@ -739,9 +729,8 @@ class Link extends Equatable {
   @JsonKey(defaultValue: 0, includeIfNull: false)
   int? id;
 
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "url", defaultValue: "", includeIfNull: false)
   String? url;
@@ -777,9 +766,8 @@ class Link extends Equatable {
 @Entity()
 @JsonSerializable()
 class Ticket extends Equatable {
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "id", defaultValue: 0, includeIfNull: false)
   int? id;
@@ -885,9 +873,8 @@ class Ticket extends Equatable {
 @Entity()
 @JsonSerializable()
 class TicketPrice extends Equatable {
-  @JsonKey(includeFromJson: false, includeToJson: false, defaultValue: 0)
   @Id(assignable: true)
-  int? objId;
+  int? objId = 0;
 
   @JsonKey(name: "id", includeIfNull: false, defaultValue: 0)
   int? id;

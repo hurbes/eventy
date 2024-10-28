@@ -8,6 +8,7 @@ part of 'event.dart';
 
 EventResponse _$EventResponseFromJson(Map<String, dynamic> json) =>
     EventResponse(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       data: const _EventRelToManyConverter()
           .fromJson(json['data'] as List<Map<String, dynamic>>?),
@@ -27,6 +28,7 @@ Map<String, dynamic> _$EventResponseToJson(EventResponse instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   writeNotNull('data', const _EventRelToManyConverter().toJson(instance.data));
   writeNotNull('links', const _LinksRelToOneConverter().toJson(instance.links));
   writeNotNull('meta', const _MetaRelToOneConverter().toJson(instance.meta));
@@ -34,6 +36,7 @@ Map<String, dynamic> _$EventResponseToJson(EventResponse instance) {
 }
 
 Event _$EventFromJson(Map<String, dynamic> json) => Event(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       title: json['title'] as String? ?? '',
       description: json['description'] as String? ?? '',
@@ -64,6 +67,7 @@ Map<String, dynamic> _$EventToJson(Event instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   val['title'] = instance.title;
   val['description'] = instance.description;
   val['start_date'] = instance.startDate.toIso8601String();
@@ -85,6 +89,7 @@ Map<String, dynamic> _$EventToJson(Event instance) {
 }
 
 EventImage _$EventImageFromJson(Map<String, dynamic> json) => EventImage(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       url: json['url'] as String? ?? '',
       size: (json['size'] as num?)?.toInt() ?? 0,
@@ -103,6 +108,7 @@ Map<String, dynamic> _$EventImageToJson(EventImage instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   val['url'] = instance.url;
   val['size'] = instance.size;
   val['file_name'] = instance.fileName;
@@ -112,6 +118,7 @@ Map<String, dynamic> _$EventImageToJson(EventImage instance) {
 }
 
 Organizer _$OrganizerFromJson(Map<String, dynamic> json) => Organizer(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       name: json['name'] as String? ?? '',
       email: json['email'] as String? ?? '',
@@ -132,6 +139,7 @@ Map<String, dynamic> _$OrganizerToJson(Organizer instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   val['name'] = instance.name;
   val['email'] = instance.email;
   writeNotNull('phone', instance.phone);
@@ -144,6 +152,7 @@ Map<String, dynamic> _$OrganizerToJson(Organizer instance) {
 
 Settings _$SettingsFromJson(Map<String, dynamic> json) => Settings(
       id: (json['id'] as num?)?.toInt() ?? 0,
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       preCheckoutMessage: json['pre_checkout_message'] as String? ?? '',
       postCheckoutMessage: json['post_checkout_message'] as String? ?? '',
       ticketPageMessage: json['ticket_page_message'] as String? ?? '',
@@ -197,6 +206,7 @@ Map<String, dynamic> _$SettingsToJson(Settings instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   writeNotNull('pre_checkout_message', instance.preCheckoutMessage);
   writeNotNull('post_checkout_message', instance.postCheckoutMessage);
   writeNotNull('ticket_page_message', instance.ticketPageMessage);
@@ -233,6 +243,7 @@ Map<String, dynamic> _$SettingsToJson(Settings instance) {
 
 LocationDetails _$LocationDetailsFromJson(Map<String, dynamic> json) =>
     LocationDetails(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       city: json['city'] as String? ?? '',
       country: json['country'] as String? ?? '',
@@ -253,6 +264,7 @@ Map<String, dynamic> _$LocationDetailsToJson(LocationDetails instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   val['city'] = instance.city;
   val['country'] = instance.country;
   val['venue_name'] = instance.venueName;
@@ -264,6 +276,7 @@ Map<String, dynamic> _$LocationDetailsToJson(LocationDetails instance) {
 }
 
 Links _$LinksFromJson(Map<String, dynamic> json) => Links(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       first: json['first'] as String? ?? '',
       last: json['last'] as String? ?? '',
@@ -281,6 +294,7 @@ Map<String, dynamic> _$LinksToJson(Links instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   val['first'] = instance.first;
   val['last'] = instance.last;
   writeNotNull('prev', instance.prev);
@@ -289,6 +303,7 @@ Map<String, dynamic> _$LinksToJson(Links instance) {
 }
 
 Meta _$MetaFromJson(Map<String, dynamic> json) => Meta(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       currentPage: (json['current_page'] as num?)?.toInt() ?? 1,
       from: (json['from'] as num?)?.toInt() ?? 0,
@@ -319,6 +334,7 @@ Map<String, dynamic> _$MetaToJson(Meta instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   val['current_page'] = instance.currentPage;
   val['from'] = instance.from;
   val['last_page'] = instance.lastPage;
@@ -336,6 +352,7 @@ Map<String, dynamic> _$MetaToJson(Meta instance) {
 }
 
 AllowedSorts _$AllowedSortsFromJson(Map<String, dynamic> json) => AllowedSorts(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       startDate: const _CreatedAtRelToOneConverter()
           .fromJson(json['start_date'] as Map<String, dynamic>?),
@@ -357,6 +374,7 @@ Map<String, dynamic> _$AllowedSortsToJson(AllowedSorts instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   writeNotNull('start_date',
       const _CreatedAtRelToOneConverter().toJson(instance.startDate));
   writeNotNull(
@@ -372,6 +390,7 @@ CreatedAt _$CreatedAtFromJson(Map<String, dynamic> json) => CreatedAt(
       id: (json['id'] as num?)?.toInt() ?? 0,
       asc: json['asc'] as String? ?? 'asc',
       desc: json['desc'] as String? ?? 'desc',
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
     );
 
 Map<String, dynamic> _$CreatedAtToJson(CreatedAt instance) {
@@ -384,6 +403,7 @@ Map<String, dynamic> _$CreatedAtToJson(CreatedAt instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   val['asc'] = instance.asc;
   val['desc'] = instance.desc;
   return val;
@@ -392,6 +412,7 @@ Map<String, dynamic> _$CreatedAtToJson(CreatedAt instance) {
 Link _$LinkFromJson(Map<String, dynamic> json) => Link(
       id: (json['id'] as num?)?.toInt() ?? 0,
       url: json['url'] as String? ?? '',
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       label: json['label'] as String? ?? '',
       active: json['active'] as bool? ?? false,
     );
@@ -406,6 +427,7 @@ Map<String, dynamic> _$LinkToJson(Link instance) {
   }
 
   writeNotNull('id', instance.id);
+  val['objId'] = instance.objId;
   writeNotNull('url', instance.url);
   val['label'] = instance.label;
   val['active'] = instance.active;
@@ -413,6 +435,7 @@ Map<String, dynamic> _$LinkToJson(Link instance) {
 }
 
 Ticket _$TicketFromJson(Map<String, dynamic> json) => Ticket(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       title: json['title'] as String? ?? '',
       type: json['type'] as String? ?? '',
@@ -438,7 +461,9 @@ Ticket _$TicketFromJson(Map<String, dynamic> json) => Ticket(
     );
 
 Map<String, dynamic> _$TicketToJson(Ticket instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'objId': instance.objId,
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -467,6 +492,7 @@ Map<String, dynamic> _$TicketToJson(Ticket instance) {
 }
 
 TicketPrice _$TicketPriceFromJson(Map<String, dynamic> json) => TicketPrice(
+      objId: (json['objId'] as num?)?.toInt() ?? 0,
       id: (json['id'] as num?)?.toInt() ?? 0,
       label: json['label'] as String? ?? '',
       price: (json['price'] as num?)?.toDouble() ?? 0.0,
@@ -492,7 +518,9 @@ TicketPrice _$TicketPriceFromJson(Map<String, dynamic> json) => TicketPrice(
     );
 
 Map<String, dynamic> _$TicketPriceToJson(TicketPrice instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'objId': instance.objId,
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
