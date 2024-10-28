@@ -166,6 +166,11 @@
           "id": "5:2111035307468602959",
           "name": "tickets",
           "targetId": "12:3361063440599023220"
+        },
+        {
+          "id": "6:726881542957312664",
+          "name": "images",
+          "targetId": "4:7562423902453322177"
         }
       ]
     },
@@ -209,14 +214,6 @@
           "name": "objId",
           "type": 6,
           "flags": 129
-        },
-        {
-          "id": "8:7689066604462285511",
-          "name": "eventId",
-          "type": 11,
-          "flags": 520,
-          "indexId": "11:5231135900013012768",
-          "relationTarget": "Event"
         }
       ],
       "relations": []
@@ -870,13 +867,17 @@
   ],
   "lastEntityId": "13:799067579399403885",
   "lastIndexId": "11:5231135900013012768",
-  "lastRelationId": "5:2111035307468602959",
+  "lastRelationId": "6:726881542957312664",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredIndexUids": [
+    5231135900013012768
+  ],
+  "retiredPropertyUids": [
+    7689066604462285511
+  ],
   "retiredRelationUids": [
     515576437394905215
   ],

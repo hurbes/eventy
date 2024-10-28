@@ -22,7 +22,6 @@ import 'package:eventy/core/services/order_service.dart';
 import 'package:eventy/ui/views/details_form/details_form_view.dart';
 import 'package:eventy/ui/views/map_navigation/map_navigation_view.dart';
 import 'package:eventy/ui/views/search_view/search_view_view.dart';
-import 'package:eventy/ui/bottom_sheets/payment/payment_sheet.dart';
 import 'package:eventy/core/services/stripe_service.dart';
 import 'package:eventy/ui/bottom_sheets/payment_fail/payment_fail_sheet.dart';
 import 'package:eventy/ui/bottom_sheets/payment_success/payment_success_sheet.dart';
@@ -66,7 +65,6 @@ import 'package:eventy/ui/bottom_sheets/payment_success/payment_success_sheet.da
   ],
   bottomsheets: [
     StackedBottomsheet(classType: NoticeSheet),
-    StackedBottomsheet(classType: PaymentSheet),
     StackedBottomsheet(classType: PaymentFailSheet),
     StackedBottomsheet(classType: PaymentSuccessSheet),
 // @stacked-bottom-sheet

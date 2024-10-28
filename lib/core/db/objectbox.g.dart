@@ -175,12 +175,13 @@ final _entities = <obx_int.ModelEntity>[
         obx_int.ModelRelation(
             id: const obx_int.IdUid(5, 2111035307468602959),
             name: 'tickets',
-            targetId: const obx_int.IdUid(12, 3361063440599023220))
+            targetId: const obx_int.IdUid(12, 3361063440599023220)),
+        obx_int.ModelRelation(
+            id: const obx_int.IdUid(6, 726881542957312664),
+            name: 'images',
+            targetId: const obx_int.IdUid(4, 7562423902453322177))
       ],
-      backlinks: <obx_int.ModelBacklink>[
-        obx_int.ModelBacklink(
-            name: 'images', srcEntity: 'EventImage', srcField: 'event')
-      ]),
+      backlinks: <obx_int.ModelBacklink>[]),
   obx_int.ModelEntity(
       id: const obx_int.IdUid(4, 7562423902453322177),
       name: 'EventImage',
@@ -221,14 +222,7 @@ final _entities = <obx_int.ModelEntity>[
             id: const obx_int.IdUid(7, 4736021858158975148),
             name: 'objId',
             type: 6,
-            flags: 129),
-        obx_int.ModelProperty(
-            id: const obx_int.IdUid(8, 7689066604462285511),
-            name: 'eventId',
-            type: 11,
-            flags: 520,
-            indexId: const obx_int.IdUid(11, 5231135900013012768),
-            relationTarget: 'Event')
+            flags: 129)
       ],
       relations: <obx_int.ModelRelation>[],
       backlinks: <obx_int.ModelBacklink>[]),
@@ -910,11 +904,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
       entities: _entities,
       lastEntityId: const obx_int.IdUid(13, 799067579399403885),
       lastIndexId: const obx_int.IdUid(11, 5231135900013012768),
-      lastRelationId: const obx_int.IdUid(5, 2111035307468602959),
+      lastRelationId: const obx_int.IdUid(6, 726881542957312664),
       lastSequenceId: const obx_int.IdUid(0, 0),
       retiredEntityUids: const [],
-      retiredIndexUids: const [],
-      retiredPropertyUids: const [],
+      retiredIndexUids: const [5231135900013012768],
+      retiredPropertyUids: const [7689066604462285511],
       retiredRelationUids: const [515576437394905215],
       modelVersion: 5,
       modelVersionParserMinimum: 5,
@@ -1017,8 +1011,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
         toOneRelations: (Event object) => [object.settings, object.organizer],
         toManyRelations: (Event object) => {
               obx_int.RelInfo<Event>.toMany(5, object.objId!): object.tickets,
-              obx_int.RelInfo<EventImage>.toOneBacklink(8, object.objId!,
-                  (EventImage srcObject) => srcObject.event): object.images
+              obx_int.RelInfo<Event>.toMany(6, object.objId!): object.images
             },
         getId: (Event object) => object.objId,
         setId: (Event object, int id) {
@@ -1108,16 +1101,13 @@ obx_int.ModelDefinition getObjectBoxModel() {
           object.organizer.attach(store);
           obx_int.InternalToManyAccess.setRelInfo<Event>(object.tickets, store,
               obx_int.RelInfo<Event>.toMany(5, object.objId!));
-          obx_int.InternalToManyAccess.setRelInfo<Event>(
-              object.images,
-              store,
-              obx_int.RelInfo<EventImage>.toOneBacklink(
-                  8, object.objId!, (EventImage srcObject) => srcObject.event));
+          obx_int.InternalToManyAccess.setRelInfo<Event>(object.images, store,
+              obx_int.RelInfo<Event>.toMany(6, object.objId!));
           return object;
         }),
     EventImage: obx_int.EntityDefinition<EventImage>(
         model: _entities[3],
-        toOneRelations: (EventImage object) => [object.event],
+        toOneRelations: (EventImage object) => [],
         toManyRelations: (EventImage object) => {},
         getId: (EventImage object) => object.objId,
         setId: (EventImage object, int id) {
@@ -1136,7 +1126,6 @@ obx_int.ModelDefinition getObjectBoxModel() {
           fbb.addOffset(4, mimeTypeOffset);
           fbb.addOffset(5, typeOffset);
           fbb.addInt64(6, object.objId ?? 0);
-          fbb.addInt64(7, object.event.targetId);
           fbb.finish(fbb.endTable());
           return object.objId ?? 0;
         },
@@ -1165,9 +1154,7 @@ obx_int.ModelDefinition getObjectBoxModel() {
               fileName: fileNameParam,
               mimeType: mimeTypeParam,
               type: typeParam);
-          object.event.targetId =
-              const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0);
-          object.event.attach(store);
+
           return object;
         }),
     EventResponse: obx_int.EntityDefinition<EventResponse>(
@@ -2068,7 +2055,7 @@ class Event_ {
 
   /// see [Event.images]
   static final images =
-      obx.QueryBacklinkToMany<EventImage, Event>(EventImage_.event);
+      obx.QueryRelationToMany<Event, EventImage>(_entities[2].relations[1]);
 }
 
 /// [EventImage] entity fields to define ObjectBox queries.
@@ -2100,10 +2087,6 @@ class EventImage_ {
   /// See [EventImage.objId].
   static final objId =
       obx.QueryIntegerProperty<EventImage>(_entities[3].properties[6]);
-
-  /// See [EventImage.event].
-  static final event =
-      obx.QueryRelationToOne<EventImage, Event>(_entities[3].properties[7]);
 }
 
 /// [EventResponse] entity fields to define ObjectBox queries.
