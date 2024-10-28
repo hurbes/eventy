@@ -1,7 +1,7 @@
 name: eventy
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.3.0
+version: 0.3.1
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
