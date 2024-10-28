@@ -13,7 +13,8 @@ class BuyTicketButton extends ViewModelWidget<EventDetailsViewModel> {
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: EventyAppButton(
-          text: 'Buy Ticket',
+          isLoading: viewModel.isBusy,
+          text: viewModel.buttonText,
           width: double.infinity,
           onTap: viewModel.navigateToTicketSelection,
           isEnabled: viewModel.isBookable,

@@ -31,6 +31,12 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
     return !isArchived && event.tickets.isNotEmpty;
   }
 
+  String get buttonText {
+    if (isArchived) return 'Event Ended';
+    if (event.tickets.isEmpty) return 'Tickets Sold Out';
+    return 'Buy Ticket';
+  }
+
   bool get isUpcoming {
     return event.startDate.isAfter(DateTime.now());
   }
@@ -61,7 +67,7 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
   }
 
   void navigateToTicketSelection() {
-    _routerService.navigateToTicketSelectionView();
+    _routerService.navigateToOrderDetailsView();
   }
 
   @override
