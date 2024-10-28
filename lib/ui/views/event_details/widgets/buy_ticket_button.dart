@@ -9,7 +9,7 @@ class BuyTicketButton extends ViewModelWidget<EventDetailsViewModel> {
 
   @override
   Widget build(BuildContext context, EventDetailsViewModel viewModel) {
-    return SafeArea(
+    final widget = SafeArea(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: EventyAppButton(
@@ -20,13 +20,14 @@ class BuyTicketButton extends ViewModelWidget<EventDetailsViewModel> {
           isEnabled: viewModel.isBookable,
         ),
       ),
-    )
-        .animate(
-          onPlay: (controller) => controller.repeat(),
-          target: viewModel.isBookable ? 1 : 0,
-        )
-        .shimmer(duration: 1500.ms)
-        .then(delay: 1000.ms)
-        .shake(duration: 300.ms, hz: 4);
+    );
+    if (viewModel.isBookable) {
+      return widget
+          .animate(onPlay: (controller) => controller.repeat())
+          .shimmer(duration: 1500.ms)
+          .then(delay: 1000.ms)
+          .shake(duration: 300.ms, hz: 4);
+    }
+    return widget;
   }
 }

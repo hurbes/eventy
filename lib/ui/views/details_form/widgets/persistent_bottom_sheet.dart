@@ -105,6 +105,7 @@ class NavigationButtons extends ViewModelWidget<DetailsFormViewModel> {
           else
             const SizedBox.shrink(),
           EventyAppButton(
+            isLoading: viewModel.isPaymentIntentBusy,
             text: viewModel.currentStep < 2 ? 'Next' : 'Submit',
             onTap: viewModel.currentStep < 2
                 ? (viewModel.canMoveToNextStep() ? viewModel.nextStep : null)

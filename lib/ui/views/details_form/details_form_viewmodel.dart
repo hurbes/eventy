@@ -6,6 +6,8 @@ import 'package:eventy/core/services/order_service.dart';
 
 import 'package:stacked/stacked.dart';
 
+const _PAYMENT_INTENT_BUSY_OBJECT = 'payment_intent';
+
 class DetailsFormViewModel extends FutureViewModel<void> with AppLogger {
   final _orderService = locator<OrderService>();
 
@@ -17,6 +19,8 @@ class DetailsFormViewModel extends FutureViewModel<void> with AppLogger {
 
   bool _copyDetails = false;
   bool get copyDetails => _copyDetails;
+
+  bool get isPaymentIntentBusy => busy(_PAYMENT_INTENT_BUSY_OBJECT);
 
   final PersonalDetails _personalDetails = PersonalDetails();
   PersonalDetails get personalDetails => _personalDetails;
@@ -147,7 +151,10 @@ class DetailsFormViewModel extends FutureViewModel<void> with AppLogger {
   Future<void> createPaymentIntent() async {
     try {
       final orderData = buildOrderComplete();
-      await _orderService.completeOrder(orderData);
+      await runBusyFuture(
+        _orderService.completeOrder(orderData),
+        busyObject: _PAYMENT_INTENT_BUSY_OBJECT,
+      );
     } catch (e) {
       logE(e.toString());
     }
