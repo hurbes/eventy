@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:stacked/stacked.dart';
-
+import '../../../ui/common/app_colors.dart';
+import '../../../ui/common/ui_helpers.dart';
 import 'order_details_viewmodel.dart';
+import 'widgets/ticket_qr_section.dart';
+import 'widgets/ticket_details_section.dart';
+import 'widgets/ticket_header.dart';
 
 class OrderDetailsView extends StackedView<OrderDetailsViewModel> {
   const OrderDetailsView({Key? key}) : super(key: key);
@@ -13,16 +18,32 @@ class OrderDetailsView extends StackedView<OrderDetailsViewModel> {
     Widget? child,
   ) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      body: Container(
-        padding: const EdgeInsets.only(left: 25.0, right: 25.0),
+      backgroundColor: kcBackgroundColor,
+      body: CustomScrollView(
+        slivers: [
+          const TicketHeader(),
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Column(
+              children: [
+                verticalSpaceMedium,
+                const TicketQRSection()
+                    .animate(
+                      onPlay: (controller) => controller.repeat(reverse: true),
+                    )
+                    .scaleXY(duration: 1500.ms, end: 0.98),
+                verticalSpaceLarge,
+                const TicketDetailsSection(),
+                verticalSpaceLarge,
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
 
   @override
-  OrderDetailsViewModel viewModelBuilder(
-    BuildContext context,
-  ) =>
+  OrderDetailsViewModel viewModelBuilder(BuildContext context) =>
       OrderDetailsViewModel();
 }
