@@ -117,10 +117,9 @@ class DetailsFormViewModel extends FutureViewModel<void> with AppLogger {
     });
   }
 
-  bool get isPaymentDetailsValid {
-    if (totalPrice <= 0) return true;
-    // return _orderService.hasValidPaymentMethod;
-    return true;
+  String get eventImage {
+    if (event?.images.isEmpty == true) return '';
+    return event!.images.first.url;
   }
 
   bool isCurrentStepValid() {
@@ -130,7 +129,7 @@ class DetailsFormViewModel extends FutureViewModel<void> with AppLogger {
       case 1:
         return isAttendeeDetailsValid;
       case 2:
-        return isPaymentDetailsValid;
+        return true;
       default:
         return false;
     }
@@ -189,11 +188,6 @@ class DetailsFormViewModel extends FutureViewModel<void> with AppLogger {
       'address': {},
       "questions": [],
     };
-  }
-
-  String get eventImage {
-    if (event?.images.isEmpty == true) return '';
-    return event!.images.first.url;
   }
 
   @override
