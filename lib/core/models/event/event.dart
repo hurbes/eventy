@@ -83,6 +83,7 @@ class Event extends Equatable {
   String slug;
 
   @JsonKey(name: "images", includeIfNull: false)
+  @Backlink('event')
   @_ImageRelToManyConverter()
   ToMany<EventImage> images;
 
@@ -148,6 +149,8 @@ class EventImage extends Equatable {
   @Id(assignable: true)
   int? objId = 0;
 
+  final event = ToOne<Event>();
+
   @JsonKey(name: "url", defaultValue: "", includeIfNull: false)
   String url;
 
@@ -179,7 +182,8 @@ class EventImage extends Equatable {
   Map<String, dynamic> toJson() => _$EventImageToJson(this);
 
   @override
-  List<Object?> get props => [objId, id, url, size, fileName, mimeType, type];
+  List<Object?> get props =>
+      [objId, id, url, size, fileName, mimeType, type, event];
 }
 
 @Entity()
