@@ -16,7 +16,7 @@ class PaymentDetailsForm extends ViewModelWidget<DetailsFormViewModel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EventCard(event: viewModel.event!, isUpcoming: true),
+        EventCard(event: viewModel.event!),
         verticalSpaceMedium,
         const OrderSummaryCard(),
       ],

@@ -105,7 +105,7 @@ class HomeView extends StackedView<HomeViewModel> {
       final event = viewModel.recommendedEvents[index];
       return Padding(
         padding: const EdgeInsets.only(bottom: 15),
-        child: EventCard(event: event, isUpcoming: false),
+        child: EventCard(event: event),
       );
     } else if (viewModel.hasMoreRecommendations) {
       return Padding(

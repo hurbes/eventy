@@ -27,7 +27,7 @@ class UpcomingEventsSection extends ViewModelWidget<HomeViewModel> {
             itemCount: viewModel.upcomingEvents.length,
             itemBuilder: (context, index) {
               final event = viewModel.upcomingEvents[index];
-              return EventCard(event: event, isUpcoming: true);
+              return EventCard(event: event);
             },
           ),
         ),
