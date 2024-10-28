@@ -12,9 +12,11 @@ A feature-rich Flutter application for event listing and booking, implementing n
   <tr>
     <td><img src="https://raw.githubusercontent.com/hurbes/eventy/main/screenshots/3.png" alt="Payment Screen" width="200"/></td>
     <td><img src="https://raw.githubusercontent.com/hurbes/eventy/main/screenshots/4.png" alt="Confirmation" width="200"/></td>
-    <td><p align="center">📱 Check out the app flow video <a href="https://raw.githubusercontent.com/hurbes/eventy/main/screenshots/v1.mp4">here</a>!</p></td>
+    <td><img src="https://raw.githubusercontent.com/hurbes/eventy/main/screenshots/v1.gif" alt="Screen Record" width="200"/></td>
   </tr>
 </table>
+
+<p align="center">📱 Check out the app flow video <a href="https://raw.githubusercontent.com/hurbes/eventy/main/screenshots/v1.mp4">here</a>!
 
 ## 🎯 Project Context & Challenges
 
