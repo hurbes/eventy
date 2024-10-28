@@ -2,6 +2,20 @@
 
 A feature-rich Flutter application for event listing and booking, implementing native API integration with advanced caching and state management.
 
+📱 App Preview
+<table>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/hurbes/color_extractor/main/screenshots/0.png" alt="Home Screen" width="200"/></td>
+    <td><img src="https://raw.githubusercontent.com/hurbes/color_extractor/main/screenshots/1.png" alt="Event Details" width="200"/></td>
+    <td><img src="https://raw.githubusercontent.com/hurbes/color_extractor/main/screenshots/2.png" alt="Booking Flow" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/hurbes/color_extractor/main/screenshots/3.png" alt="Payment Screen" width="200"/></td>
+    <td><img src="https://raw.githubusercontent.com/hurbes/color_extractor/main/screenshots/4.png" alt="Confirmation" width="200"/></td>
+    <td><p align="center">📱 Check out the app flow video <a href="https://raw.githubusercontent.com/hurbes/color_extractor/main/screenshots/v1.mp4">here</a>!</p></td>
+  </tr>
+</table>
+
 ## 🎯 Project Context & Challenges
 
 First, I would like to apologize for the delay in submission. Several technical challenges and architectural decisions led to extended development time:
