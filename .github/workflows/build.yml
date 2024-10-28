@@ -16,6 +16,7 @@ jobs:
     runs-on: macos-latest 
     permissions:
       contents: write
+          
     steps:
         #1 Checkout Repository
       - name: Checkout Repository
@@ -34,6 +35,12 @@ jobs:
         with:
           flutter-version: '3.24.4'
           channel: 'stable'
+
+      - name: Create .env file
+        run: |
+          cat > .env <<EOF
+          STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          EOF
 
         #4 Install Dependencies
       - name: Install Dependencies
