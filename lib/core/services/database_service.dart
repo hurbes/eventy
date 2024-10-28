@@ -23,8 +23,22 @@ class DatabaseService with AppLogger implements IDatabaseService {
   @override
   Future<void> update<T>(T object) async {
     try {
+      logD('Updating object: $object');
       final box = _store.box<T>();
-      box.put(object, mode: PutMode.insert);
+      final idProperty = (object as dynamic).objId as int? ?? 0;
+
+      if (idProperty == 0) {
+        box.put(object, mode: PutMode.insert);
+        return;
+      }
+
+      if (box.contains((object as dynamic)?.objId)) {
+        box.put(object, mode: PutMode.update);
+        return;
+      } else {
+        box.put(object, mode: PutMode.insert);
+      }
+
       logD('Updated object: $object');
     } catch (e) {
       logE('Error updating object: $e');

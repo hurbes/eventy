@@ -1,3 +1,5 @@
+import 'package:equatable/equatable.dart';
+
 enum DataSource { local, api }
 
 enum DataStatus { loading, success, error }
@@ -50,9 +52,13 @@ class DataState<T> {
         dataSource: source,
         data: data,
       );
+
+  DataState<T> transformData(T data) {
+    return DataState.success(data, dataSource, pagination: pagination);
+  }
 }
 
-class PaginatedOption {
+class PaginatedOption extends Equatable {
   final bool isEnabled;
   final int page;
   // ignore: non_constant_identifier_names
@@ -83,9 +89,12 @@ class PaginatedOption {
       totalPages: totalPages ?? this.totalPages,
     );
   }
+
+  @override
+  List<Object?> get props => [isEnabled, page, perPage, totalPages, totalItems];
 }
 
-class PaginatedData<T> {
+class PaginatedData<T> extends Equatable {
   final List<T> items;
   final PaginatedOption pagination;
 
@@ -100,6 +109,9 @@ class PaginatedData<T> {
       pagination: pagination ?? this.pagination,
     );
   }
+
+  @override
+  List<Object?> get props => [items, pagination];
 }
 
 class PersonalDetails {
