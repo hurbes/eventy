@@ -1,7 +1,7 @@
 name: eventy
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.1.0
+version: 0.2.0
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -11,15 +11,58 @@ dependencies:
     sdk: flutter
   stacked: ^3.4.0
   stacked_services: ^1.1.0
+  lottie: ^2.7.0
+  dio: ^5.7.0
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  objectbox: ^4.0.3
+  objectbox_flutter_libs: any
+  path: ^1.9.0
+  path_provider: ^2.1.4
+  equatable: ^2.0.5
+  google_fonts: ^6.2.0
+  flutter_octicons: ^0.1.0
+  shimmer: ^2.0.0
+  cached_network_image: ^3.2.3
+  animations: ^2.0.11
+  flutter_animate: ^4.5.0
+  flutter_widget_from_html: ^0.15.2
+  sliver_tools: ^0.2.12
+  flutter_stripe: ^11.2.0
+  flutter_dotenv: ^5.2.1
+  intl: ^0.19.0
+  confetti: ^0.7.0
 
 dev_dependencies:
-  build_runner: ^2.4.5
+  build_runner: ^2.4.13
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
   mockito: ^5.4.1
   stacked_generator: ^1.3.3
+  flutter_launcher_icons: "^0.14.1"
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  objectbox_generator: any
+  
+flutter_launcher_icons:
+  android: "launcher_icon"
+  adaptive_icon_background: "#22141a"
+  adaptive_icon_foreground: "assets/app_icon.png"
+  background_color_ios: "#22141a"
+  ios: true
+  image_path: "assets/app_icon.png"
+  remove_alpha_ios: true
+
+objectbox:
+  output_dir: core/db
 
 flutter:
   uses-material-design: true
 
+  assets:
+    - .env
+    - assets/animations/splash_animation.json
+    - assets/animations/loader.json
+    - assets/animations/error.json
+    - assets/animations/success.json

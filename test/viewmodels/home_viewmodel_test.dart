@@ -1,39 +1,82 @@
+import 'package:eventy/core/models/event/event.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
-import 'package:eventy/app/app.bottomsheets.dart';
-import 'package:eventy/app/app.locator.dart';
-import 'package:eventy/ui/common/app_strings.dart';
-import 'package:eventy/ui/views/home/home_viewmodel.dart';
 
+import 'package:eventy/app/app.locator.dart';
+import 'package:eventy/core/models/data_state/data_set.dart';
+
+import 'package:eventy/ui/views/home/home_viewmodel.dart';
+import 'package:mockito/mockito.dart';
+
+import '../data/event_data.dart';
 import '../helpers/test_helpers.dart';
+import '../helpers/test_helpers.mocks.dart';
 
 void main() {
-  HomeViewModel getModel() => HomeViewModel();
+  late HomeViewModel viewModel;
+  late MockRepository mockEventRepository;
 
-  group('HomeViewmodelTest -', () {
-    setUp(() => registerServices());
-    tearDown(() => locator.reset());
+  setUp(() async {
+    registerServices();
+    mockEventRepository = getAndRegisterEventRepository();
 
-    group('incrementCounter -', () {
-      test('When called once should return  Counter is: 1', () {
-        final model = getModel();
-        model.incrementCounter();
-        expect(model.counterLabel, 'Counter is: 1');
+    // Setup mock stream
+    when(mockEventRepository.dataStream)
+        .thenAnswer((_) => Stream.value(DataState.success([], DataSource.api)));
+
+    // Setup default mock responses
+    when(mockEventRepository.fetchAll(
+      endpoint: anyNamed('endpoint'),
+      paginatedOptions: anyNamed('paginatedOptions'),
+      queryParams: anyNamed('queryParams'),
+      ignoreCache: anyNamed('ignoreCache'),
+    )).thenAnswer((_) async {});
+
+    viewModel = HomeViewModel();
+  });
+
+  tearDown(() => locator.reset());
+
+  group('HomeViewModel - Initialization', () {
+    test('should initialize with empty data', () {
+      expect(viewModel.upcomingEvents, isEmpty);
+      expect(viewModel.popularEvent, isNull);
+      expect(viewModel.recommendedEvents, isEmpty);
+      expect(viewModel.hasMoreRecommendations, isTrue);
+    });
+
+    group('HomeViewModel - Data Processing', () {
+      test('should handle empty data', () async {
+        // Arrange
+        final DataState<List<Event>> dataState =
+            DataState.success([], DataSource.api);
+
+        // Setup stream with empty data
+        when(mockEventRepository.dataStream)
+            .thenAnswer((_) => Stream.value(dataState));
+
+        // Act
+        viewModel.initialise();
+
+        // Assert
+        expect(viewModel.upcomingEvents, isEmpty);
+        expect(viewModel.popularEvent, isNull);
+        expect(viewModel.recommendedEvents, isEmpty);
       });
     });
 
-    group('showBottomSheet -', () {
-      test('When called, should show custom bottom sheet using notice variant',
-          () {
-        final bottomSheetService = getAndRegisterBottomSheetService();
+    group('HomeViewModel - Navigation', () {
+      test('should navigate to event details', () async {
+        // Act
+        viewModel.navigateToEventDetails(testEvent);
+      });
+    });
 
-        final model = getModel();
-        model.showBottomSheet();
-        verify(bottomSheetService.showCustomSheet(
-          variant: BottomSheetType.notice,
-          title: ksHomeBottomSheetTitle,
-          description: ksHomeBottomSheetDescription,
-        ));
+    group('HomeViewModel - Data Sections', () {
+      setUp(() {
+        final events = List.generate(10, (i) => testEvent);
+        final dataState = DataState.success(events, DataSource.api);
+        when(mockEventRepository.dataStream)
+            .thenAnswer((_) => Stream.value(dataState));
       });
     });
   });

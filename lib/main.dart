@@ -3,11 +3,12 @@ import 'package:eventy/app/app.bottomsheets.dart';
 import 'package:eventy/app/app.dialogs.dart';
 import 'package:eventy/app/app.locator.dart';
 import 'package:eventy/app/app.router.dart';
-import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setupLocator();
+  await dotenv.load(fileName: ".env");
+  await setupLocator(stackedRouter: stackedRouter);
   setupDialogUi();
   setupBottomSheetUi();
   runApp(const MainApp());
@@ -18,13 +19,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: Routes.startupView,
-      onGenerateRoute: StackedRouter().onGenerateRoute,
-      navigatorKey: StackedService.navigatorKey,
-      navigatorObservers: [
-        StackedService.routeObserver,
-      ],
+    return MaterialApp.router(
+      theme: ThemeData.dark().copyWith(
+        bottomSheetTheme: const BottomSheetThemeData(
+          backgroundColor: Colors.transparent,
+        ),
+      ),
+      routerDelegate: stackedRouter.delegate(),
+      routeInformationParser: stackedRouter.defaultRouteParser(),
     );
   }
 }

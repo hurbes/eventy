@@ -14,11 +14,13 @@ jobs:
   build:      
     name: Build & Release 
     runs-on: macos-latest 
-
+    permissions:
+      contents: write
+          
     steps:
         #1 Checkout Repository
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
         #2 Setup Java
       - name: Set Up Java
@@ -31,8 +33,14 @@ jobs:
       - name: Set Up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.2'
+          flutter-version: '3.24.4'
           channel: 'stable'
+
+      - name: Create .env file
+        run: |
+          cat > .env <<EOF
+          STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+          EOF
 
         #4 Install Dependencies
       - name: Install Dependencies
@@ -74,7 +82,7 @@ jobs:
 
         #9 Upload Artifacts
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Releases
           path: |
@@ -113,4 +121,3 @@ jobs:
         with:
           artifacts: "build/app/outputs/flutter-apk/app-release.apk,build/app/outputs/bundle/release/app-release.aab,build/ios_build.tar.gz"
           tag: v${{ env.VERSION }}
-          token: ${{ secrets.TOKEN }}
