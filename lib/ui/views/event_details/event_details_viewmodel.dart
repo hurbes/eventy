@@ -67,7 +67,7 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
   }
 
   void navigateToTicketSelection() {
-    _routerService.navigateToOrderDetailsView();
+    _routerService.navigateToTicketSelectionView();
   }
 
   @override

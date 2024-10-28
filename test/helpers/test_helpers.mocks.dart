@@ -4,33 +4,37 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i9;
-import 'dart:ui' as _i15;
+import 'dart:ui' as _i18;
 
 import 'package:dio/dio.dart' as _i8;
 import 'package:dio/src/adapter.dart' as _i4;
-import 'package:dio/src/cancel_token.dart' as _i19;
+import 'package:dio/src/cancel_token.dart' as _i21;
 import 'package:dio/src/dio_mixin.dart' as _i6;
 import 'package:dio/src/options.dart' as _i3;
 import 'package:dio/src/response.dart' as _i7;
 import 'package:dio/src/transformer.dart' as _i5;
-import 'package:eventy/core/models/event/event.dart' as _i26;
-import 'package:eventy/core/services/api_service.dart' as _i20;
-import 'package:eventy/core/services/database_service.dart' as _i22;
-import 'package:eventy/core/services/dio_service.dart' as _i24;
-import 'package:eventy/core/services/objectbox_service.dart' as _i23;
-import 'package:eventy/core/services/order_service.dart' as _i25;
-import 'package:eventy/core/services/payment_service.dart' as _i18;
-import 'package:flutter/material.dart' as _i12;
+import 'package:eventy/core/models/data_state/data_set.dart' as _i14;
+import 'package:eventy/core/models/event/event.dart' as _i13;
+import 'package:eventy/core/repository/app_repository.dart' as _i30;
+import 'package:eventy/core/services/api_service.dart' as _i22;
+import 'package:eventy/core/services/database_service.dart' as _i24;
+import 'package:eventy/core/services/dio_service.dart' as _i26;
+import 'package:eventy/core/services/objectbox_service.dart' as _i25;
+import 'package:eventy/core/services/order_service.dart' as _i27;
+import 'package:eventy/core/services/payment_service.dart' as _i20;
+import 'package:eventy/core/services/stripe_service.dart' as _i29;
+import 'package:flutter/foundation.dart' as _i11;
+import 'package:flutter/material.dart' as _i16;
+import 'package:flutter_stripe/flutter_stripe.dart' as _i28;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i21;
+import 'package:mockito/src/dummies.dart' as _i23;
 import 'package:objectbox/objectbox.dart' as _i10;
 import 'package:stacked/stacked.dart' as _i2;
-import 'package:stacked_services/src/bottom_sheet/bottom_sheet_service.dart'
-    as _i13;
-import 'package:stacked_services/src/dialog/dialog_service.dart' as _i16;
-import 'package:stacked_services/src/models/overlay_request.dart' as _i17;
-import 'package:stacked_services/src/models/overlay_response.dart' as _i14;
-import 'package:stacked_services/src/navigation/router_service.dart' as _i11;
+import 'package:stacked_services/src/models/overlay_request.dart' as _i19;
+import 'package:stacked_services/src/models/overlay_response.dart' as _i17;
+import 'package:stacked_services/stacked_services.dart' as _i15;
+import 'package:stripe_platform_interface/stripe_platform_interface.dart'
+    as _i12;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -158,10 +162,150 @@ class _FakeStore_10 extends _i1.SmartFake implements _i10.Store {
         );
 }
 
+class _FakeValueListenable_11<T> extends _i1.SmartFake
+    implements _i11.ValueListenable<T> {
+  _FakeValueListenable_11(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePlatformPayPaymentMethod_12 extends _i1.SmartFake
+    implements _i12.PlatformPayPaymentMethod {
+  _FakePlatformPayPaymentMethod_12(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeSetupIntent_13 extends _i1.SmartFake implements _i12.SetupIntent {
+  _FakeSetupIntent_13(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePaymentIntent_14 extends _i1.SmartFake
+    implements _i12.PaymentIntent {
+  _FakePaymentIntent_14(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeTokenData_15 extends _i1.SmartFake implements _i12.TokenData {
+  _FakeTokenData_15(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePaymentMethod_16 extends _i1.SmartFake
+    implements _i12.PaymentMethod {
+  _FakePaymentMethod_16(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeAddToWalletResult_17 extends _i1.SmartFake
+    implements _i12.AddToWalletResult {
+  _FakeAddToWalletResult_17(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeCanAddCardToWalletResult_18 extends _i1.SmartFake
+    implements _i12.CanAddCardToWalletResult {
+  _FakeCanAddCardToWalletResult_18(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeIsCardInWalletResult_19 extends _i1.SmartFake
+    implements _i12.IsCardInWalletResult {
+  _FakeIsCardInWalletResult_19(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeFinancialConnectionTokenResult_20 extends _i1.SmartFake
+    implements _i12.FinancialConnectionTokenResult {
+  _FakeFinancialConnectionTokenResult_20(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeFinancialConnectionSessionResult_21 extends _i1.SmartFake
+    implements _i12.FinancialConnectionSessionResult {
+  _FakeFinancialConnectionSessionResult_21(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeEvent_22 extends _i1.SmartFake implements _i13.Event {
+  _FakeEvent_22(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakePaginatedOption_23 extends _i1.SmartFake
+    implements _i14.PaginatedOption {
+  _FakePaginatedOption_23(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [RouterService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRouterService extends _i1.Mock implements _i11.RouterService {
+class MockRouterService extends _i1.Mock implements _i15.RouterService {
   @override
   _i2.RootStackRouter get router => (super.noSuchMethod(
         Invocation.getter(#router),
@@ -250,8 +394,8 @@ class MockRouterService extends _i1.Mock implements _i11.RouterService {
 
   @override
   _i9.Future<T?> navigateWithTransition<T extends Object?>(
-    _i12.Widget? widget, {
-    _i12.RouteTransitionsBuilder? transitionBuilder,
+    _i16.Widget? widget, {
+    _i16.RouteTransitionsBuilder? transitionBuilder,
     bool? fullscreenDialog = false,
     Duration? transitionDuration = const Duration(milliseconds: 300),
   }) =>
@@ -301,8 +445,8 @@ class MockRouterService extends _i1.Mock implements _i11.RouterService {
 
   @override
   _i9.Future<void> clearStackAndShowView(
-    _i12.Widget? widget, {
-    _i12.RouteTransitionsBuilder? transitionBuilder,
+    _i16.Widget? widget, {
+    _i16.RouteTransitionsBuilder? transitionBuilder,
     bool? fullscreenDialog = false,
     Duration? transitionDuration = const Duration(milliseconds: 300),
   }) =>
@@ -376,7 +520,7 @@ class MockRouterService extends _i1.Mock implements _i11.RouterService {
       ) as _i2.RoutingController);
 
   @override
-  _i9.Future<T?> pushNativeRoute<T extends Object?>(_i12.Route<T>? route) =>
+  _i9.Future<T?> pushNativeRoute<T extends Object?>(_i16.Route<T>? route) =>
       (super.noSuchMethod(
         Invocation.method(
           #pushNativeRoute,
@@ -391,9 +535,9 @@ class MockRouterService extends _i1.Mock implements _i11.RouterService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockBottomSheetService extends _i1.Mock
-    implements _i13.BottomSheetService {
+    implements _i15.BottomSheetService {
   @override
-  void setCustomSheetBuilders(Map<dynamic, _i13.SheetBuilder>? builders) =>
+  void setCustomSheetBuilders(Map<dynamic, _i15.SheetBuilder>? builders) =>
       super.noSuchMethod(
         Invocation.method(
           #setCustomSheetBuilders,
@@ -403,7 +547,7 @@ class MockBottomSheetService extends _i1.Mock
       );
 
   @override
-  _i9.Future<_i14.SheetResponse<dynamic>?> showBottomSheet({
+  _i9.Future<_i17.SheetResponse<dynamic>?> showBottomSheet({
     required String? title,
     String? description,
     String? confirmButtonTitle = r'Ok',
@@ -436,13 +580,13 @@ class MockBottomSheetService extends _i1.Mock
             #elevation: elevation,
           },
         ),
-        returnValue: _i9.Future<_i14.SheetResponse<dynamic>?>.value(),
+        returnValue: _i9.Future<_i17.SheetResponse<dynamic>?>.value(),
         returnValueForMissingStub:
-            _i9.Future<_i14.SheetResponse<dynamic>?>.value(),
-      ) as _i9.Future<_i14.SheetResponse<dynamic>?>);
+            _i9.Future<_i17.SheetResponse<dynamic>?>.value(),
+      ) as _i9.Future<_i17.SheetResponse<dynamic>?>);
 
   @override
-  _i9.Future<_i14.SheetResponse<T>?> showCustomSheet<T, R>({
+  _i9.Future<_i17.SheetResponse<T>?> showCustomSheet<T, R>({
     dynamic variant,
     String? title,
     String? description,
@@ -455,7 +599,7 @@ class MockBottomSheetService extends _i1.Mock
     bool? showIconInAdditionalButton = false,
     String? additionalButtonTitle,
     bool? takesInput = false,
-    _i15.Color? barrierColor = const _i15.Color(2315255808),
+    _i18.Color? barrierColor = const _i18.Color(2315255808),
     double? elevation = 1.0,
     bool? barrierDismissible = true,
     bool? isScrollControlled = false,
@@ -499,12 +643,12 @@ class MockBottomSheetService extends _i1.Mock
             #useRootNavigator: useRootNavigator,
           },
         ),
-        returnValue: _i9.Future<_i14.SheetResponse<T>?>.value(),
-        returnValueForMissingStub: _i9.Future<_i14.SheetResponse<T>?>.value(),
-      ) as _i9.Future<_i14.SheetResponse<T>?>);
+        returnValue: _i9.Future<_i17.SheetResponse<T>?>.value(),
+        returnValueForMissingStub: _i9.Future<_i17.SheetResponse<T>?>.value(),
+      ) as _i9.Future<_i17.SheetResponse<T>?>);
 
   @override
-  void completeSheet(_i14.SheetResponse<dynamic>? response) =>
+  void completeSheet(_i17.SheetResponse<dynamic>? response) =>
       super.noSuchMethod(
         Invocation.method(
           #completeSheet,
@@ -517,10 +661,10 @@ class MockBottomSheetService extends _i1.Mock
 /// A class which mocks [DialogService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDialogService extends _i1.Mock implements _i16.DialogService {
+class MockDialogService extends _i1.Mock implements _i15.DialogService {
   @override
   void registerCustomDialogBuilders(
-          Map<dynamic, _i16.DialogBuilder>? builders) =>
+          Map<dynamic, _i15.DialogBuilder>? builders) =>
       super.noSuchMethod(
         Invocation.method(
           #registerCustomDialogBuilders,
@@ -532,10 +676,10 @@ class MockDialogService extends _i1.Mock implements _i16.DialogService {
   @override
   void registerCustomDialogBuilder({
     required dynamic variant,
-    required _i12.Widget Function(
-      _i12.BuildContext,
-      _i17.DialogRequest<dynamic>,
-      dynamic Function(_i14.DialogResponse<dynamic>),
+    required _i16.Widget Function(
+      _i16.BuildContext,
+      _i19.DialogRequest<dynamic>,
+      dynamic Function(_i17.DialogResponse<dynamic>),
     )? builder,
   }) =>
       super.noSuchMethod(
@@ -551,15 +695,15 @@ class MockDialogService extends _i1.Mock implements _i16.DialogService {
       );
 
   @override
-  _i9.Future<_i14.DialogResponse<dynamic>?> showDialog({
+  _i9.Future<_i17.DialogResponse<dynamic>?> showDialog({
     String? title,
     String? description,
     String? cancelTitle,
-    _i15.Color? cancelTitleColor,
+    _i18.Color? cancelTitleColor,
     String? buttonTitle = r'Ok',
-    _i15.Color? buttonTitleColor,
+    _i18.Color? buttonTitleColor,
     bool? barrierDismissible = false,
-    _i16.DialogPlatform? dialogPlatform,
+    _i15.DialogPlatform? dialogPlatform,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -576,13 +720,13 @@ class MockDialogService extends _i1.Mock implements _i16.DialogService {
             #dialogPlatform: dialogPlatform,
           },
         ),
-        returnValue: _i9.Future<_i14.DialogResponse<dynamic>?>.value(),
+        returnValue: _i9.Future<_i17.DialogResponse<dynamic>?>.value(),
         returnValueForMissingStub:
-            _i9.Future<_i14.DialogResponse<dynamic>?>.value(),
-      ) as _i9.Future<_i14.DialogResponse<dynamic>?>);
+            _i9.Future<_i17.DialogResponse<dynamic>?>.value(),
+      ) as _i9.Future<_i17.DialogResponse<dynamic>?>);
 
   @override
-  _i9.Future<_i14.DialogResponse<T>?> showCustomDialog<T, R>({
+  _i9.Future<_i17.DialogResponse<T>?> showCustomDialog<T, R>({
     dynamic variant,
     String? title,
     String? description,
@@ -595,7 +739,7 @@ class MockDialogService extends _i1.Mock implements _i16.DialogService {
     bool? showIconInAdditionalButton = false,
     String? additionalButtonTitle,
     bool? takesInput = false,
-    _i15.Color? barrierColor = const _i15.Color(2315255808),
+    _i18.Color? barrierColor = const _i18.Color(2315255808),
     bool? barrierDismissible = false,
     String? barrierLabel = r'',
     bool? useSafeArea = true,
@@ -627,20 +771,20 @@ class MockDialogService extends _i1.Mock implements _i16.DialogService {
             #data: data,
           },
         ),
-        returnValue: _i9.Future<_i14.DialogResponse<T>?>.value(),
-        returnValueForMissingStub: _i9.Future<_i14.DialogResponse<T>?>.value(),
-      ) as _i9.Future<_i14.DialogResponse<T>?>);
+        returnValue: _i9.Future<_i17.DialogResponse<T>?>.value(),
+        returnValueForMissingStub: _i9.Future<_i17.DialogResponse<T>?>.value(),
+      ) as _i9.Future<_i17.DialogResponse<T>?>);
 
   @override
-  _i9.Future<_i14.DialogResponse<dynamic>?> showConfirmationDialog({
+  _i9.Future<_i17.DialogResponse<dynamic>?> showConfirmationDialog({
     String? title,
     String? description,
     String? cancelTitle = r'Cancel',
-    _i15.Color? cancelTitleColor,
+    _i18.Color? cancelTitleColor,
     String? confirmationTitle = r'Ok',
-    _i15.Color? confirmationTitleColor,
+    _i18.Color? confirmationTitleColor,
     bool? barrierDismissible = false,
-    _i16.DialogPlatform? dialogPlatform,
+    _i15.DialogPlatform? dialogPlatform,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -657,13 +801,13 @@ class MockDialogService extends _i1.Mock implements _i16.DialogService {
             #dialogPlatform: dialogPlatform,
           },
         ),
-        returnValue: _i9.Future<_i14.DialogResponse<dynamic>?>.value(),
+        returnValue: _i9.Future<_i17.DialogResponse<dynamic>?>.value(),
         returnValueForMissingStub:
-            _i9.Future<_i14.DialogResponse<dynamic>?>.value(),
-      ) as _i9.Future<_i14.DialogResponse<dynamic>?>);
+            _i9.Future<_i17.DialogResponse<dynamic>?>.value(),
+      ) as _i9.Future<_i17.DialogResponse<dynamic>?>);
 
   @override
-  void completeDialog(_i14.DialogResponse<dynamic>? response) =>
+  void completeDialog(_i17.DialogResponse<dynamic>? response) =>
       super.noSuchMethod(
         Invocation.method(
           #completeDialog,
@@ -676,7 +820,7 @@ class MockDialogService extends _i1.Mock implements _i16.DialogService {
 /// A class which mocks [PaymentService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPaymentService extends _i1.Mock implements _i18.PaymentService {}
+class MockPaymentService extends _i1.Mock implements _i20.PaymentService {}
 
 /// A class which mocks [Dio].
 ///
@@ -778,7 +922,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Object? data,
     Map<String, dynamic>? queryParameters,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -825,7 +969,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Uri? uri, {
     Object? data,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -870,7 +1014,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Object? data,
     Map<String, dynamic>? queryParameters,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.ProgressCallback? onReceiveProgress,
   }) =>
       (super.noSuchMethod(
@@ -921,7 +1065,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Uri? uri, {
     Object? data,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.ProgressCallback? onReceiveProgress,
   }) =>
       (super.noSuchMethod(
@@ -970,7 +1114,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Object? data,
     Map<String, dynamic>? queryParameters,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.ProgressCallback? onSendProgress,
     _i3.ProgressCallback? onReceiveProgress,
   }) =>
@@ -1025,7 +1169,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Uri? uri, {
     Object? data,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.ProgressCallback? onSendProgress,
     _i3.ProgressCallback? onReceiveProgress,
   }) =>
@@ -1078,7 +1222,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Object? data,
     Map<String, dynamic>? queryParameters,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.ProgressCallback? onSendProgress,
     _i3.ProgressCallback? onReceiveProgress,
   }) =>
@@ -1133,7 +1277,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Uri? uri, {
     Object? data,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.ProgressCallback? onSendProgress,
     _i3.ProgressCallback? onReceiveProgress,
   }) =>
@@ -1186,7 +1330,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Object? data,
     Map<String, dynamic>? queryParameters,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.ProgressCallback? onSendProgress,
     _i3.ProgressCallback? onReceiveProgress,
   }) =>
@@ -1241,7 +1385,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Uri? uri, {
     Object? data,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.ProgressCallback? onSendProgress,
     _i3.ProgressCallback? onReceiveProgress,
   }) =>
@@ -1294,7 +1438,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Object? data,
     Map<String, dynamic>? queryParameters,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1341,7 +1485,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Uri? uri, {
     Object? data,
     _i3.Options? options,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1386,7 +1530,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     dynamic savePath, {
     _i3.ProgressCallback? onReceiveProgress,
     Map<String, dynamic>? queryParameters,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     bool? deleteOnError = true,
     String? lengthHeader = r'content-length',
     Object? data,
@@ -1456,7 +1600,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     Uri? uri,
     dynamic savePath, {
     _i3.ProgressCallback? onReceiveProgress,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     bool? deleteOnError = true,
     String? lengthHeader = r'content-length',
     Object? data,
@@ -1523,7 +1667,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
     String? url, {
     Object? data,
     Map<String, dynamic>? queryParameters,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.Options? options,
     _i3.ProgressCallback? onSendProgress,
     _i3.ProgressCallback? onReceiveProgress,
@@ -1578,7 +1722,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
   _i9.Future<_i7.Response<T>> requestUri<T>(
     Uri? uri, {
     Object? data,
-    _i19.CancelToken? cancelToken,
+    _i21.CancelToken? cancelToken,
     _i3.Options? options,
     _i3.ProgressCallback? onSendProgress,
     _i3.ProgressCallback? onReceiveProgress,
@@ -1654,7 +1798,7 @@ class MockDio extends _i1.Mock implements _i8.Dio {
 /// A class which mocks [ApiService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockApiService extends _i1.Mock implements _i20.ApiService {
+class MockApiService extends _i1.Mock implements _i22.ApiService {
   @override
   _i8.Dio get dio => (super.noSuchMethod(
         Invocation.getter(#dio),
@@ -1691,8 +1835,8 @@ class MockApiService extends _i1.Mock implements _i20.ApiService {
             #headers: headers,
           },
         ),
-        returnValue: _i21.ifNotNull(
-              _i21.dummyValueOrNull<T>(
+        returnValue: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #get,
@@ -1718,8 +1862,8 @@ class MockApiService extends _i1.Mock implements _i20.ApiService {
                 },
               ),
             ),
-        returnValueForMissingStub: _i21.ifNotNull(
-              _i21.dummyValueOrNull<T>(
+        returnValueForMissingStub: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #get,
@@ -1763,8 +1907,8 @@ class MockApiService extends _i1.Mock implements _i20.ApiService {
             #headers: headers,
           },
         ),
-        returnValue: _i21.ifNotNull(
-              _i21.dummyValueOrNull<T>(
+        returnValue: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #post,
@@ -1790,8 +1934,8 @@ class MockApiService extends _i1.Mock implements _i20.ApiService {
                 },
               ),
             ),
-        returnValueForMissingStub: _i21.ifNotNull(
-              _i21.dummyValueOrNull<T>(
+        returnValueForMissingStub: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #post,
@@ -1835,8 +1979,8 @@ class MockApiService extends _i1.Mock implements _i20.ApiService {
             #headers: headers,
           },
         ),
-        returnValue: _i21.ifNotNull(
-              _i21.dummyValueOrNull<T>(
+        returnValue: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #put,
@@ -1862,8 +2006,8 @@ class MockApiService extends _i1.Mock implements _i20.ApiService {
                 },
               ),
             ),
-        returnValueForMissingStub: _i21.ifNotNull(
-              _i21.dummyValueOrNull<T>(
+        returnValueForMissingStub: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #put,
@@ -1907,8 +2051,8 @@ class MockApiService extends _i1.Mock implements _i20.ApiService {
             #headers: headers,
           },
         ),
-        returnValue: _i21.ifNotNull(
-              _i21.dummyValueOrNull<T>(
+        returnValue: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #delete,
@@ -1934,8 +2078,8 @@ class MockApiService extends _i1.Mock implements _i20.ApiService {
                 },
               ),
             ),
-        returnValueForMissingStub: _i21.ifNotNull(
-              _i21.dummyValueOrNull<T>(
+        returnValueForMissingStub: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
                 this,
                 Invocation.method(
                   #delete,
@@ -2048,7 +2192,7 @@ class MockApiService extends _i1.Mock implements _i20.ApiService {
 /// A class which mocks [DatabaseService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDatabaseService extends _i1.Mock implements _i22.DatabaseService {
+class MockDatabaseService extends _i1.Mock implements _i24.DatabaseService {
   @override
   bool get enableLogs => (super.noSuchMethod(
         Invocation.getter(#enableLogs),
@@ -2194,7 +2338,7 @@ class MockDatabaseService extends _i1.Mock implements _i22.DatabaseService {
 /// A class which mocks [ObjectboxService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockObjectboxService extends _i1.Mock implements _i23.ObjectboxService {
+class MockObjectboxService extends _i1.Mock implements _i25.ObjectboxService {
   @override
   _i10.Store get store => (super.noSuchMethod(
         Invocation.getter(#store),
@@ -2231,18 +2375,18 @@ class MockObjectboxService extends _i1.Mock implements _i23.ObjectboxService {
 /// A class which mocks [DioService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDioService extends _i1.Mock implements _i24.DioService {}
+class MockDioService extends _i1.Mock implements _i26.DioService {}
 
 /// A class which mocks [OrderService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockOrderService extends _i1.Mock implements _i25.OrderService {
+class MockOrderService extends _i1.Mock implements _i27.OrderService {
   @override
-  Map<_i26.Ticket, int> get selectedTickets => (super.noSuchMethod(
+  Map<_i13.Ticket, int> get selectedTickets => (super.noSuchMethod(
         Invocation.getter(#selectedTickets),
-        returnValue: <_i26.Ticket, int>{},
-        returnValueForMissingStub: <_i26.Ticket, int>{},
-      ) as Map<_i26.Ticket, int>);
+        returnValue: <_i13.Ticket, int>{},
+        returnValueForMissingStub: <_i13.Ticket, int>{},
+      ) as Map<_i13.Ticket, int>);
 
   @override
   bool get enableLogs => (super.noSuchMethod(
@@ -2259,7 +2403,7 @@ class MockOrderService extends _i1.Mock implements _i25.OrderService {
       ) as int);
 
   @override
-  void setActiveEvent(_i26.Event? event) => super.noSuchMethod(
+  void setActiveEvent(_i13.Event? event) => super.noSuchMethod(
         Invocation.method(
           #setActiveEvent,
           [event],
@@ -2268,7 +2412,7 @@ class MockOrderService extends _i1.Mock implements _i25.OrderService {
       );
 
   @override
-  int quantityForTicket(_i26.Ticket? ticket) => (super.noSuchMethod(
+  int quantityForTicket(_i13.Ticket? ticket) => (super.noSuchMethod(
         Invocation.method(
           #quantityForTicket,
           [ticket],
@@ -2278,7 +2422,7 @@ class MockOrderService extends _i1.Mock implements _i25.OrderService {
       ) as int);
 
   @override
-  void addTicket(_i26.Ticket? ticket) => super.noSuchMethod(
+  void addTicket(_i13.Ticket? ticket) => super.noSuchMethod(
         Invocation.method(
           #addTicket,
           [ticket],
@@ -2287,7 +2431,7 @@ class MockOrderService extends _i1.Mock implements _i25.OrderService {
       );
 
   @override
-  void removeTicket(_i26.Ticket? ticket) => super.noSuchMethod(
+  void removeTicket(_i13.Ticket? ticket) => super.noSuchMethod(
         Invocation.method(
           #removeTicket,
           [ticket],
@@ -2296,7 +2440,7 @@ class MockOrderService extends _i1.Mock implements _i25.OrderService {
       );
 
   @override
-  bool canAddMoreTickets(_i26.Ticket? ticket) => (super.noSuchMethod(
+  bool canAddMoreTickets(_i13.Ticket? ticket) => (super.noSuchMethod(
         Invocation.method(
           #canAddMoreTickets,
           [ticket],
@@ -2306,7 +2450,7 @@ class MockOrderService extends _i1.Mock implements _i25.OrderService {
       ) as bool);
 
   @override
-  bool canRemoveTickets(_i26.Ticket? ticket) => (super.noSuchMethod(
+  bool canRemoveTickets(_i13.Ticket? ticket) => (super.noSuchMethod(
         Invocation.method(
           #canRemoveTickets,
           [ticket],
@@ -2314,6 +2458,47 @@ class MockOrderService extends _i1.Mock implements _i25.OrderService {
         returnValue: false,
         returnValueForMissingStub: false,
       ) as bool);
+
+  @override
+  Map<String, dynamic> getTicketsPayload() => (super.noSuchMethod(
+        Invocation.method(
+          #getTicketsPayload,
+          [],
+        ),
+        returnValue: <String, dynamic>{},
+        returnValueForMissingStub: <String, dynamic>{},
+      ) as Map<String, dynamic>);
+
+  @override
+  _i9.Future<void> createOrder() => (super.noSuchMethod(
+        Invocation.method(
+          #createOrder,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> completeOrder(Map<String, dynamic>? data) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #completeOrder,
+          [data],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> createPayment() => (super.noSuchMethod(
+        Invocation.method(
+          #createPayment,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
 
   @override
   void listenToReactiveValues(List<dynamic>? reactiveValues) =>
@@ -2393,6 +2578,1534 @@ class MockOrderService extends _i1.Mock implements _i25.OrderService {
         Invocation.method(
           #logE,
           [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [Stripe].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStripe extends _i1.Mock implements _i28.Stripe {
+  @override
+  bool get debugUpdatePlatformSheetCalled => (super.noSuchMethod(
+        Invocation.getter(#debugUpdatePlatformSheetCalled),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set debugUpdatePlatformSheetCalled(bool? _debugUpdatePlatformSheetCalled) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #debugUpdatePlatformSheetCalled,
+          _debugUpdatePlatformSheetCalled,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get debugConfigurePlatformOrderTrackingCalled => (super.noSuchMethod(
+        Invocation.getter(#debugConfigurePlatformOrderTrackingCalled),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set debugConfigurePlatformOrderTrackingCalled(
+          bool? _debugConfigurePlatformOrderTrackingCalled) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #debugConfigurePlatformOrderTrackingCalled,
+          _debugConfigurePlatformOrderTrackingCalled,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i11.ValueListenable<bool> get isPlatformPaySupportedListenable =>
+      (super.noSuchMethod(
+        Invocation.getter(#isPlatformPaySupportedListenable),
+        returnValue: _FakeValueListenable_11<bool>(
+          this,
+          Invocation.getter(#isPlatformPaySupportedListenable),
+        ),
+        returnValueForMissingStub: _FakeValueListenable_11<bool>(
+          this,
+          Invocation.getter(#isPlatformPaySupportedListenable),
+        ),
+      ) as _i11.ValueListenable<bool>);
+
+  @override
+  _i9.Future<void> applySettings() => (super.noSuchMethod(
+        Invocation.method(
+          #applySettings,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<bool> isPlatformPaySupported({
+    _i12.IsGooglePaySupportedParams? googlePay,
+    _i12.PlatformPayWebPaymentRequestCreateOptions?
+        webPaymentRequestCreateOptions,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #isPlatformPaySupported,
+          [],
+          {
+            #googlePay: googlePay,
+            #webPaymentRequestCreateOptions: webPaymentRequestCreateOptions,
+          },
+        ),
+        returnValue: _i9.Future<bool>.value(false),
+        returnValueForMissingStub: _i9.Future<bool>.value(false),
+      ) as _i9.Future<bool>);
+
+  @override
+  _i9.Future<_i12.PlatformPayPaymentMethod> createPlatformPayPaymentMethod({
+    required _i12.PlatformPayPaymentMethodParams? params,
+    bool? usesDeprecatedTokenFlow = false,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createPlatformPayPaymentMethod,
+          [],
+          {
+            #params: params,
+            #usesDeprecatedTokenFlow: usesDeprecatedTokenFlow,
+          },
+        ),
+        returnValue: _i9.Future<_i12.PlatformPayPaymentMethod>.value(
+            _FakePlatformPayPaymentMethod_12(
+          this,
+          Invocation.method(
+            #createPlatformPayPaymentMethod,
+            [],
+            {
+              #params: params,
+              #usesDeprecatedTokenFlow: usesDeprecatedTokenFlow,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PlatformPayPaymentMethod>.value(
+                _FakePlatformPayPaymentMethod_12(
+          this,
+          Invocation.method(
+            #createPlatformPayPaymentMethod,
+            [],
+            {
+              #params: params,
+              #usesDeprecatedTokenFlow: usesDeprecatedTokenFlow,
+            },
+          ),
+        )),
+      ) as _i9.Future<_i12.PlatformPayPaymentMethod>);
+
+  @override
+  _i9.Future<_i12.SetupIntent> confirmPlatformPaySetupIntent({
+    required String? clientSecret,
+    required _i12.PlatformPayConfirmParams? confirmParams,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #confirmPlatformPaySetupIntent,
+          [],
+          {
+            #clientSecret: clientSecret,
+            #confirmParams: confirmParams,
+          },
+        ),
+        returnValue: _i9.Future<_i12.SetupIntent>.value(_FakeSetupIntent_13(
+          this,
+          Invocation.method(
+            #confirmPlatformPaySetupIntent,
+            [],
+            {
+              #clientSecret: clientSecret,
+              #confirmParams: confirmParams,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.SetupIntent>.value(_FakeSetupIntent_13(
+          this,
+          Invocation.method(
+            #confirmPlatformPaySetupIntent,
+            [],
+            {
+              #clientSecret: clientSecret,
+              #confirmParams: confirmParams,
+            },
+          ),
+        )),
+      ) as _i9.Future<_i12.SetupIntent>);
+
+  @override
+  _i9.Future<_i12.PaymentIntent> confirmPlatformPayPaymentIntent({
+    required String? clientSecret,
+    required _i12.PlatformPayConfirmParams? confirmParams,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #confirmPlatformPayPaymentIntent,
+          [],
+          {
+            #clientSecret: clientSecret,
+            #confirmParams: confirmParams,
+          },
+        ),
+        returnValue: _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #confirmPlatformPayPaymentIntent,
+            [],
+            {
+              #clientSecret: clientSecret,
+              #confirmParams: confirmParams,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #confirmPlatformPayPaymentIntent,
+            [],
+            {
+              #clientSecret: clientSecret,
+              #confirmParams: confirmParams,
+            },
+          ),
+        )),
+      ) as _i9.Future<_i12.PaymentIntent>);
+
+  @override
+  _i9.Future<void> updatePlatformSheet(
+          {required _i12.PlatformPaySheetUpdateParams? params}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updatePlatformSheet,
+          [],
+          {#params: params},
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> configurePlatformOrderTracking(
+          {required _i12.PlatformPayOrderDetails? orderDetails}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #configurePlatformOrderTracking,
+          [],
+          {#orderDetails: orderDetails},
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<_i12.TokenData> createApplePayToken(
+          Map<String, dynamic>? payment) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createApplePayToken,
+          [payment],
+        ),
+        returnValue: _i9.Future<_i12.TokenData>.value(_FakeTokenData_15(
+          this,
+          Invocation.method(
+            #createApplePayToken,
+            [payment],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.TokenData>.value(_FakeTokenData_15(
+          this,
+          Invocation.method(
+            #createApplePayToken,
+            [payment],
+          ),
+        )),
+      ) as _i9.Future<_i12.TokenData>);
+
+  @override
+  _i9.Future<_i12.PaymentMethod> createPaymentMethod({
+    required _i12.PaymentMethodParams? params,
+    _i12.PaymentMethodOptions? options,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createPaymentMethod,
+          [],
+          {
+            #params: params,
+            #options: options,
+          },
+        ),
+        returnValue: _i9.Future<_i12.PaymentMethod>.value(_FakePaymentMethod_16(
+          this,
+          Invocation.method(
+            #createPaymentMethod,
+            [],
+            {
+              #params: params,
+              #options: options,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentMethod>.value(_FakePaymentMethod_16(
+          this,
+          Invocation.method(
+            #createPaymentMethod,
+            [],
+            {
+              #params: params,
+              #options: options,
+            },
+          ),
+        )),
+      ) as _i9.Future<_i12.PaymentMethod>);
+
+  @override
+  _i9.Future<_i12.TokenData> createToken(_i12.CreateTokenParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createToken,
+          [params],
+        ),
+        returnValue: _i9.Future<_i12.TokenData>.value(_FakeTokenData_15(
+          this,
+          Invocation.method(
+            #createToken,
+            [params],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.TokenData>.value(_FakeTokenData_15(
+          this,
+          Invocation.method(
+            #createToken,
+            [params],
+          ),
+        )),
+      ) as _i9.Future<_i12.TokenData>);
+
+  @override
+  _i9.Future<_i12.PaymentIntent> retrievePaymentIntent(String? clientSecret) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #retrievePaymentIntent,
+          [clientSecret],
+        ),
+        returnValue: _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #retrievePaymentIntent,
+            [clientSecret],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #retrievePaymentIntent,
+            [clientSecret],
+          ),
+        )),
+      ) as _i9.Future<_i12.PaymentIntent>);
+
+  @override
+  _i9.Future<_i12.SetupIntent> retrieveSetupIntent(String? clientSecret) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #retrieveSetupIntent,
+          [clientSecret],
+        ),
+        returnValue: _i9.Future<_i12.SetupIntent>.value(_FakeSetupIntent_13(
+          this,
+          Invocation.method(
+            #retrieveSetupIntent,
+            [clientSecret],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.SetupIntent>.value(_FakeSetupIntent_13(
+          this,
+          Invocation.method(
+            #retrieveSetupIntent,
+            [clientSecret],
+          ),
+        )),
+      ) as _i9.Future<_i12.SetupIntent>);
+
+  @override
+  _i9.Future<void> openApplePaySetup() => (super.noSuchMethod(
+        Invocation.method(
+          #openApplePaySetup,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<bool> handleURLCallback(String? url) => (super.noSuchMethod(
+        Invocation.method(
+          #handleURLCallback,
+          [url],
+        ),
+        returnValue: _i9.Future<bool>.value(false),
+        returnValueForMissingStub: _i9.Future<bool>.value(false),
+      ) as _i9.Future<bool>);
+
+  @override
+  _i9.Future<_i12.PaymentIntent> confirmPayment({
+    required String? paymentIntentClientSecret,
+    _i12.PaymentMethodParams? data,
+    _i12.PaymentMethodOptions? options,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #confirmPayment,
+          [],
+          {
+            #paymentIntentClientSecret: paymentIntentClientSecret,
+            #data: data,
+            #options: options,
+          },
+        ),
+        returnValue: _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #confirmPayment,
+            [],
+            {
+              #paymentIntentClientSecret: paymentIntentClientSecret,
+              #data: data,
+              #options: options,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #confirmPayment,
+            [],
+            {
+              #paymentIntentClientSecret: paymentIntentClientSecret,
+              #data: data,
+              #options: options,
+            },
+          ),
+        )),
+      ) as _i9.Future<_i12.PaymentIntent>);
+
+  @override
+  _i9.Future<_i12.PaymentIntent> handleNextAction(
+    String? paymentIntentClientSecret, {
+    String? returnURL,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #handleNextAction,
+          [paymentIntentClientSecret],
+          {#returnURL: returnURL},
+        ),
+        returnValue: _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #handleNextAction,
+            [paymentIntentClientSecret],
+            {#returnURL: returnURL},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #handleNextAction,
+            [paymentIntentClientSecret],
+            {#returnURL: returnURL},
+          ),
+        )),
+      ) as _i9.Future<_i12.PaymentIntent>);
+
+  @override
+  _i9.Future<_i12.SetupIntent> handleNextActionForSetupIntent(
+    String? setupIntentClientSecret, {
+    String? returnURL,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #handleNextActionForSetupIntent,
+          [setupIntentClientSecret],
+          {#returnURL: returnURL},
+        ),
+        returnValue: _i9.Future<_i12.SetupIntent>.value(_FakeSetupIntent_13(
+          this,
+          Invocation.method(
+            #handleNextActionForSetupIntent,
+            [setupIntentClientSecret],
+            {#returnURL: returnURL},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.SetupIntent>.value(_FakeSetupIntent_13(
+          this,
+          Invocation.method(
+            #handleNextActionForSetupIntent,
+            [setupIntentClientSecret],
+            {#returnURL: returnURL},
+          ),
+        )),
+      ) as _i9.Future<_i12.SetupIntent>);
+
+  @override
+  _i9.Future<_i12.SetupIntent> confirmSetupIntent({
+    required String? paymentIntentClientSecret,
+    required _i12.PaymentMethodParams? params,
+    _i12.PaymentMethodOptions? options,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #confirmSetupIntent,
+          [],
+          {
+            #paymentIntentClientSecret: paymentIntentClientSecret,
+            #params: params,
+            #options: options,
+          },
+        ),
+        returnValue: _i9.Future<_i12.SetupIntent>.value(_FakeSetupIntent_13(
+          this,
+          Invocation.method(
+            #confirmSetupIntent,
+            [],
+            {
+              #paymentIntentClientSecret: paymentIntentClientSecret,
+              #params: params,
+              #options: options,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.SetupIntent>.value(_FakeSetupIntent_13(
+          this,
+          Invocation.method(
+            #confirmSetupIntent,
+            [],
+            {
+              #paymentIntentClientSecret: paymentIntentClientSecret,
+              #params: params,
+              #options: options,
+            },
+          ),
+        )),
+      ) as _i9.Future<_i12.SetupIntent>);
+
+  @override
+  _i9.Future<String?> createTokenForCVCUpdate(String? cvc) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createTokenForCVCUpdate,
+          [cvc],
+        ),
+        returnValue: _i9.Future<String?>.value(),
+        returnValueForMissingStub: _i9.Future<String?>.value(),
+      ) as _i9.Future<String?>);
+
+  @override
+  _i9.Future<_i12.PaymentSheetPaymentOption?> initPaymentSheet(
+          {required _i12.SetupPaymentSheetParameters?
+              paymentSheetParameters}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #initPaymentSheet,
+          [],
+          {#paymentSheetParameters: paymentSheetParameters},
+        ),
+        returnValue: _i9.Future<_i12.PaymentSheetPaymentOption?>.value(),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentSheetPaymentOption?>.value(),
+      ) as _i9.Future<_i12.PaymentSheetPaymentOption?>);
+
+  @override
+  _i9.Future<_i12.PaymentSheetPaymentOption?> presentPaymentSheet(
+          {_i12.PaymentSheetPresentOptions? options}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #presentPaymentSheet,
+          [],
+          {#options: options},
+        ),
+        returnValue: _i9.Future<_i12.PaymentSheetPaymentOption?>.value(),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentSheetPaymentOption?>.value(),
+      ) as _i9.Future<_i12.PaymentSheetPaymentOption?>);
+
+  @override
+  _i9.Future<void> intentCreationCallback(
+          _i12.IntentCreationCallbackParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #intentCreationCallback,
+          [params],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> resetPaymentSheetCustomer() => (super.noSuchMethod(
+        Invocation.method(
+          #resetPaymentSheetCustomer,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> confirmPaymentSheetPayment() => (super.noSuchMethod(
+        Invocation.method(
+          #confirmPaymentSheetPayment,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> dangerouslyUpdateCardDetails(_i12.CardDetails? card) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #dangerouslyUpdateCardDetails,
+          [card],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> initGooglePay(_i12.GooglePayInitParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #initGooglePay,
+          [params],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> presentGooglePay(_i12.PresentGooglePayParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #presentGooglePay,
+          [params],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<_i12.PaymentMethod> createGooglePayPaymentMethod(
+          _i12.CreateGooglePayPaymentParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #createGooglePayPaymentMethod,
+          [params],
+        ),
+        returnValue: _i9.Future<_i12.PaymentMethod>.value(_FakePaymentMethod_16(
+          this,
+          Invocation.method(
+            #createGooglePayPaymentMethod,
+            [params],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentMethod>.value(_FakePaymentMethod_16(
+          this,
+          Invocation.method(
+            #createGooglePayPaymentMethod,
+            [params],
+          ),
+        )),
+      ) as _i9.Future<_i12.PaymentMethod>);
+
+  @override
+  _i9.Future<bool> isGooglePaySupported(
+          _i12.IsGooglePaySupportedParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #isGooglePaySupported,
+          [params],
+        ),
+        returnValue: _i9.Future<bool>.value(false),
+        returnValueForMissingStub: _i9.Future<bool>.value(false),
+      ) as _i9.Future<bool>);
+
+  @override
+  _i9.Future<_i12.PaymentIntent> collectBankAccount({
+    required bool? isPaymentIntent,
+    required String? clientSecret,
+    required _i12.CollectBankAccountParams? params,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #collectBankAccount,
+          [],
+          {
+            #isPaymentIntent: isPaymentIntent,
+            #clientSecret: clientSecret,
+            #params: params,
+          },
+        ),
+        returnValue: _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #collectBankAccount,
+            [],
+            {
+              #isPaymentIntent: isPaymentIntent,
+              #clientSecret: clientSecret,
+              #params: params,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #collectBankAccount,
+            [],
+            {
+              #isPaymentIntent: isPaymentIntent,
+              #clientSecret: clientSecret,
+              #params: params,
+            },
+          ),
+        )),
+      ) as _i9.Future<_i12.PaymentIntent>);
+
+  @override
+  _i9.Future<_i12.PaymentIntent> verifyPaymentIntentWithMicrodeposits({
+    required bool? isPaymentIntent,
+    required String? clientSecret,
+    required _i12.VerifyMicroDepositsParams? params,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #verifyPaymentIntentWithMicrodeposits,
+          [],
+          {
+            #isPaymentIntent: isPaymentIntent,
+            #clientSecret: clientSecret,
+            #params: params,
+          },
+        ),
+        returnValue: _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #verifyPaymentIntentWithMicrodeposits,
+            [],
+            {
+              #isPaymentIntent: isPaymentIntent,
+              #clientSecret: clientSecret,
+              #params: params,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.PaymentIntent>.value(_FakePaymentIntent_14(
+          this,
+          Invocation.method(
+            #verifyPaymentIntentWithMicrodeposits,
+            [],
+            {
+              #isPaymentIntent: isPaymentIntent,
+              #clientSecret: clientSecret,
+              #params: params,
+            },
+          ),
+        )),
+      ) as _i9.Future<_i12.PaymentIntent>);
+
+  @override
+  _i9.Future<_i12.AddToWalletResult> canAddToWallet(String? last4) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #canAddToWallet,
+          [last4],
+        ),
+        returnValue:
+            _i9.Future<_i12.AddToWalletResult>.value(_FakeAddToWalletResult_17(
+          this,
+          Invocation.method(
+            #canAddToWallet,
+            [last4],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.AddToWalletResult>.value(_FakeAddToWalletResult_17(
+          this,
+          Invocation.method(
+            #canAddToWallet,
+            [last4],
+          ),
+        )),
+      ) as _i9.Future<_i12.AddToWalletResult>);
+
+  @override
+  _i9.Future<_i12.CanAddCardToWalletResult> canAddCardToWallet(
+          _i12.CanAddCardToWalletParams? params) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #canAddCardToWallet,
+          [params],
+        ),
+        returnValue: _i9.Future<_i12.CanAddCardToWalletResult>.value(
+            _FakeCanAddCardToWalletResult_18(
+          this,
+          Invocation.method(
+            #canAddCardToWallet,
+            [params],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.CanAddCardToWalletResult>.value(
+                _FakeCanAddCardToWalletResult_18(
+          this,
+          Invocation.method(
+            #canAddCardToWallet,
+            [params],
+          ),
+        )),
+      ) as _i9.Future<_i12.CanAddCardToWalletResult>);
+
+  @override
+  _i9.Future<_i12.IsCardInWalletResult> isCardInWallet(String? cardLastFour) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #isCardInWallet,
+          [cardLastFour],
+        ),
+        returnValue: _i9.Future<_i12.IsCardInWalletResult>.value(
+            _FakeIsCardInWalletResult_19(
+          this,
+          Invocation.method(
+            #isCardInWallet,
+            [cardLastFour],
+          ),
+        )),
+        returnValueForMissingStub: _i9.Future<_i12.IsCardInWalletResult>.value(
+            _FakeIsCardInWalletResult_19(
+          this,
+          Invocation.method(
+            #isCardInWallet,
+            [cardLastFour],
+          ),
+        )),
+      ) as _i9.Future<_i12.IsCardInWalletResult>);
+
+  @override
+  _i9.Future<_i12.FinancialConnectionTokenResult> collectBankAccountToken(
+          {required String? clientSecret}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #collectBankAccountToken,
+          [],
+          {#clientSecret: clientSecret},
+        ),
+        returnValue: _i9.Future<_i12.FinancialConnectionTokenResult>.value(
+            _FakeFinancialConnectionTokenResult_20(
+          this,
+          Invocation.method(
+            #collectBankAccountToken,
+            [],
+            {#clientSecret: clientSecret},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i9.Future<_i12.FinancialConnectionTokenResult>.value(
+                _FakeFinancialConnectionTokenResult_20(
+          this,
+          Invocation.method(
+            #collectBankAccountToken,
+            [],
+            {#clientSecret: clientSecret},
+          ),
+        )),
+      ) as _i9.Future<_i12.FinancialConnectionTokenResult>);
+
+  @override
+  _i9.Future<_i12.FinancialConnectionSessionResult>
+      collectFinancialConnectionsAccounts({required String? clientSecret}) =>
+          (super.noSuchMethod(
+            Invocation.method(
+              #collectFinancialConnectionsAccounts,
+              [],
+              {#clientSecret: clientSecret},
+            ),
+            returnValue:
+                _i9.Future<_i12.FinancialConnectionSessionResult>.value(
+                    _FakeFinancialConnectionSessionResult_21(
+              this,
+              Invocation.method(
+                #collectFinancialConnectionsAccounts,
+                [],
+                {#clientSecret: clientSecret},
+              ),
+            )),
+            returnValueForMissingStub:
+                _i9.Future<_i12.FinancialConnectionSessionResult>.value(
+                    _FakeFinancialConnectionSessionResult_21(
+              this,
+              Invocation.method(
+                #collectFinancialConnectionsAccounts,
+                [],
+                {#clientSecret: clientSecret},
+              ),
+            )),
+          ) as _i9.Future<_i12.FinancialConnectionSessionResult>);
+
+  @override
+  _i9.Future<_i12.CustomerSheetResult?> initCustomerSheet(
+          {required _i12.CustomerSheetInitParams? customerSheetInitParams}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #initCustomerSheet,
+          [],
+          {#customerSheetInitParams: customerSheetInitParams},
+        ),
+        returnValue: _i9.Future<_i12.CustomerSheetResult?>.value(),
+        returnValueForMissingStub:
+            _i9.Future<_i12.CustomerSheetResult?>.value(),
+      ) as _i9.Future<_i12.CustomerSheetResult?>);
+
+  @override
+  _i9.Future<_i12.CustomerSheetResult?> presentCustomerSheet(
+          {_i12.CustomerSheetPresentParams? options}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #presentCustomerSheet,
+          [],
+          {#options: options},
+        ),
+        returnValue: _i9.Future<_i12.CustomerSheetResult?>.value(),
+        returnValueForMissingStub:
+            _i9.Future<_i12.CustomerSheetResult?>.value(),
+      ) as _i9.Future<_i12.CustomerSheetResult?>);
+
+  @override
+  _i9.Future<_i12.CustomerSheetResult?>
+      retrieveCustomerSheetPaymentOptionSelection() => (super.noSuchMethod(
+            Invocation.method(
+              #retrieveCustomerSheetPaymentOptionSelection,
+              [],
+            ),
+            returnValue: _i9.Future<_i12.CustomerSheetResult?>.value(),
+            returnValueForMissingStub:
+                _i9.Future<_i12.CustomerSheetResult?>.value(),
+          ) as _i9.Future<_i12.CustomerSheetResult?>);
+
+  @override
+  void markNeedsSettings() => super.noSuchMethod(
+        Invocation.method(
+          #markNeedsSettings,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [StripeService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockStripeService extends _i1.Mock implements _i29.StripeService {
+  @override
+  bool get enableLogs => (super.noSuchMethod(
+        Invocation.getter(#enableLogs),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  _i9.Future<void> createPayment(String? clientSecret) => (super.noSuchMethod(
+        Invocation.method(
+          #createPayment,
+          [clientSecret],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> presentPaymentSheet() => (super.noSuchMethod(
+        Invocation.method(
+          #presentPaymentSheet,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> successSheet() => (super.noSuchMethod(
+        Invocation.method(
+          #successSheet,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> failSheet() => (super.noSuchMethod(
+        Invocation.method(
+          #failSheet,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  void logEntryCheck() => super.noSuchMethod(
+        Invocation.method(
+          #logEntryCheck,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logD(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logD,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logI(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logI,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logW(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logW,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logE(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logE,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [Repository].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockRepository extends _i1.Mock implements _i30.Repository<_i13.Event> {
+  @override
+  bool get enableLogs => (super.noSuchMethod(
+        Invocation.getter(#enableLogs),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  _i9.Stream<_i14.DataState<List<_i13.Event>>> get dataStream =>
+      (super.noSuchMethod(
+        Invocation.getter(#dataStream),
+        returnValue: _i9.Stream<_i14.DataState<List<_i13.Event>>>.empty(),
+        returnValueForMissingStub:
+            _i9.Stream<_i14.DataState<List<_i13.Event>>>.empty(),
+      ) as _i9.Stream<_i14.DataState<List<_i13.Event>>>);
+
+  @override
+  _i9.Stream<_i14.DataState<_i13.Event>> get singleItemStream =>
+      (super.noSuchMethod(
+        Invocation.getter(#singleItemStream),
+        returnValue: _i9.Stream<_i14.DataState<_i13.Event>>.empty(),
+        returnValueForMissingStub:
+            _i9.Stream<_i14.DataState<_i13.Event>>.empty(),
+      ) as _i9.Stream<_i14.DataState<_i13.Event>>);
+
+  @override
+  _i13.Event parseItem(Map<String, dynamic>? json) => (super.noSuchMethod(
+        Invocation.method(
+          #parseItem,
+          [json],
+        ),
+        returnValue: _FakeEvent_22(
+          this,
+          Invocation.method(
+            #parseItem,
+            [json],
+          ),
+        ),
+        returnValueForMissingStub: _FakeEvent_22(
+          this,
+          Invocation.method(
+            #parseItem,
+            [json],
+          ),
+        ),
+      ) as _i13.Event);
+
+  @override
+  List<_i13.Event> parseList(List<Map<String, dynamic>>? jsonList) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #parseList,
+          [jsonList],
+        ),
+        returnValue: <_i13.Event>[],
+        returnValueForMissingStub: <_i13.Event>[],
+      ) as List<_i13.Event>);
+
+  @override
+  String getItemId(_i13.Event? item) => (super.noSuchMethod(
+        Invocation.method(
+          #getItemId,
+          [item],
+        ),
+        returnValue: _i23.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getItemId,
+            [item],
+          ),
+        ),
+        returnValueForMissingStub: _i23.dummyValue<String>(
+          this,
+          Invocation.method(
+            #getItemId,
+            [item],
+          ),
+        ),
+      ) as String);
+
+  @override
+  _i9.Future<void> fetchAll({
+    _i14.PaginatedOption? paginatedOptions,
+    required String? endpoint,
+    Map<String, dynamic>? queryParams,
+    bool? ignoreCache = false,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fetchAll,
+          [],
+          {
+            #paginatedOptions: paginatedOptions,
+            #endpoint: endpoint,
+            #queryParams: queryParams,
+            #ignoreCache: ignoreCache,
+          },
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> fetchById({
+    required String? id,
+    required String? endpoint,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fetchById,
+          [],
+          {
+            #id: id,
+            #endpoint: endpoint,
+          },
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> update({
+    required _i13.Event? item,
+    required String? endpoint,
+    required Map<String, dynamic>? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #update,
+          [],
+          {
+            #item: item,
+            #endpoint: endpoint,
+            #body: body,
+          },
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<void> delete({
+    required int? id,
+    required String? endpoint,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #delete,
+          [],
+          {
+            #id: id,
+            #endpoint: endpoint,
+          },
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  void logEntryCheck() => super.noSuchMethod(
+        Invocation.method(
+          #logEntryCheck,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logD(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logD,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logI(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logI,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logW(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logW,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void logE(dynamic message) => super.noSuchMethod(
+        Invocation.method(
+          #logE,
+          [message],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void emitListState(_i14.DataState<List<_i13.Event>>? state) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #emitListState,
+          [state],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void emitSingleState(_i14.DataState<_i13.Event>? state) => super.noSuchMethod(
+        Invocation.method(
+          #emitSingleState,
+          [state],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void emitListError(Object? error) => super.noSuchMethod(
+        Invocation.method(
+          #emitListError,
+          [error],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void emitSingleError(Object? error) => super.noSuchMethod(
+        Invocation.method(
+          #emitSingleError,
+          [error],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i9.Future<Map<String, dynamic>> fetchApiData({
+    required String? endpoint,
+    Map<String, dynamic>? queryParams,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #fetchApiData,
+          [],
+          {
+            #endpoint: endpoint,
+            #queryParams: queryParams,
+          },
+        ),
+        returnValue:
+            _i9.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+        returnValueForMissingStub:
+            _i9.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i9.Future<Map<String, dynamic>>);
+
+  @override
+  _i9.Future<Map<String, dynamic>> postApiData({
+    required String? endpoint,
+    required Map<String, dynamic>? body,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #postApiData,
+          [],
+          {
+            #endpoint: endpoint,
+            #body: body,
+          },
+        ),
+        returnValue:
+            _i9.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+        returnValueForMissingStub:
+            _i9.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i9.Future<Map<String, dynamic>>);
+
+  @override
+  _i9.Future<Map<String, dynamic>> deleteApiData({required String? endpoint}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteApiData,
+          [],
+          {#endpoint: endpoint},
+        ),
+        returnValue:
+            _i9.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+        returnValueForMissingStub:
+            _i9.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+      ) as _i9.Future<Map<String, dynamic>>);
+
+  @override
+  _i9.Future<void> saveToDatabase(_i13.Event? item) => (super.noSuchMethod(
+        Invocation.method(
+          #saveToDatabase,
+          [item],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<_i13.Event?> getFromDatabase(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #getFromDatabase,
+          [id],
+        ),
+        returnValue: _i9.Future<_i13.Event?>.value(),
+        returnValueForMissingStub: _i9.Future<_i13.Event?>.value(),
+      ) as _i9.Future<_i13.Event?>);
+
+  @override
+  _i9.Future<void> deleteFromDatabase(int? id) => (super.noSuchMethod(
+        Invocation.method(
+          #deleteFromDatabase,
+          [id],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i9.Future<List<_i13.Event>> getAllFromDatabase() => (super.noSuchMethod(
+        Invocation.method(
+          #getAllFromDatabase,
+          [],
+        ),
+        returnValue: _i9.Future<List<_i13.Event>>.value(<_i13.Event>[]),
+        returnValueForMissingStub:
+            _i9.Future<List<_i13.Event>>.value(<_i13.Event>[]),
+      ) as _i9.Future<List<_i13.Event>>);
+
+  @override
+  _i9.Future<void> clearDatabase() => (super.noSuchMethod(
+        Invocation.method(
+          #clearDatabase,
+          [],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  _i14.PaginatedData<_i13.Event>? getCachedData(String? key) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getCachedData,
+          [key],
+        ),
+        returnValueForMissingStub: null,
+      ) as _i14.PaginatedData<_i13.Event>?);
+
+  @override
+  _i9.Future<void> updateCache(
+    String? key,
+    List<_i13.Event>? items, [
+    _i14.PaginatedOption? pagination,
+  ]) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateCache,
+          [
+            key,
+            items,
+            pagination,
+          ],
+        ),
+        returnValue: _i9.Future<void>.value(),
+        returnValueForMissingStub: _i9.Future<void>.value(),
+      ) as _i9.Future<void>);
+
+  @override
+  String buildCacheKey(
+    String? endpoint,
+    int? page,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #buildCacheKey,
+          [
+            endpoint,
+            page,
+          ],
+        ),
+        returnValue: _i23.dummyValue<String>(
+          this,
+          Invocation.method(
+            #buildCacheKey,
+            [
+              endpoint,
+              page,
+            ],
+          ),
+        ),
+        returnValueForMissingStub: _i23.dummyValue<String>(
+          this,
+          Invocation.method(
+            #buildCacheKey,
+            [
+              endpoint,
+              page,
+            ],
+          ),
+        ),
+      ) as String);
+
+  @override
+  _i14.PaginatedOption extractPaginationFromResponse(
+    Map<String, dynamic>? response,
+    _i14.PaginatedOption? currentPagination,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #extractPaginationFromResponse,
+          [
+            response,
+            currentPagination,
+          ],
+        ),
+        returnValue: _FakePaginatedOption_23(
+          this,
+          Invocation.method(
+            #extractPaginationFromResponse,
+            [
+              response,
+              currentPagination,
+            ],
+          ),
+        ),
+        returnValueForMissingStub: _FakePaginatedOption_23(
+          this,
+          Invocation.method(
+            #extractPaginationFromResponse,
+            [
+              response,
+              currentPagination,
+            ],
+          ),
+        ),
+      ) as _i14.PaginatedOption);
+
+  @override
+  List<_i13.Event> appendNewItems(
+    List<_i13.Event>? currentItems,
+    List<_i13.Event>? newItems,
+    String Function(_i13.Event)? getItemId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #appendNewItems,
+          [
+            currentItems,
+            newItems,
+            getItemId,
+          ],
+        ),
+        returnValue: <_i13.Event>[],
+        returnValueForMissingStub: <_i13.Event>[],
+      ) as List<_i13.Event>);
+
+  @override
+  void clearCache() => super.noSuchMethod(
+        Invocation.method(
+          #clearCache,
+          [],
         ),
         returnValueForMissingStub: null,
       );

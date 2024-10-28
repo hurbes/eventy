@@ -21,7 +21,7 @@ class OrderService with ListenableServiceMixin, AppLogger {
 
   void setActiveEvent(Event? event) {
     _activeEvent.value = event;
-    logE('Active event set to: ${event?.tickets.length}');
+    logI('Active event set to: ${event?.tickets.length}');
   }
 
   int quantityForTicket(Ticket ticket) => _selectedTickets[ticket] ?? 0;

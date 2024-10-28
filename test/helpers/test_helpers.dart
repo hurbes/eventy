@@ -1,6 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:eventy/app/app.locator.dart';
 import 'package:eventy/core/interfaces/i_api_service.dart';
+import 'package:eventy/core/interfaces/i_database_service.dart';
+import 'package:eventy/core/models/event/event.dart';
+import 'package:eventy/core/repository/app_repository.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -12,6 +16,7 @@ import 'package:eventy/core/services/database_service.dart';
 import 'package:eventy/core/services/objectbox_service.dart';
 import 'package:eventy/core/services/dio_service.dart';
 import 'package:eventy/core/services/order_service.dart';
+import 'package:eventy/core/services/stripe_service.dart';
 // @stacked-import
 
 @GenerateMocks([], customMocks: [
@@ -25,6 +30,9 @@ import 'package:eventy/core/services/order_service.dart';
   MockSpec<ObjectboxService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<DioService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<OrderService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<Stripe>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<StripeService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<Repository<Event>>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -39,12 +47,14 @@ void registerServices() {
   getAndRegisterObjectboxService();
   getAndRegisterDioService();
   getAndRegisterOrderService();
+  getAndRegisterStripeService();
 // @stacked-mock-register
 }
 
 MockRouterService getAndRegisterNavigationService() {
   _removeRegistrationIfExists<RouterService>();
   final service = MockRouterService();
+
   locator.registerSingleton<RouterService>(service);
   return service;
 }
@@ -114,9 +124,9 @@ MockDio getAndRegisterDio() {
 }
 
 MockDatabaseService getAndRegisterDatabaseService() {
-  _removeRegistrationIfExists<DatabaseService>();
+  _removeRegistrationIfExists<IDatabaseService>();
   final service = MockDatabaseService();
-  locator.registerSingleton<DatabaseService>(service);
+  locator.registerSingleton<IDatabaseService>(service);
   return service;
 }
 
@@ -140,6 +150,21 @@ MockOrderService getAndRegisterOrderService() {
   locator.registerSingleton<OrderService>(service);
   return service;
 }
+
+MockStripeService getAndRegisterStripeService() {
+  _removeRegistrationIfExists<StripeService>();
+  final service = MockStripeService();
+  locator.registerSingleton<StripeService>(service);
+  return service;
+}
+
+MockRepository getAndRegisterEventRepository() {
+  _removeRegistrationIfExists<Repository<Event>>();
+  final service = MockRepository();
+  locator.registerSingleton<Repository<Event>>(service);
+  return service;
+}
+
 // @stacked-mock-create
 
 void _removeRegistrationIfExists<T extends Object>() {
