@@ -93,8 +93,6 @@ Despite these challenges, the final product demonstrates a well-structured, perf
 
 While TDD wasn't fully implemented due to time constraints, significant testing coverage includes:
 - Unit tests for core business logic
-- Widget tests for UI components
-- Integration tests for data flow
 - Test coverage focused on critical path functionality
 
 ## 🐛 Known Issues & Limitations
