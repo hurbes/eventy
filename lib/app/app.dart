@@ -25,6 +25,7 @@ import 'package:eventy/ui/views/search_view/search_view_view.dart';
 import 'package:eventy/core/services/stripe_service.dart';
 import 'package:eventy/ui/bottom_sheets/payment_fail/payment_fail_sheet.dart';
 import 'package:eventy/ui/bottom_sheets/payment_success/payment_success_sheet.dart';
+import 'package:eventy/ui/views/order_details/order_details_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -46,6 +47,7 @@ import 'package:eventy/ui/bottom_sheets/payment_success/payment_success_sheet.da
     MaterialRoute(page: DetailsFormView),
     MaterialRoute(page: MapNavigationView, fullscreenDialog: true),
     MaterialRoute(page: SearchView, fullscreenDialog: true),
+    MaterialRoute(page: OrderDetailsView),
 // @stacked-route
   ],
   dependencies: [
