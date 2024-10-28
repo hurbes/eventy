@@ -37,6 +37,12 @@ class HomeViewModel extends StreamViewModel<DataState<List<Event>>>
   }
 
   @override
+  bool get isBusy {
+    if (data == null) return true;
+    return data!.status == DataStatus.loading && data!.data == null;
+  }
+
+  @override
   Stream<DataState<List<Event>>> get stream => _eventRepository.dataStream;
 
   @override

@@ -28,7 +28,7 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
   }
 
   bool get isBookable {
-    return !isArchived && event.tickets.isNotEmpty;
+    return !isArchived && event.tickets.isNotEmpty && !isBusy;
   }
 
   String get buttonText {
@@ -68,6 +68,11 @@ class EventDetailsViewModel extends StreamViewModel<DataState<Event>>
 
   void navigateToTicketSelection() {
     _routerService.navigateToTicketSelectionView();
+  }
+
+  @override
+  bool get isBusy {
+    return data?.status == DataStatus.loading;
   }
 
   @override

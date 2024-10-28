@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:eventy/ui/common/app_colors.dart';
+import 'package:lottie/lottie.dart';
 
 class EventyAppButton extends StatefulWidget {
   final String text;
@@ -128,13 +129,14 @@ class _EventyAppButtonState extends State<EventyAppButton>
                 const SizedBox(width: 8),
               ],
               if (widget.isLoading)
-                const SizedBox(
+                SizedBox(
                   width: 20,
                   height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    valueColor:
-                        AlwaysStoppedAnimation<Color>(kcTextPrimaryColor),
+                  child: Lottie.asset(
+                    'assets/animations/loader.json',
+                    height: 50,
+                    width: 50,
+                    fit: BoxFit.contain,
                   ),
                 )
               else
