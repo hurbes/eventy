@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:eventy/app/app.locator.dart';
 import 'package:eventy/core/mixins/logger_mixin.dart';
 import 'package:eventy/core/models/data_state/data_set.dart';
@@ -17,7 +19,7 @@ class HomeViewModel extends StreamViewModel<DataState<List<Event>>>
 
   List<Event> get upcomingEvents {
     if (data?.data == null || data!.data!.isEmpty) return [];
-    int count = (data!.data!.length * 0.4).ceil();
+    int count = min((data!.data!.length * 0.4).ceil(), 4);
     return data!.data!.take(count).toList();
   }
 
