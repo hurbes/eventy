@@ -62,7 +62,7 @@ class TestRepository extends Repository<TestModel> {
   }
 
   @override
-  String getItemId(TestModel item) => item.id.toString();
+  int getItemId(TestModel item) => item.id;
 
   @override
   bool get enableLogs => true;
