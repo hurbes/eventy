@@ -47,8 +47,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
       currency: json['currency'] as String? ?? '',
       timezone: json['timezone'] as String? ?? '',
       slug: json['slug'] as String? ?? '',
-      images:
-          const _ImageRelToManyConverter().fromJson(json['images'] as List?),
+      images: const _ImageRelToManyConverter().fromJson(json['images'] as List),
       settings: const _SettingsRelToOneConverter()
           .fromJson(json['settings'] as Map<String, dynamic>?),
       organizer: const _OrganizerRelToOneConverter()
@@ -77,8 +76,7 @@ Map<String, dynamic> _$EventToJson(Event instance) {
   val['currency'] = instance.currency;
   val['timezone'] = instance.timezone;
   val['slug'] = instance.slug;
-  writeNotNull(
-      'images', const _ImageRelToManyConverter().toJson(instance.images));
+  val['images'] = const _ImageRelToManyConverter().toJson(instance.images);
   writeNotNull(
       'tickets', const _TicketRelToManyConverter().toJson(instance.tickets));
   writeNotNull(

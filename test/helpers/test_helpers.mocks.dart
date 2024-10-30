@@ -13,19 +13,20 @@ import 'package:dio/src/dio_mixin.dart' as _i6;
 import 'package:dio/src/options.dart' as _i3;
 import 'package:dio/src/response.dart' as _i7;
 import 'package:dio/src/transformer.dart' as _i5;
+import 'package:eventy/core/interfaces/i_database_service.dart' as _i25;
 import 'package:eventy/core/models/data_state/data_set.dart' as _i14;
 import 'package:eventy/core/models/event/event.dart' as _i13;
-import 'package:eventy/core/repository/app_repository.dart' as _i30;
+import 'package:eventy/core/repository/app_repository.dart' as _i31;
 import 'package:eventy/core/services/api_service.dart' as _i22;
 import 'package:eventy/core/services/database_service.dart' as _i24;
-import 'package:eventy/core/services/dio_service.dart' as _i26;
-import 'package:eventy/core/services/objectbox_service.dart' as _i25;
-import 'package:eventy/core/services/order_service.dart' as _i27;
+import 'package:eventy/core/services/dio_service.dart' as _i27;
+import 'package:eventy/core/services/objectbox_service.dart' as _i26;
+import 'package:eventy/core/services/order_service.dart' as _i28;
 import 'package:eventy/core/services/payment_service.dart' as _i20;
-import 'package:eventy/core/services/stripe_service.dart' as _i29;
+import 'package:eventy/core/services/stripe_service.dart' as _i30;
 import 'package:flutter/foundation.dart' as _i11;
 import 'package:flutter/material.dart' as _i16;
-import 'package:flutter_stripe/flutter_stripe.dart' as _i28;
+import 'package:flutter_stripe/flutter_stripe.dart' as _i29;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i23;
 import 'package:objectbox/objectbox.dart' as _i10;
@@ -2231,10 +2232,13 @@ class MockDatabaseService extends _i1.Mock implements _i24.DatabaseService {
       ) as _i9.Future<void>);
 
   @override
-  _i9.Future<List<T>> fetchAll<T>() => (super.noSuchMethod(
+  _i9.Future<List<T>> fetchAll<T>(
+          {_i25.FindAllHelper<T, _i10.Store>? helper}) =>
+      (super.noSuchMethod(
         Invocation.method(
           #fetchAll,
           [],
+          {#helper: helper},
         ),
         returnValue: _i9.Future<List<T>>.value(<T>[]),
         returnValueForMissingStub: _i9.Future<List<T>>.value(<T>[]),
@@ -2249,16 +2253,6 @@ class MockDatabaseService extends _i1.Mock implements _i24.DatabaseService {
         returnValue: _i9.Future<T?>.value(),
         returnValueForMissingStub: _i9.Future<T?>.value(),
       ) as _i9.Future<T?>);
-
-  @override
-  _i9.Future<List<T>> query<T>(String? query) => (super.noSuchMethod(
-        Invocation.method(
-          #query,
-          [query],
-        ),
-        returnValue: _i9.Future<List<T>>.value(<T>[]),
-        returnValueForMissingStub: _i9.Future<List<T>>.value(<T>[]),
-      ) as _i9.Future<List<T>>);
 
   @override
   _i9.Stream<List<T>> queryStream<T>(String? query) => (super.noSuchMethod(
@@ -2338,7 +2332,7 @@ class MockDatabaseService extends _i1.Mock implements _i24.DatabaseService {
 /// A class which mocks [ObjectboxService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockObjectboxService extends _i1.Mock implements _i25.ObjectboxService {
+class MockObjectboxService extends _i1.Mock implements _i26.ObjectboxService {
   @override
   _i10.Store get store => (super.noSuchMethod(
         Invocation.getter(#store),
@@ -2375,12 +2369,12 @@ class MockObjectboxService extends _i1.Mock implements _i25.ObjectboxService {
 /// A class which mocks [DioService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDioService extends _i1.Mock implements _i26.DioService {}
+class MockDioService extends _i1.Mock implements _i27.DioService {}
 
 /// A class which mocks [OrderService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockOrderService extends _i1.Mock implements _i27.OrderService {
+class MockOrderService extends _i1.Mock implements _i28.OrderService {
   @override
   Map<_i13.Ticket, int> get selectedTickets => (super.noSuchMethod(
         Invocation.getter(#selectedTickets),
@@ -2586,7 +2580,7 @@ class MockOrderService extends _i1.Mock implements _i27.OrderService {
 /// A class which mocks [Stripe].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockStripe extends _i1.Mock implements _i28.Stripe {
+class MockStripe extends _i1.Mock implements _i29.Stripe {
   @override
   bool get debugUpdatePlatformSheetCalled => (super.noSuchMethod(
         Invocation.getter(#debugUpdatePlatformSheetCalled),
@@ -3531,7 +3525,7 @@ class MockStripe extends _i1.Mock implements _i28.Stripe {
 /// A class which mocks [StripeService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockStripeService extends _i1.Mock implements _i29.StripeService {
+class MockStripeService extends _i1.Mock implements _i30.StripeService {
   @override
   bool get enableLogs => (super.noSuchMethod(
         Invocation.getter(#enableLogs),
@@ -3628,7 +3622,7 @@ class MockStripeService extends _i1.Mock implements _i29.StripeService {
 /// A class which mocks [Repository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockRepository extends _i1.Mock implements _i30.Repository<_i13.Event> {
+class MockRepository extends _i1.Mock implements _i31.Repository<_i13.Event> {
   @override
   bool get enableLogs => (super.noSuchMethod(
         Invocation.getter(#enableLogs),
@@ -3688,26 +3682,14 @@ class MockRepository extends _i1.Mock implements _i30.Repository<_i13.Event> {
       ) as List<_i13.Event>);
 
   @override
-  String getItemId(_i13.Event? item) => (super.noSuchMethod(
+  int getItemId(_i13.Event? item) => (super.noSuchMethod(
         Invocation.method(
           #getItemId,
           [item],
         ),
-        returnValue: _i23.dummyValue<String>(
-          this,
-          Invocation.method(
-            #getItemId,
-            [item],
-          ),
-        ),
-        returnValueForMissingStub: _i23.dummyValue<String>(
-          this,
-          Invocation.method(
-            #getItemId,
-            [item],
-          ),
-        ),
-      ) as String);
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
 
   @override
   _i9.Future<void> fetchAll({
@@ -4086,7 +4068,7 @@ class MockRepository extends _i1.Mock implements _i30.Repository<_i13.Event> {
   List<_i13.Event> appendNewItems(
     List<_i13.Event>? currentItems,
     List<_i13.Event>? newItems,
-    String Function(_i13.Event)? getItemId,
+    int Function(_i13.Event)? getItemId,
   ) =>
       (super.noSuchMethod(
         Invocation.method(
