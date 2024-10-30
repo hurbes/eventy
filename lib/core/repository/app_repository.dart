@@ -36,6 +36,7 @@ abstract class Repository<T>
     bool ignoreCache = false,
   }) async {
     logI('Fetching all data from $endpoint');
+    await Future.delayed(const Duration(milliseconds: 100));
     try {
       if (paginatedOptions?.isEnabled ?? false) {
         await _handlePaginatedFetch(
