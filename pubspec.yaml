@@ -1,7 +1,7 @@
 name: eventy
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.3.3+3
+version: 0.3.3+4
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -60,6 +60,11 @@ flutter_native_splash:
   color: "#22141a"
   color_dark: "#22141a"
   image: "assets/app_icon.png"
+  android_12:
+    color: "#22141a"
+    color_dark: "#22141a"
+    branding: "assets/app_icon.png"
+
 
 objectbox:
   output_dir: core/db
