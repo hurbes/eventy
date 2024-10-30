@@ -43,13 +43,24 @@ mixin PaginationHandlerMixin<T> on AppLogger {
   List<T> appendNewItems(
     List<T> currentItems,
     List<T> newItems,
-    String Function(T) getItemId,
+    int Function(T) getItemId,
   ) {
-    final Set<String> currentIds = currentItems.map(getItemId).toSet();
+    final Set<int> currentIds = currentItems.map(getItemId).toSet();
+
+    final Map<int, T> uniqueCurrentItems = Map.fromEntries(
+        currentItems.map((item) => MapEntry(getItemId(item), item)));
+
     final List<T> uniqueNewItems = newItems
         .where((item) => !currentIds.contains(getItemId(item)))
         .toList();
-    return [...currentItems, ...uniqueNewItems];
+
+    final Set<int> updatedItemsId = uniqueNewItems.map(getItemId).toSet();
+
+    final Set<int> uniqueNewIds = newItems.map(getItemId).toSet();
+
+    logI('New ids mixin $uniqueNewIds old $currentIds list $updatedItemsId');
+
+    return [...uniqueCurrentItems.values, ...uniqueNewItems];
   }
 
   void clearCache() => _cache.clear();

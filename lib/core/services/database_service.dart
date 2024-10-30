@@ -66,12 +66,12 @@ class DatabaseService with AppLogger implements IDatabaseService {
   }
 
   @override
-  Future<List<T>> fetchAll<T>() async {
+  Future<List<T>> fetchAll<T>({FindAllHelper<T, Store>? helper}) async {
     try {
-      final box = _store.box<T>();
-      final results = box.getAll();
       logD('Fetched all objects of type ${T.toString()}');
-      return results;
+      if (helper != null) return helper(_store);
+      final box = _store.box<T>();
+      return box.getAll();
     } catch (e) {
       logE('Error fetching all objects of type ${T.toString()}: $e');
       throw FetchException('Failed to fetch objects: $e');
@@ -88,19 +88,6 @@ class DatabaseService with AppLogger implements IDatabaseService {
     } catch (e) {
       logE('Error fetching object by id $id: $e');
       throw FetchException('Failed to fetch object by id: $e');
-    }
-  }
-
-  @override
-  Future<List<T>> query<T>(String query) async {
-    try {
-      final box = _store.box<T>();
-      final results = box.query().build().find();
-      logD('Executed query for type ${T.toString()}, Results: $results');
-      return results;
-    } catch (e) {
-      logE('Error executing query for type ${T.toString()}: $e');
-      throw QueryException('Failed to execute query: $e');
     }
   }
 

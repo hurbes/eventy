@@ -987,16 +987,15 @@ class _EventRelToManyConverter
 }
 
 class _ImageRelToManyConverter
-    implements JsonConverter<ToMany<EventImage>, List<dynamic>?> {
+    implements JsonConverter<ToMany<EventImage>, List<dynamic>> {
   const _ImageRelToManyConverter();
 
   @override
-  ToMany<EventImage> fromJson(List<dynamic>? json) => ToMany<EventImage>(
-      items:
-          json == null ? [] : json.map((e) => EventImage.fromJson(e)).toList());
+  ToMany<EventImage> fromJson(List<dynamic> json) => ToMany<EventImage>(
+      items: json.map((e) => EventImage.fromJson(e)).toList());
 
   @override
-  List<Map<String, dynamic>>? toJson(ToMany<EventImage> rel) =>
+  List<Map<String, dynamic>> toJson(ToMany<EventImage> rel) =>
       rel.map((EventImage obj) => obj.toJson()).toList();
 }
 
