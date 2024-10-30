@@ -26,7 +26,7 @@ abstract class Repository<T>
   List<T> parseList(List<Map<String, dynamic>> jsonList);
 
   @protected
-  String getItemId(T item);
+  int getItemId(T item);
 
   @override
   Future<void> fetchAll({
@@ -194,10 +194,6 @@ abstract class Repository<T>
       DataSource.local,
       pagination: data.pagination,
     );
-  }
-
-  String _buildCacheKey(String endpoint, int? page) {
-    return page != null ? '${endpoint}_$page' : endpoint;
   }
 
   List<T> _parseApiResponse(Map<String, dynamic> response) {
