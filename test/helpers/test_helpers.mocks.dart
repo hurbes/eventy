@@ -18,6 +18,7 @@ import 'package:eventy/core/models/data_state/data_set.dart' as _i14;
 import 'package:eventy/core/models/event/event.dart' as _i13;
 import 'package:eventy/core/repository/app_repository.dart' as _i31;
 import 'package:eventy/core/services/api_service.dart' as _i22;
+import 'package:eventy/core/services/connection_service.dart' as _i32;
 import 'package:eventy/core/services/database_service.dart' as _i24;
 import 'package:eventy/core/services/dio_service.dart' as _i27;
 import 'package:eventy/core/services/objectbox_service.dart' as _i26;
@@ -4087,6 +4088,124 @@ class MockRepository extends _i1.Mock implements _i31.Repository<_i13.Event> {
   void clearCache() => super.noSuchMethod(
         Invocation.method(
           #clearCache,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i9.Future<T> trackApiOperation<T>(_i9.Future<T> Function()? apiCall) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #trackApiOperation,
+          [apiCall],
+        ),
+        returnValue: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #trackApiOperation,
+                  [apiCall],
+                ),
+              ),
+              (T v) => _i9.Future<T>.value(v),
+            ) ??
+            _FakeFuture_9<T>(
+              this,
+              Invocation.method(
+                #trackApiOperation,
+                [apiCall],
+              ),
+            ),
+        returnValueForMissingStub: _i23.ifNotNull(
+              _i23.dummyValueOrNull<T>(
+                this,
+                Invocation.method(
+                  #trackApiOperation,
+                  [apiCall],
+                ),
+              ),
+              (T v) => _i9.Future<T>.value(v),
+            ) ??
+            _FakeFuture_9<T>(
+              this,
+              Invocation.method(
+                #trackApiOperation,
+                [apiCall],
+              ),
+            ),
+      ) as _i9.Future<T>);
+}
+
+/// A class which mocks [ConnectionService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockConnectionService extends _i1.Mock implements _i32.ConnectionService {
+  @override
+  bool get hasConnection => (super.noSuchMethod(
+        Invocation.getter(#hasConnection),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  void registerCallback(_i32.ConnectionCallback? callback) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #registerCallback,
+          [callback],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void dispose() => super.noSuchMethod(
+        Invocation.method(
+          #dispose,
+          [],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
           [],
         ),
         returnValueForMissingStub: null,
