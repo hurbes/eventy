@@ -1,8 +1,8 @@
-import 'package:meta/meta.dart';
 import 'package:eventy/app/app.locator.dart';
 import 'package:eventy/core/exceptions/api_exceptions.dart';
 import 'package:eventy/core/interfaces/i_api_service.dart';
 import 'package:eventy/core/mixins/logger_mixin.dart';
+import 'package:flutter/foundation.dart';
 
 mixin ApiOperationsMixin on AppLogger {
   final _apiService = locator<IApiService>();
