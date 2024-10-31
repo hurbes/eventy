@@ -1,7 +1,7 @@
 name: eventy
 description: A new Flutter project.
 publish_to: 'none'
-version: 0.3.3+4
+version: 0.3.4+5
 
 environment:
   sdk: '>=3.0.3 <4.0.0'
@@ -33,7 +33,9 @@ dependencies:
   intl: ^0.19.0
   confetti: ^0.7.0
   flutter_native_splash: ^2.4.2
-
+  connectivity_plus: ^6.1.0
+  overlay_support: ^2.1.0
+  
 dev_dependencies:
   build_runner: ^2.4.13
   flutter_test:
