@@ -17,6 +17,7 @@ import 'package:eventy/core/services/objectbox_service.dart';
 import 'package:eventy/core/services/dio_service.dart';
 import 'package:eventy/core/services/order_service.dart';
 import 'package:eventy/core/services/stripe_service.dart';
+import 'package:eventy/core/services/connection_service.dart';
 // @stacked-import
 
 @GenerateMocks([], customMocks: [
@@ -33,6 +34,7 @@ import 'package:eventy/core/services/stripe_service.dart';
   MockSpec<Stripe>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<StripeService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<Repository<Event>>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<ConnectionService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -48,6 +50,7 @@ void registerServices() {
   getAndRegisterDioService();
   getAndRegisterOrderService();
   getAndRegisterStripeService();
+  getAndRegisterConnectionService();
 // @stacked-mock-register
 }
 
@@ -165,6 +168,12 @@ MockRepository getAndRegisterEventRepository() {
   return service;
 }
 
+MockConnectionService getAndRegisterConnectionService() {
+  _removeRegistrationIfExists<ConnectionService>();
+  final service = MockConnectionService();
+  locator.registerSingleton<ConnectionService>(service);
+  return service;
+}
 // @stacked-mock-create
 
 void _removeRegistrationIfExists<T extends Object>() {

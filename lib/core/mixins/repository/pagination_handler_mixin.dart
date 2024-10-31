@@ -1,12 +1,11 @@
-import 'package:meta/meta.dart';
 import 'package:eventy/core/models/data_state/data_set.dart';
 import 'package:eventy/core/utils/lru_cache.dart';
 import 'package:eventy/core/mixins/logger_mixin.dart';
+import 'package:flutter/foundation.dart';
 
 mixin PaginationHandlerMixin<T> on AppLogger {
   final LRUCache<String, PaginatedData<T>> _cache = LRUCache(40);
 
-  @protected
   PaginatedData<T>? getCachedData(String key) => _cache.get(key);
 
   @protected

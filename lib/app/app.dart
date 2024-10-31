@@ -26,6 +26,7 @@ import 'package:eventy/core/services/stripe_service.dart';
 import 'package:eventy/ui/bottom_sheets/payment_fail/payment_fail_sheet.dart';
 import 'package:eventy/ui/bottom_sheets/payment_success/payment_success_sheet.dart';
 import 'package:eventy/ui/views/order_details/order_details_view.dart';
+import 'package:eventy/core/services/connection_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -63,6 +64,7 @@ import 'package:eventy/ui/views/order_details/order_details_view.dart';
     LazySingleton(classType: EventRepository, asType: Repository<Event>),
     LazySingleton(classType: OrderService),
     LazySingleton(classType: StripeService),
+    LazySingleton(classType: ConnectionService),
 // @stacked-service
   ],
   bottomsheets: [
