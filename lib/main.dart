@@ -1,3 +1,4 @@
+import 'package:eventy/ui/widgets/common/connection/connection_aware.dart';
 import 'package:flutter/material.dart';
 import 'package:eventy/app/app.bottomsheets.dart';
 import 'package:eventy/app/app.dialogs.dart';
@@ -27,6 +28,8 @@ class MainApp extends StatelessWidget {
       ),
       routerDelegate: stackedRouter.delegate(),
       routeInformationParser: stackedRouter.defaultRouteParser(),
+      builder: (context, child) =>
+          ConnectionAwareOverlay(child: child ?? const SizedBox.shrink()),
     );
   }
 }
